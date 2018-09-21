@@ -24,6 +24,15 @@ class BaseViewController: UIViewController {
         LogManager.shared.loggingViewControllerLifecycle(#function, className: className)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        LogManager.shared.loggingViewControllerLifecycle(#function, className: className)
+    }
+    
+    deinit {
+        LogManager.shared.loggingViewControllerLifecycle(#function, className: className)
+    }
+    
     override func loadView() {
         super.loadView()
         LogManager.shared.loggingViewControllerLifecycle(#function, className: className)
