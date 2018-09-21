@@ -7,14 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C1D437E2154A23A006017CB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D437D2154A23A006017CB /* BaseViewController.swift */; };
 		5C945B2B215420180045E20F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C945B2A215420180045E20F /* AppDelegate.swift */; };
 		5C945B2D215420180045E20F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C945B2C215420180045E20F /* ViewController.swift */; };
 		5C945B30215420180045E20F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B2E215420180045E20F /* Main.storyboard */; };
 		5C945B322154201A0045E20F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B312154201A0045E20F /* Assets.xcassets */; };
 		5C945B352154201A0045E20F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B332154201A0045E20F /* LaunchScreen.storyboard */; };
+		5C945B4221542DD50045E20F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B4121542DD50045E20F /* Default-568h@2x.png */; };
+		5CC26AA62155535000DF9E64 /* String+UIApplicationStateInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC26AA52155535000DF9E64 /* String+UIApplicationStateInitialization.swift */; };
+		5CC26AB121555A9400DF9E64 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC26AB021555A9400DF9E64 /* LogManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C1D437D2154A23A006017CB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5C945B27215420180045E20F /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C945B2A215420180045E20F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5C945B2C215420180045E20F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +27,9 @@
 		5C945B312154201A0045E20F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C945B342154201A0045E20F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C945B362154201A0045E20F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C945B4121542DD50045E20F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5CC26AA52155535000DF9E64 /* String+UIApplicationStateInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+UIApplicationStateInitialization.swift"; sourceTree = "<group>"; };
+		5CC26AB021555A9400DF9E64 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +43,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C1D43782154A095006017CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5C1D43792154A0BD006017CB /* UIKit */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5C1D43792154A0BD006017CB /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5CC26AA72155546300DF9E64 /* String */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		5C1D437F2154A244006017CB /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5C1D437D2154A23A006017CB /* BaseViewController.swift */,
+			);
+			path = BaseViewController;
+			sourceTree = "<group>";
+		};
+		5C1D43802154A25A006017CB /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				5C945B3D2154275B0045E20F /* AppDelegate */,
+				5C1D437F2154A244006017CB /* BaseViewController */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		5C945B1E215420180045E20F = {
 			isa = PBXGroup;
 			children = (
@@ -54,14 +95,49 @@
 		5C945B29215420180045E20F /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
-				5C945B2A215420180045E20F /* AppDelegate.swift */,
-				5C945B2C215420180045E20F /* ViewController.swift */,
+				5C1D43802154A25A006017CB /* Application */,
 				5C945B2E215420180045E20F /* Main.storyboard */,
-				5C945B312154201A0045E20F /* Assets.xcassets */,
-				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
-				5C945B362154201A0045E20F /* Info.plist */,
+				5C945B3C215425880045E20F /* Supporting Files */,
+				5C945B2C215420180045E20F /* ViewController.swift */,
+				5CC26AAF21555A9400DF9E64 /* LogManager */,
+				5C1D43782154A095006017CB /* Extensions */,
 			);
 			path = TinkoffChat;
+			sourceTree = "<group>";
+		};
+		5C945B3C215425880045E20F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5C945B4121542DD50045E20F /* Default-568h@2x.png */,
+				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
+				5C945B312154201A0045E20F /* Assets.xcassets */,
+				5C945B362154201A0045E20F /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5C945B3D2154275B0045E20F /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				5C945B2A215420180045E20F /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		5CC26AA72155546300DF9E64 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				5CC26AA52155535000DF9E64 /* String+UIApplicationStateInitialization.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
+		5CC26AAF21555A9400DF9E64 /* LogManager */ = {
+			isa = PBXGroup;
+			children = (
+				5CC26AB021555A9400DF9E64 /* LogManager.swift */,
+			);
+			path = LogManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C945B352154201A0045E20F /* LaunchScreen.storyboard in Resources */,
+				5C945B4221542DD50045E20F /* Default-568h@2x.png in Resources */,
 				5C945B322154201A0045E20F /* Assets.xcassets in Resources */,
 				5C945B30215420180045E20F /* Main.storyboard in Resources */,
 			);
@@ -135,6 +212,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C1D437E2154A23A006017CB /* BaseViewController.swift in Sources */,
+				5CC26AB121555A9400DF9E64 /* LogManager.swift in Sources */,
+				5CC26AA62155535000DF9E64 /* String+UIApplicationStateInitialization.swift in Sources */,
 				5C945B2D215420180045E20F /* ViewController.swift in Sources */,
 				5C945B2B215420180045E20F /* AppDelegate.swift in Sources */,
 			);
@@ -213,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -268,7 +348,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -284,7 +364,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FXS2GW5LYK;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TinkoffChat/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +382,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FXS2GW5LYK;
-				INFOPLIST_FILE = TinkoffChat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/TinkoffChat/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
