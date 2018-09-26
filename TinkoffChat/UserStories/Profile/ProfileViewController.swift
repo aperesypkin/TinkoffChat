@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 20.09.2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: BaseViewController {
+class ProfileViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
