@@ -59,14 +59,15 @@ class ProfileViewController: BaseViewController {
         
         //Fatal error: Unexpectedly found nil while unwrapping an Optional value
         //Получаем краш, так как в этом методе editButton все еще равен nil,
-        //а мы пытаемся получить доступ к форме анврапнотому значению
+        //а мы пытаемся получить доступ к анврапнотому значению
         //print(editButton.frame)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Получаем фрейм кнопки из сториборда, по этому при запуске на устройстве отличном от устройства в сториборде получаем разный фрейм
+        //Получаем фрейм кнопки из сториборда, по этому при запуске на устройстве
+        //отличном от устройства в сториборде получаем разный фрейм
         print(editButton.frame)
         
         imagePicker.delegate = self
@@ -81,7 +82,8 @@ class ProfileViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //Констрейнты уже расчитались и мы получаем верный фрейм у кнопки для устройства на котором запускается приложение
+        //Констрейнты уже расчитались и мы получаем верный фрейм у кнопки для
+        //устройства на котором запускается приложение
         print(editButton.frame)
     }
     
