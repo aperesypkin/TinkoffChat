@@ -58,12 +58,15 @@ class ProfileViewController: BaseViewController {
         super.init(coder: aDecoder)
         
         //Fatal error: Unexpectedly found nil while unwrapping an Optional value
+        //Получаем краш, так как в этом методе editButton все еще равен nil,
+        //а мы пытаемся получить доступ к форме анврапнотому значению
         //print(editButton.frame)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Получаем фрейм кнопки из сториборда, по этому при запуске на устройстве отличном от устройства в сториборде получаем разный фрейм
         print(editButton.frame)
         
         imagePicker.delegate = self
@@ -78,6 +81,7 @@ class ProfileViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        //Констрейнты уже расчитались и мы получаем верный фрейм у кнопки для устройства на котором запускается приложение
         print(editButton.frame)
     }
     
@@ -91,7 +95,7 @@ class ProfileViewController: BaseViewController {
     
     private func setupUI() {
         choosePhotoButton.layer.cornerRadius = choosePhotoButton.bounds.height / 2
-        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(.choosePhotoButtonEdgeInsets)
+        choosePhotoButton.imageEdgeInsets = UIEdgeInsets(all: .choosePhotoButtonEdgeInsets)
         
         photoImageView.layer.masksToBounds = true
         photoImageView.layer.cornerRadius = choosePhotoButton.bounds.height / 2
