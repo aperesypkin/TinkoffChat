@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private var applicationState: String {
-        return String(UIApplication.shared.applicationState)
+        return UIApplication.shared.applicationState.string
     }
     
     override init() {
@@ -24,33 +24,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
         return true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        LogManager.shared.loggingAppDelegateLifecycle(#function, state: applicationState)
+        LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
     }
     
 }

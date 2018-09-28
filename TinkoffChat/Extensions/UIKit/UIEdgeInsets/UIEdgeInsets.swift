@@ -1,5 +1,5 @@
 //
-//  UIEdgeInsets+AllEdgeInitialization.swift
+//  UIEdgeInsets.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 27/09/2018.

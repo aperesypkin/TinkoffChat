@@ -16,7 +16,7 @@ class LogManager {
     
     private var previousAppDelegateLifecycleState: String?
         
-    func loggingAppDelegateLifecycle(_ functionName: String, state: String) {
+    func logAppDelegateLifecycle(_ functionName: String, state: String) {
         guard isEnabled else { return }
         if let previousState = previousAppDelegateLifecycleState {
             print("Application moved from \(previousState) to \(state): \(functionName)")
@@ -26,7 +26,7 @@ class LogManager {
         previousAppDelegateLifecycleState = state
     }
     
-    func loggingViewControllerLifecycle(_ functionName: String, className: String) {
+    func logViewControllerLifecycle(_ functionName: String, className: String) {
         guard isEnabled else { return }
         print("\(className): \(functionName)")
     }
