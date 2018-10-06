@@ -203,7 +203,6 @@
                             <constraint firstItem="juV-i9-PK1" firstAttribute="leading" secondItem="cdS-rt-HCF" secondAttribute="trailing" constant="8" symbolic="YES" id="JC3-Y4-Z56"/>
                             <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="juV-i9-PK1" secondAttribute="bottom" constant="16" id="MGw-AL-Rdk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cdS-rt-HCF" secondAttribute="trailing" constant="16" id="MQK-4P-IKV"/>
-                            <constraint firstItem="cdS-rt-HCF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="S6x-Yx-meq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cdS-rt-HCF" secondAttribute="bottom" constant="20" symbolic="YES" id="VTd-5g-TDl">
                                 <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -219,6 +218,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="juV-i9-PK1" secondAttribute="trailing" constant="16" id="wlu-0Z-xRn"/>
+                            <constraint firstItem="cdS-rt-HCF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wqZ-TG-sI8"/>
                             <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="juV-i9-PK1" secondAttribute="bottom" constant="8" symbolic="YES" id="xmy-UO-MY9"/>
                             <constraint firstItem="SGQ-uY-1S5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ujo-JP-OCE" secondAttribute="bottom" constant="8" id="zai-lA-c1G"/>
                         </constraints>
@@ -253,7 +253,6 @@
                                 <include reference="sCY-Eu-ELh"/>
                                 <exclude reference="wlu-0Z-xRn"/>
                                 <include reference="3eN-w7-En9"/>
-                                <exclude reference="S6x-Yx-meq"/>
                                 <include reference="bwo-aB-HR9"/>
                                 <exclude reference="0UC-gN-Ash"/>
                                 <include reference="6uL-k5-jDC"/>
