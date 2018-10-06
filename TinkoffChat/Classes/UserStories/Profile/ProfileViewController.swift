@@ -87,6 +87,10 @@ class ProfileViewController: BaseViewController {
         print(editButton.frame)
     }
     
+    @IBAction func didTapCloseButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func didTapChoosePhotoButton(_ sender: UIButton) {
         present(actionSheetController, animated: true)
     }
