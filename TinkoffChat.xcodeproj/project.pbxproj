@@ -11,7 +11,9 @@
 		5C0E5473216801F2000AA0A1 /* UITableView+ReusableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E5472216801F2000AA0A1 /* UITableView+ReusableCell.swift */; };
 		5C0E547B216809AA000AA0A1 /* ConversationsListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E547A216809AA000AA0A1 /* ConversationsListDataManager.swift */; };
 		5C0E547D21680DFF000AA0A1 /* UIViewController+Contents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0E547C21680DFF000AA0A1 /* UIViewController+Contents.swift */; };
+		5C1582AA216FE81A003F2453 /* ThemesSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1582A9216FE81A003F2453 /* ThemesSwiftViewController.swift */; };
 		5C1D437E2154A23A006017CB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D437D2154A23A006017CB /* BaseViewController.swift */; };
+		5C35B8D521714568006369B4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35B8D421714568006369B4 /* Theme.swift */; };
 		5C7C27AC2168FECA005066C6 /* Date+Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AB2168FECA005066C6 /* Date+Today.swift */; };
 		5C7C27AF21690134005066C6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AE21690134005066C6 /* UIColor.swift */; };
 		5C7C27B5216914B0005066C6 /* OutgoingMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27B3216914B0005066C6 /* OutgoingMessageCell.swift */; };
@@ -24,6 +26,8 @@
 		5C945B322154201A0045E20F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B312154201A0045E20F /* Assets.xcassets */; };
 		5C945B352154201A0045E20F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B332154201A0045E20F /* LaunchScreen.storyboard */; };
 		5C945B4221542DD50045E20F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5C945B4121542DD50045E20F /* Default-568h@2x.png */; };
+		5CB2A4D8216E9D7300132404 /* ThemesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2A4D7216E9D7300132404 /* ThemesViewController.m */; };
+		5CB2A4DC216E9F0100132404 /* Themes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB2A4DB216E9F0100132404 /* Themes.m */; };
 		5CBAE6C62166A18B00F91551 /* UITableView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBAE6C52166A18B00F91551 /* UITableView+RegisterCell.swift */; };
 		5CC26AB121555A9400DF9E64 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC26AB021555A9400DF9E64 /* LogManager.swift */; };
 		5CC88917215E4F170005A46B /* UIApplicationState+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC88916215E4F170005A46B /* UIApplicationState+String.swift */; };
@@ -38,7 +42,9 @@
 		5C0E5472216801F2000AA0A1 /* UITableView+ReusableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+ReusableCell.swift"; sourceTree = "<group>"; };
 		5C0E547A216809AA000AA0A1 /* ConversationsListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListDataManager.swift; sourceTree = "<group>"; };
 		5C0E547C21680DFF000AA0A1 /* UIViewController+Contents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Contents.swift"; sourceTree = "<group>"; };
+		5C1582A9216FE81A003F2453 /* ThemesSwiftViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSwiftViewController.swift; sourceTree = "<group>"; };
 		5C1D437D2154A23A006017CB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		5C35B8D421714568006369B4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5C7C27AB2168FECA005066C6 /* Date+Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Today.swift"; sourceTree = "<group>"; };
 		5C7C27AE21690134005066C6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		5C7C27B3216914B0005066C6 /* OutgoingMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessageCell.swift; sourceTree = "<group>"; };
@@ -53,6 +59,11 @@
 		5C945B342154201A0045E20F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C945B362154201A0045E20F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C945B4121542DD50045E20F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5CB2A4D5216E9D7200132404 /* TinkoffChat-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TinkoffChat-Bridging-Header.h"; sourceTree = "<group>"; };
+		5CB2A4D6216E9D7300132404 /* ThemesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThemesViewController.h; sourceTree = "<group>"; };
+		5CB2A4D7216E9D7300132404 /* ThemesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThemesViewController.m; sourceTree = "<group>"; };
+		5CB2A4DA216E9F0100132404 /* Themes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Themes.h; sourceTree = "<group>"; };
+		5CB2A4DB216E9F0100132404 /* Themes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Themes.m; sourceTree = "<group>"; };
 		5CBAE6C52166A18B00F91551 /* UITableView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+RegisterCell.swift"; sourceTree = "<group>"; };
 		5CC26AB021555A9400DF9E64 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		5CC88916215E4F170005A46B /* UIApplicationState+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplicationState+String.swift"; sourceTree = "<group>"; };
@@ -240,6 +251,26 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
+		5CB2A4D9216E9DDF00132404 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				5CB2A4DD216E9F0B00132404 /* Models */,
+				5CB2A4D6216E9D7300132404 /* ThemesViewController.h */,
+				5CB2A4D7216E9D7300132404 /* ThemesViewController.m */,
+				5C1582A9216FE81A003F2453 /* ThemesSwiftViewController.swift */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		5CB2A4DD216E9F0B00132404 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5CB2A4DA216E9F0100132404 /* Themes.h */,
+				5CB2A4DB216E9F0100132404 /* Themes.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5CBAE6C72166A19000F91551 /* UITableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +296,9 @@
 				5CC119E5215C10C100507837 /* Profile */,
 				5CF946552165627500DAFBBC /* ConversationsList */,
 				5CF94660216570B400DAFBBC /* Conversation */,
+				5CB2A4D9216E9DDF00132404 /* Themes */,
+				5CB2A4D5216E9D7200132404 /* TinkoffChat-Bridging-Header.h */,
+				5C35B8D421714568006369B4 /* Theme.swift */,
 			);
 			path = UserStories;
 			sourceTree = "<group>";
@@ -353,6 +387,7 @@
 				TargetAttributes = {
 					5C945B26215420180045E20F = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -398,18 +433,22 @@
 			files = (
 				5C1D437E2154A23A006017CB /* BaseViewController.swift in Sources */,
 				5CC88917215E4F170005A46B /* UIApplicationState+String.swift in Sources */,
+				5CB2A4DC216E9F0100132404 /* Themes.m in Sources */,
 				5CF94662216570D300DAFBBC /* ConversationViewController.swift in Sources */,
 				5CC26AB121555A9400DF9E64 /* LogManager.swift in Sources */,
 				5C7C27AF21690134005066C6 /* UIColor.swift in Sources */,
+				5C35B8D521714568006369B4 /* Theme.swift in Sources */,
 				5C7C27B5216914B0005066C6 /* OutgoingMessageCell.swift in Sources */,
 				5C0E5473216801F2000AA0A1 /* UITableView+ReusableCell.swift in Sources */,
 				5C7C27AC2168FECA005066C6 /* Date+Today.swift in Sources */,
 				5C054904215D6927006A1523 /* UIEdgeInsets.swift in Sources */,
 				5CF9465A216566E500DAFBBC /* ConversationsListCell.swift in Sources */,
 				5C945B2D215420180045E20F /* ProfileViewController.swift in Sources */,
+				5C1582AA216FE81A003F2453 /* ThemesSwiftViewController.swift in Sources */,
 				5CBAE6C62166A18B00F91551 /* UITableView+RegisterCell.swift in Sources */,
 				5C0E547D21680DFF000AA0A1 /* UIViewController+Contents.swift in Sources */,
 				5C0E547B216809AA000AA0A1 /* ConversationsListDataManager.swift in Sources */,
+				5CB2A4D8216E9D7300132404 /* ThemesViewController.m in Sources */,
 				5C7C27B9216914C1005066C6 /* IncomingMessageCell.swift in Sources */,
 				5CF94657216562A600DAFBBC /* ConversationsListViewController.swift in Sources */,
 				5C945B2B215420180045E20F /* AppDelegate.swift in Sources */,
@@ -447,7 +486,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -508,7 +547,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -558,6 +597,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FXS2GW5LYK;
@@ -569,6 +609,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aperesypkin.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Classes/UserStories/TinkoffChat-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -578,6 +620,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FXS2GW5LYK;
@@ -589,6 +632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aperesypkin.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Classes/UserStories/TinkoffChat-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
