@@ -10,6 +10,8 @@ import UIKit
 
 private struct Identifiers {
     static let conversationSequeIdentifier = "ConversationSequeIdentifier"
+    static let themesSequeIdentifier = "ThemesSequeIdentifier"
+    static let themesSwiftSequeIdentifier = "ThemesSwiftSequeIdentifier"
 }
 
 final class ConversationsListViewController: BaseViewController {
@@ -54,8 +56,34 @@ final class ConversationsListViewController: BaseViewController {
             tableView.reloadData()
         }
     }
-    
+
     private let dataManager = ConversationsListDataManager()
+    
+    private let themes = [UIColor.black: Theme.black,
+                          UIColor.blue: Theme.blue,
+                          UIColor.white: Theme.white]
+    
+    private lazy var actionSheetController: UIAlertController = {
+        let actionSheetController = UIAlertController(title: "Выберите View Controller", message: nil, preferredStyle: .actionSheet)
+        
+        let objectiveViewControllerAction = UIAlertAction(title: "Objective-C View Controller", style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.performSegue(withIdentifier: Identifiers.themesSequeIdentifier, sender: nil)
+        }
+        
+        let swiftViewControllerAction = UIAlertAction(title: "Swift View Controller", style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.performSegue(withIdentifier: Identifiers.themesSwiftSequeIdentifier, sender: nil)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        actionSheetController.addAction(objectiveViewControllerAction)
+        actionSheetController.addAction(swiftViewControllerAction)
+        actionSheetController.addAction(cancelAction)
+        
+        return actionSheetController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,9 +98,30 @@ final class ConversationsListViewController: BaseViewController {
             if let conversationViewController = segue.destination.contents as? ConversationViewController {
                 conversationViewController.title = (sender as? ConversationsListCell)?.nameLabel.text
             }
+        } else if segue.identifier == Identifiers.themesSequeIdentifier {
+            if let themesViewController = segue.destination.contents as? ThemesViewController {
+                themesViewController.delegate = self
+            }
+        } else if segue.identifier == Identifiers.themesSwiftSequeIdentifier {
+            if let themesSwiftViewController = segue.destination.contents as? ThemesSwiftViewController {
+                themesSwiftViewController.themeButtonAction = { [weak self] selectedTheme in
+                    guard let `self` = self else { return }
+                    self.logThemeChanging(selectedTheme: selectedTheme)
+                }
+            }
         } else {
             super.prepare(for: segue, sender: sender)
         }
+    }
+    
+    @IBAction func didTapChooseThemeButton(_ sender: UIBarButtonItem) {
+        present(actionSheetController, animated: true)
+    }
+    
+    private func logThemeChanging(selectedTheme: UIColor) {
+        print("Selected theme's color is \(selectedTheme.string)")
+        Theme.current = themes[selectedTheme]
+        Theme.current?.apply()
     }
 
 }
@@ -107,5 +156,12 @@ extension ConversationsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: tableView.cellForRow(at: indexPath))
+    }
+}
+
+// MARK: - ​ThemesViewControllerDelegate
+extension ConversationsListViewController: ​ThemesViewControllerDelegate {
+    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
+        logThemeChanging(selectedTheme: selectedTheme)
     }
 }

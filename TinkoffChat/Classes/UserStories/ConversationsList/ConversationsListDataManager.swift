@@ -31,30 +31,30 @@ class ConversationsListDataManager {
     }
     
     private func prepareItem(for model: FakeModel) -> Item {
-        let font: UIFont
-        
+        return Item(name: model.name ?? "Unnamed",
+                    message: model.message ?? "No messages yet",
+                    font: prepareFont(for: model),
+                    date: prepareDate(for: model),
+                    backgroundColor: model.online ? .lightYellow : .white,
+                    online: model.online)
+    }
+    
+    private func prepareFont(for model: FakeModel) -> UIFont {
         if model.message != nil {
-            font = model.hasUnreadMessages ? UIFont.boldSystemFont(ofSize: UIFont.systemFontSize) : UIFont.systemFont(ofSize: UIFont.systemFontSize)
+            return model.hasUnreadMessages ? UIFont.boldSystemFont(ofSize: UIFont.systemFontSize) : UIFont.systemFont(ofSize: UIFont.systemFontSize)
         } else {
-            font = UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)
-
+            return UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)
         }
-        
-        var dateString: String
+    }
+    
+    private func prepareDate(for model: FakeModel) -> String {
         let dateFormatter = DateFormatter()
         if let date = model.date {
             dateFormatter.dateFormat = date.isToday ? "HH:mm" : "dd MMM"
-            dateString = dateFormatter.string(from: date)
+            return dateFormatter.string(from: date)
         } else {
-            dateString = ""
+            return ""
         }
-        
-        return Item(name: model.name ?? "Unnamed",
-                    message: model.message ?? "No messages yet",
-                    font: font,
-                    date: dateString,
-                    backgroundColor: model.online ? .lightYellow : .white,
-                    online: model.online)
     }
     
     // Заглушка
