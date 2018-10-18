@@ -20,11 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         super.init()
         // Включаем/выключаем логирование жизненного цикла приложения и контроллеров
-        LogManager.shared.isEnabled = true
+        LogManager.shared.isEnabled = false
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
+        Theme.current?.apply()
         return true
     }
     
