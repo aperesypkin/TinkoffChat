@@ -9,16 +9,23 @@
 import UIKit
 
 private extension CGFloat {
-    static let editButtonBorderWith: CGFloat = 1
-    static let editButtonCornerRadius: CGFloat = 10
     static let choosePhotoButtonEdgeInsets: CGFloat = 15
 }
 
 class ProfileViewController: BaseViewController {
     
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var editButton: TCButton!
+    @IBOutlet var multithreadingButtonsStack: UIStackView!
+    
     @IBOutlet weak var choosePhotoButton: UIButton!
+    
+    private var isEditMode: Bool = false {
+        didSet {
+            editButton.isHidden = isEditMode
+            multithreadingButtonsStack.isHidden = !isEditMode
+        }
+    }
     
     private let imagePicker = UIImagePickerController()
     
@@ -95,8 +102,16 @@ class ProfileViewController: BaseViewController {
         present(actionSheetController, animated: true)
     }
     
-    @IBAction func didTapEditButton(_ sender: UIButton) {
-        print(#function)
+    @IBAction func didTapEditButton(_ sender: TCButton) {
+        isEditMode.toggle()
+    }
+    
+    @IBAction func didTapGCDButton(_ sender: TCButton) {
+        isEditMode.toggle()
+    }
+    
+    @IBAction func didTapOperationButton(_ sender: TCButton) {
+        isEditMode.toggle()
     }
     
     private func setupUI() {
@@ -105,10 +120,6 @@ class ProfileViewController: BaseViewController {
         
         photoImageView.layer.masksToBounds = true
         photoImageView.layer.cornerRadius = choosePhotoButton.bounds.height / 2
-        
-        editButton.layer.masksToBounds = true
-        editButton.layer.borderWidth = .editButtonBorderWith
-        editButton.layer.cornerRadius = .editButtonCornerRadius
     }
 
 }
