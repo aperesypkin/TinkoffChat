@@ -155,231 +155,224 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdS-rt-HCF">
-                                <rect key="frame" x="16" y="80" width="288" height="288"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CXY-7Q-ceL">
+                                <rect key="frame" x="16" y="80" width="288" height="472"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-user" translatesAutoresizingMaskIntoConstraints="NO" id="tZY-1w-XWT">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdS-rt-HCF">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="288"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRl-aj-8HN">
-                                        <rect key="frame" x="216" y="216" width="72" height="72"/>
-                                        <color key="backgroundColor" red="0.24705882352941178" green="0.47058823529411764" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                                        <state key="normal" title="Button" image="slr-camera-2-xxl"/>
-                                        <connections>
-                                            <action selector="didTapChoosePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ULv-gp-X0L"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="width" secondItem="tZY-1w-XWT" secondAttribute="width" multiplier="0.25" id="04i-pd-lYD"/>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="39I-iz-J1p"/>
-                                    <constraint firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="6BE-BM-xp3"/>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="6qg-gV-iD3"/>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cdS-rt-HCF" secondAttribute="leading" constant="20" symbolic="YES" id="7lO-gm-oO4"/>
-                                    <constraint firstItem="tZY-1w-XWT" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="top" id="Bh6-WD-Akh"/>
-                                    <constraint firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="Mbk-2T-t8C"/>
-                                    <constraint firstAttribute="width" secondItem="cdS-rt-HCF" secondAttribute="height" multiplier="1:1" id="Uwl-n3-J5G"/>
-                                    <constraint firstAttribute="width" secondItem="cdS-rt-HCF" secondAttribute="height" multiplier="1:1" id="dBJ-gf-DlJ"/>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cdS-rt-HCF" secondAttribute="leading" constant="20" symbolic="YES" id="dMU-Ng-LNI"/>
-                                    <constraint firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="fkS-mZ-Snd"/>
-                                    <constraint firstItem="tZY-1w-XWT" firstAttribute="leading" secondItem="cdS-rt-HCF" secondAttribute="leading" id="hcx-LO-lsy"/>
-                                    <constraint firstItem="GRl-aj-8HN" firstAttribute="height" secondItem="tZY-1w-XWT" secondAttribute="height" multiplier="0.25" id="mby-7B-Rvx"/>
-                                    <constraint firstItem="tZY-1w-XWT" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="top" id="nfr-nP-eCj"/>
-                                    <constraint firstItem="tZY-1w-XWT" firstAttribute="leading" secondItem="cdS-rt-HCF" secondAttribute="leading" id="wyV-r6-c0M"/>
-                                    <constraint firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="xkH-jQ-5j1"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="dBJ-gf-DlJ"/>
-                                        <exclude reference="6BE-BM-xp3"/>
-                                        <exclude reference="Mbk-2T-t8C"/>
-                                        <exclude reference="hcx-LO-lsy"/>
-                                        <exclude reference="nfr-nP-eCj"/>
-                                        <exclude reference="dMU-Ng-LNI"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact-widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="Uwl-n3-J5G"/>
-                                        <include reference="dBJ-gf-DlJ"/>
-                                        <include reference="6BE-BM-xp3"/>
-                                        <exclude reference="Bh6-WD-Akh"/>
-                                        <include reference="Mbk-2T-t8C"/>
-                                        <exclude reference="fkS-mZ-Snd"/>
-                                        <include reference="hcx-LO-lsy"/>
-                                        <include reference="nfr-nP-eCj"/>
-                                        <exclude reference="wyV-r6-c0M"/>
-                                        <exclude reference="xkH-jQ-5j1"/>
-                                        <exclude reference="7lO-gm-oO4"/>
-                                        <include reference="dMU-Ng-LNI"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yO4-3v-Q63">
-                                <rect key="frame" x="16" y="497" width="288" height="55"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGQ-uY-1S5" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-user" translatesAutoresizingMaskIntoConstraints="NO" id="tZY-1w-XWT">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="288"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRl-aj-8HN">
+                                                <rect key="frame" x="216" y="216" width="72" height="72"/>
+                                                <color key="backgroundColor" red="0.24705882352941178" green="0.47058823529411764" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                <state key="normal" title="Button" image="slr-camera-2-xxl"/>
+                                                <connections>
+                                                    <action selector="didTapChoosePhotoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ULv-gp-X0L"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="55" id="pmL-Ht-y8V"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="width" secondItem="tZY-1w-XWT" secondAttribute="width" multiplier="0.25" id="04i-pd-lYD"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="39I-iz-J1p"/>
+                                            <constraint firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="6BE-BM-xp3"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="6qg-gV-iD3"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cdS-rt-HCF" secondAttribute="leading" constant="20" symbolic="YES" id="7lO-gm-oO4"/>
+                                            <constraint firstItem="tZY-1w-XWT" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="top" id="Bh6-WD-Akh"/>
+                                            <constraint firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="Mbk-2T-t8C"/>
+                                            <constraint firstAttribute="width" secondItem="cdS-rt-HCF" secondAttribute="height" multiplier="1:1" id="Uwl-n3-J5G"/>
+                                            <constraint firstAttribute="width" secondItem="cdS-rt-HCF" secondAttribute="height" multiplier="1:1" id="dBJ-gf-DlJ"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cdS-rt-HCF" secondAttribute="leading" constant="20" symbolic="YES" id="dMU-Ng-LNI"/>
+                                            <constraint firstAttribute="trailing" secondItem="tZY-1w-XWT" secondAttribute="trailing" id="fkS-mZ-Snd"/>
+                                            <constraint firstItem="tZY-1w-XWT" firstAttribute="leading" secondItem="cdS-rt-HCF" secondAttribute="leading" id="hcx-LO-lsy"/>
+                                            <constraint firstItem="GRl-aj-8HN" firstAttribute="height" secondItem="tZY-1w-XWT" secondAttribute="height" multiplier="0.25" id="mby-7B-Rvx"/>
+                                            <constraint firstItem="tZY-1w-XWT" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="top" id="nfr-nP-eCj"/>
+                                            <constraint firstItem="tZY-1w-XWT" firstAttribute="leading" secondItem="cdS-rt-HCF" secondAttribute="leading" id="wyV-r6-c0M"/>
+                                            <constraint firstAttribute="bottom" secondItem="tZY-1w-XWT" secondAttribute="bottom" id="xkH-jQ-5j1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <state key="normal" title="Редактировать">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="heightClass=compact-widthClass=compact">
+                                        <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="pmL-Ht-y8V"/>
+                                                <exclude reference="dBJ-gf-DlJ"/>
+                                                <exclude reference="6BE-BM-xp3"/>
+                                                <exclude reference="Mbk-2T-t8C"/>
+                                                <exclude reference="hcx-LO-lsy"/>
+                                                <exclude reference="nfr-nP-eCj"/>
+                                                <exclude reference="dMU-Ng-LNI"/>
                                             </mask>
                                         </variation>
-                                        <connections>
-                                            <action selector="didTapEditButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C5N-Yy-YGN"/>
-                                        </connections>
-                                    </button>
-                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3rM-tv-V69">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
+                                        <variation key="heightClass=compact-widthClass=compact">
+                                            <mask key="constraints">
+                                                <exclude reference="Uwl-n3-J5G"/>
+                                                <include reference="dBJ-gf-DlJ"/>
+                                                <include reference="6BE-BM-xp3"/>
+                                                <exclude reference="Bh6-WD-Akh"/>
+                                                <include reference="Mbk-2T-t8C"/>
+                                                <exclude reference="fkS-mZ-Snd"/>
+                                                <include reference="hcx-LO-lsy"/>
+                                                <include reference="nfr-nP-eCj"/>
+                                                <exclude reference="wyV-r6-c0M"/>
+                                                <exclude reference="xkH-jQ-5j1"/>
+                                                <exclude reference="7lO-gm-oO4"/>
+                                                <include reference="dMU-Ng-LNI"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LHc-bd-zFi">
+                                        <rect key="frame" x="0.0" y="296" width="288" height="176"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYS-6R-vjQ" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="140" height="55"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="55" id="FI1-fR-N5e"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <state key="normal" title="GCD">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=compact-widthClass=compact">
-                                                    <mask key="constraints">
-                                                        <exclude reference="FI1-fR-N5e"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="didTapGCDButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pfw-pE-6Du"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkO-GX-ggf" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
-                                                <rect key="frame" x="148" y="0.0" width="140" height="55"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="55" id="EUu-8K-Tty"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <state key="normal" title="Operation">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="2"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <variation key="heightClass=compact-widthClass=compact">
-                                                    <mask key="constraints">
-                                                        <exclude reference="EUu-8K-Tty"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="didTapOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zcP-Fr-oft"/>
-                                                </connections>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-In-hCt">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="33.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alexander Peresypkin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juV-i9-PK1">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="33.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя пользователя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VZv-rE-0l5">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lvP-sp-2UN">
+                                                <rect key="frame" x="0.0" y="41.5" width="288" height="71.5"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="2aF-YF-D0x">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="71.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Same text Same text Same text Same text Same text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ujo-JP-OCE">
+                                                                <rect key="frame" x="0.0" y="0.0" width="288" height="48"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="2aF-YF-D0x" secondAttribute="top" id="EkA-tW-UZj"/>
+                                                            <constraint firstAttribute="trailing" secondItem="Ujo-JP-OCE" secondAttribute="trailing" id="Xxx-1Z-5bi"/>
+                                                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="leading" secondItem="2aF-YF-D0x" secondAttribute="leading" id="bRo-LD-qoL"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <textView hidden="YES" verifyAmbiguity="off" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="О себе" translatesAutoresizingMaskIntoConstraints="NO" id="PAi-3L-412">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="yO4-3v-Q63">
+                                                <rect key="frame" x="0.0" y="121" width="288" height="55"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGQ-uY-1S5" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="55" id="pmL-Ht-y8V"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                        <state key="normal" title="Редактировать">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="2"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <variation key="heightClass=compact-widthClass=compact">
+                                                            <mask key="constraints">
+                                                                <exclude reference="pmL-Ht-y8V"/>
+                                                            </mask>
+                                                        </variation>
+                                                        <connections>
+                                                            <action selector="didTapEditButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C5N-Yy-YGN"/>
+                                                        </connections>
+                                                    </button>
+                                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3rM-tv-V69">
+                                                        <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PYS-6R-vjQ" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="140" height="55"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="55" id="FI1-fR-N5e"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                                <state key="normal" title="GCD">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <variation key="heightClass=compact-widthClass=compact">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="FI1-fR-N5e"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <connections>
+                                                                    <action selector="didTapGCDButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pfw-pE-6Du"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkO-GX-ggf" customClass="TCButton" customModule="TinkoffChat" customModuleProvider="target">
+                                                                <rect key="frame" x="148" y="0.0" width="140" height="55"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="55" id="EUu-8K-Tty"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                                <state key="normal" title="Operation">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="2"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <variation key="heightClass=compact-widthClass=compact">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="EUu-8K-Tty"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <connections>
+                                                                    <action selector="didTapOperationButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zcP-Fr-oft"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="UbW-Ge-rMB"/>
-                                </constraints>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-In-hCt">
-                                <rect key="frame" x="16" y="376" width="288" height="33.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alexander Peresypkin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juV-i9-PK1">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="33.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя пользователя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VZv-rE-0l5">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lvP-sp-2UN">
-                                <rect key="frame" x="16" y="417.5" width="288" height="71.5"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="2aF-YF-D0x">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="71.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Same text Same text Same text Same text Same text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ujo-JP-OCE">
-                                                <rect key="frame" x="0.0" y="0.0" width="288" height="48"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="2aF-YF-D0x" secondAttribute="top" id="EkA-tW-UZj"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ujo-JP-OCE" secondAttribute="trailing" id="Xxx-1Z-5bi"/>
-                                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="leading" secondItem="2aF-YF-D0x" secondAttribute="leading" id="bRo-LD-qoL"/>
-                                        </constraints>
-                                    </view>
-                                    <textView hidden="YES" verifyAmbiguity="off" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="О себе" translatesAutoresizingMaskIntoConstraints="NO" id="PAi-3L-412">
-                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="cdS-rt-HCF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="6yb-iq-iti"/>
-                            <constraint firstItem="yO4-3v-Q63" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="AYD-zx-Hb6"/>
-                            <constraint firstAttribute="trailing" secondItem="lvP-sp-2UN" secondAttribute="trailing" constant="16" id="BR4-JG-yBJ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cdS-rt-HCF" secondAttribute="trailing" constant="16" id="MQK-4P-IKV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bI7-In-hCt" secondAttribute="trailing" constant="16" id="UeE-kp-yXF"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yO4-3v-Q63" secondAttribute="trailing" constant="16" id="b57-9C-pZ8"/>
-                            <constraint firstItem="bI7-In-hCt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bwM-XE-9BM"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yO4-3v-Q63" secondAttribute="bottom" constant="16" id="fMg-gl-15j"/>
-                            <constraint firstItem="lvP-sp-2UN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="iEt-Qg-0U4"/>
-                            <constraint firstItem="bI7-In-hCt" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="bottom" constant="8" symbolic="YES" id="lqO-ye-k8s"/>
-                            <constraint firstItem="lvP-sp-2UN" firstAttribute="top" secondItem="bI7-In-hCt" secondAttribute="bottom" constant="8" symbolic="YES" id="pjy-9f-HDD"/>
-                            <constraint firstItem="cdS-rt-HCF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wqZ-TG-sI8"/>
-                            <constraint firstItem="yO4-3v-Q63" firstAttribute="top" secondItem="lvP-sp-2UN" secondAttribute="bottom" constant="8" symbolic="YES" id="zSD-ct-jyU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CXY-7Q-ceL" secondAttribute="bottom" constant="16" id="3Fr-fk-IVB"/>
+                            <constraint firstItem="CXY-7Q-ceL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="CSp-ko-NNm"/>
+                            <constraint firstItem="CXY-7Q-ceL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="kws-wA-60p"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CXY-7Q-ceL" secondAttribute="trailing" constant="16" id="ogw-br-Vny"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <variation key="heightClass=compact-widthClass=compact">
-                            <mask key="constraints">
-                                <exclude reference="MQK-4P-IKV"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Профиль" id="UV3-Wk-jee">
                         <barButtonItem key="leftBarButtonItem" title="Закрыть" id="gBg-VB-65N">
