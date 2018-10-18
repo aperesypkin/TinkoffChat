@@ -17,13 +17,18 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: TCButton!
     @IBOutlet var multithreadingButtonsStack: UIStackView!
+    @IBOutlet var nameLabel: UILabel!
     
+    @IBOutlet var nameTextField: UITextField!
     @IBOutlet weak var choosePhotoButton: UIButton!
     
     private var isEditMode: Bool = false {
         didSet {
             editButton.isHidden = isEditMode
+            nameLabel.isHidden = isEditMode
+            
             multithreadingButtonsStack.isHidden = !isEditMode
+            nameTextField.isHidden = !isEditMode
         }
     }
     

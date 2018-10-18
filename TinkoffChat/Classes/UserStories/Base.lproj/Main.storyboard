@@ -311,12 +311,23 @@
                                     <constraint firstAttribute="height" constant="55" id="UbW-Ge-rMB"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alexander Peresypkin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juV-i9-PK1">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-In-hCt">
                                 <rect key="frame" x="16" y="376" width="288" height="33.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alexander Peresypkin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juV-i9-PK1">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="33.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя пользователя" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VZv-rE-0l5">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Same text Same text Same text Same text Same text Same text Same text " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ujo-JP-OCE">
                                 <rect key="frame" x="16" y="417.5" width="288" height="71.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -327,29 +338,25 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ujo-JP-OCE" secondAttribute="trailing" constant="16" id="0TI-Dj-oYd"/>
-                            <constraint firstItem="juV-i9-PK1" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="bottom" constant="8" symbolic="YES" id="0UC-gN-Ash"/>
                             <constraint firstItem="cdS-rt-HCF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="6yb-iq-iti"/>
                             <constraint firstItem="yO4-3v-Q63" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="AYD-zx-Hb6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cdS-rt-HCF" secondAttribute="trailing" constant="16" id="MQK-4P-IKV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="bI7-In-hCt" secondAttribute="trailing" constant="16" id="UeE-kp-yXF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yO4-3v-Q63" secondAttribute="trailing" constant="16" id="b57-9C-pZ8"/>
+                            <constraint firstItem="bI7-In-hCt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bwM-XE-9BM"/>
                             <constraint firstItem="Ujo-JP-OCE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="cm6-Bc-TQG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yO4-3v-Q63" secondAttribute="bottom" constant="16" id="fMg-gl-15j"/>
-                            <constraint firstItem="juV-i9-PK1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="iLs-Bj-aMA"/>
+                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="bI7-In-hCt" secondAttribute="bottom" constant="8" symbolic="YES" id="i18-6G-EU6"/>
+                            <constraint firstItem="bI7-In-hCt" firstAttribute="top" secondItem="cdS-rt-HCF" secondAttribute="bottom" constant="8" symbolic="YES" id="lqO-ye-k8s"/>
                             <constraint firstItem="yO4-3v-Q63" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ujo-JP-OCE" secondAttribute="bottom" constant="8" symbolic="YES" id="luh-XH-Z8Z"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="juV-i9-PK1" secondAttribute="trailing" constant="16" id="wlu-0Z-xRn"/>
                             <constraint firstItem="cdS-rt-HCF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wqZ-TG-sI8"/>
-                            <constraint firstItem="Ujo-JP-OCE" firstAttribute="top" secondItem="juV-i9-PK1" secondAttribute="bottom" constant="8" symbolic="YES" id="xmy-UO-MY9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="heightClass=compact-widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="0TI-Dj-oYd"/>
                                 <exclude reference="MQK-4P-IKV"/>
-                                <exclude reference="wlu-0Z-xRn"/>
-                                <exclude reference="0UC-gN-Ash"/>
-                                <exclude reference="iLs-Bj-aMA"/>
                                 <exclude reference="cm6-Bc-TQG"/>
-                                <exclude reference="xmy-UO-MY9"/>
                             </mask>
                         </variation>
                     </view>
@@ -364,6 +371,8 @@
                         <outlet property="choosePhotoButton" destination="GRl-aj-8HN" id="eeW-fO-xdD"/>
                         <outlet property="editButton" destination="SGQ-uY-1S5" id="LJ3-qR-tXX"/>
                         <outlet property="multithreadingButtonsStack" destination="3rM-tv-V69" id="rfN-1b-aeZ"/>
+                        <outlet property="nameLabel" destination="juV-i9-PK1" id="7CD-lp-qX6"/>
+                        <outlet property="nameTextField" destination="VZv-rE-0l5" id="JQY-dc-aZk"/>
                         <outlet property="photoImageView" destination="tZY-1w-XWT" id="aYz-QQ-bZ4"/>
                     </connections>
                 </viewController>
