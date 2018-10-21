@@ -120,8 +120,10 @@ final class ConversationsListViewController: BaseViewController {
     
     private func logThemeChanging(selectedTheme: UIColor) {
         print("Selected theme's color is \(selectedTheme.string)")
-        Theme.current = themes[selectedTheme]
-        Theme.current?.apply()
+        if let theme = themes[selectedTheme] {
+            theme.apply()
+            ThemeManager.shared.save(theme: theme)
+        }
     }
 
 }

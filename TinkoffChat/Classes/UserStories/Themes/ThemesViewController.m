@@ -73,6 +73,7 @@
 - (void)dealloc {
     [_model release];
     [_themesArray release];
+    _delegate = nil;
     [super dealloc];
 }
 

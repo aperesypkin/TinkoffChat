@@ -25,7 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
-        Theme.current?.apply()
+        ThemeManager.shared.loadTheme { theme in
+            if let theme = theme {
+                theme.apply()
+            }
+        }
         return true
     }
     
