@@ -14,16 +14,40 @@ private extension CGFloat {
 
 class ProfileViewController: BaseViewController {
     
+    private struct Keys {
+        static let profileState = "ProfileState"
+    }
+    
+    private struct State: Codable {
+        var name: String? = "Unnamed"
+        var aboutMe: String? = "Информация о пользователе"
+        var imageData: Data?
+    }
+    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: TCButton!
-    @IBOutlet var multithreadingButtonsStack: UIStackView!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var aboutMeTextView: UITextView!
-    @IBOutlet var aboutMeLabel: UILabel!
-    @IBOutlet var aboutMeContainer: UIView!
-    
-    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet weak var saveButtonsStack: UIStackView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var aboutMeTextView: UITextView! {
+        didSet {
+            aboutMeTextView.delegate = self
+        }
+    }
+    @IBOutlet weak var aboutMeLabel: UILabel!
+    @IBOutlet weak var aboutMeContainer: UIView!
+    @IBOutlet weak var operationButton: TCButton!
+    @IBOutlet weak var gcdButton: TCButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var nameTextField: UITextField! {
+        didSet {
+            nameTextField.delegate = self
+        }
+    }
     @IBOutlet weak var choosePhotoButton: UIButton!
+    
+    private var dataManagerType: DataManagerType = .gcd
+    
+    private var state = State()
     
     private var isEditMode: Bool = false {
         didSet {
@@ -31,9 +55,18 @@ class ProfileViewController: BaseViewController {
             nameLabel.isHidden = isEditMode
             aboutMeContainer.isHidden = isEditMode
             
-            multithreadingButtonsStack.isHidden = !isEditMode
+            saveButtonsStack.isHidden = !isEditMode
             nameTextField.isHidden = !isEditMode
             aboutMeTextView.isHidden = !isEditMode
+            
+            choosePhotoButton.isHidden.toggle()
+        }
+    }
+    
+    private var isSaveButtonsEnabled: Bool = false {
+        didSet {
+            gcdButton.isEnabled = isSaveButtonsEnabled
+            operationButton.isEnabled = isSaveButtonsEnabled
         }
     }
     
@@ -71,37 +104,43 @@ class ProfileViewController: BaseViewController {
         return actionSheetController
     }()
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        //Fatal error: Unexpectedly found nil while unwrapping an Optional value
-        //Получаем краш, так как в этом методе editButton все еще равен nil,
-        //а мы пытаемся получить доступ к анврапнотому значению
-        //print(editButton.frame)
-    }
+    private lazy var successfulAlert: UIAlertController = {
+        let alert = UIAlertController(title: "Данные сохранены", message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "ОК", style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.loadData()
+            self.isEditMode.toggle()
+        }
+        alert.addAction(action)
+        return alert
+    }()
+    
+    private lazy var failureAlert: UIAlertController = {
+        let alert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ОК", style: .default)
+        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.saveData()
+        }
+        alert.addAction(okAction)
+        alert.addAction(repeatAction)
+        return alert
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Получаем фрейм кнопки из сториборда, по этому при запуске на устройстве
-        //отличном от устройства в сториборде получаем разный фрейм
-        print(editButton.frame)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         imagePicker.delegate = self
+        loadData()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         setupUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //Констрейнты уже расчитались и мы получаем верный фрейм у кнопки для
-        //устройства на котором запускается приложение
-        print(editButton.frame)
     }
     
     @IBAction func didTapCloseButton(_ sender: UIBarButtonItem) {
@@ -114,14 +153,56 @@ class ProfileViewController: BaseViewController {
     
     @IBAction func didTapEditButton(_ sender: TCButton) {
         isEditMode.toggle()
+        isSaveButtonsEnabled = false
     }
     
     @IBAction func didTapGCDButton(_ sender: TCButton) {
-        isEditMode.toggle()
+        dataManagerType = .gcd
+        saveData()
     }
     
     @IBAction func didTapOperationButton(_ sender: TCButton) {
-        isEditMode.toggle()
+        dataManagerType = .operation
+        saveData()
+    }
+    
+    private func saveData() {
+        activityIndicator.startAnimating()
+        isSaveButtonsEnabled = false
+        dataManagerType.dataManager().save(state, to: Keys.profileState) { [weak self] error in
+            guard let `self` = self else { return }
+            self.activityIndicator.stopAnimating()
+            self.isSaveButtonsEnabled = true
+            if let error = error {
+                print("Error: \(error)")
+                self.present(self.failureAlert, animated: true)
+            } else {
+                self.present(self.successfulAlert, animated: true)
+            }
+        }
+    }
+    
+    private func loadData() {
+        activityIndicator.startAnimating()
+        isSaveButtonsEnabled = false
+        dataManagerType.dataManager().load(State.self, from: Keys.profileState) { [weak self] data, error in
+            guard let `self` = self else { return }
+            if let profileState = data {
+                self.state = profileState
+            }
+            self.updateData()
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    private func updateData() {
+        self.nameLabel.text = state.name
+        self.nameTextField.text = state.name
+        self.aboutMeLabel.text = state.aboutMe
+        self.aboutMeTextView.text = state.aboutMe
+        if let imageData = state.imageData {
+            self.photoImageView.image = UIImage(data: imageData)
+        }
     }
     
     private func setupUI() {
@@ -138,11 +219,71 @@ class ProfileViewController: BaseViewController {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        state.imageData = image.jpegData(compressionQuality: 1)
         photoImageView.image = image
+        isSaveButtonsEnabled = true
         picker.dismiss(animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension ProfileViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        isSaveButtonsEnabled = false
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        state.name = textField.text
+        textField.resignFirstResponder()
+        isSaveButtonsEnabled = true
+    }
+}
+
+// MARK: - UITextViewDelegate
+extension ProfileViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        isSaveButtonsEnabled = false
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textView.resignFirstResponder()
+        state.aboutMe = textView.text
+        isSaveButtonsEnabled = true
+    }
+}
+
+// MARK: - Keyboard
+extension ProfileViewController {
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.origin.y != 0 {
+                view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
 }
