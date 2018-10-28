@@ -12,7 +12,7 @@ class IncomingMessageCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     
     func configure(with model: ConversationViewController.ViewModel) {
-        messageLabel.text = model.message
+        messageLabel.text = model.text
     }
     
 }
