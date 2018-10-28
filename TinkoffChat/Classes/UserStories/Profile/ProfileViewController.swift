@@ -130,9 +130,7 @@ class ProfileViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        setupKeyboardNotifications()
         imagePicker.delegate = self
         loadData()
     }
@@ -140,7 +138,7 @@ class ProfileViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        setupUI()
+        updateUI()
     }
     
     @IBAction func didTapCloseButton(_ sender: UIBarButtonItem) {
@@ -157,13 +155,20 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func didTapGCDButton(_ sender: TCButton) {
+        view.endEditing(true)
         dataManagerType = .gcd
         saveData()
     }
     
     @IBAction func didTapOperationButton(_ sender: TCButton) {
+        view.endEditing(true)
         dataManagerType = .operation
         saveData()
+    }
+    
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func saveData() {
@@ -205,7 +210,7 @@ class ProfileViewController: BaseViewController {
         }
     }
     
-    private func setupUI() {
+    private func updateUI() {
         choosePhotoButton.layer.cornerRadius = choosePhotoButton.bounds.height / 2
         choosePhotoButton.imageEdgeInsets = UIEdgeInsets(all: .choosePhotoButtonEdgeInsets)
         
@@ -232,8 +237,11 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 // MARK: - UITextFieldDelegate
 extension ProfileViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        isSaveButtonsEnabled = false
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if isSaveButtonsEnabled == false {
+            isSaveButtonsEnabled = true
+        }
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -244,14 +252,15 @@ extension ProfileViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         state.name = textField.text
         textField.resignFirstResponder()
-        isSaveButtonsEnabled = true
     }
 }
 
 // MARK: - UITextViewDelegate
 extension ProfileViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        isSaveButtonsEnabled = false
+    func textViewDidChange(_ textView: UITextView) {
+        if isSaveButtonsEnabled == false {
+            isSaveButtonsEnabled = true
+        }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -265,21 +274,20 @@ extension ProfileViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
         state.aboutMe = textView.text
-        isSaveButtonsEnabled = true
     }
 }
 
 // MARK: - Keyboard
 extension ProfileViewController {
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if view.frame.origin.y == 0 {
                 view.frame.origin.y -= keyboardSize.height
             }
         }
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if view.frame.origin.y != 0 {
                 view.frame.origin.y += keyboardSize.height
