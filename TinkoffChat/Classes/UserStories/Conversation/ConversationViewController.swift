@@ -11,21 +11,31 @@ import UIKit
 class ConversationViewController: BaseViewController {
     
     struct ViewModel {
-        let message: String
-        let isIncomingMessage: Bool
+        let text: String
     }
+    
+    @IBOutlet var messageTextField: UITextField! {
+        didSet {
+            messageTextField.delegate = self
+        }
+    }
+    
+    @IBOutlet var sendButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
-            tableView.delegate = self
             tableView.tableFooterView = UIView()
+            tableView.transform = CGAffineTransform.reverse
             tableView.register(IncomingMessageCell.self)
             tableView.register(OutgoingMessageCell.self)
         }
     }
     
-    private var dataSource: [ViewModel] = [] {
+    var communicationManager: CommunicationManager!
+    var userID: String!
+    
+    private var dataSource: [ConversationModel] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -34,29 +44,57 @@ class ConversationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataSource = fakeData
+        setupKeyboardNotifications()
+        setupCommunicationManager()
+        setupTapGesture()
     }
     
-    // Потом удалить
-    private let fakeData: [ViewModel] = [ViewModel(message: "Текст входящего сообщения", isIncomingMessage: true),
-                                         ViewModel(message: "Текст исходящего сообщения", isIncomingMessage: false),
-                                         ViewModel(message: "12345", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много входящего текста", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много исходящего текста", isIncomingMessage: false),
-                                         ViewModel(message: "Текст входящего сообщения qwerty", isIncomingMessage: true),
-                                         ViewModel(message: "Текст входящего сообщения", isIncomingMessage: true),
-                                         ViewModel(message: "Текст исходящего сообщения", isIncomingMessage: false),
-                                         ViewModel(message: "12345", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много входящего текста", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много исходящего текста", isIncomingMessage: false),
-                                         ViewModel(message: "Текст входящего сообщения qwerty", isIncomingMessage: true),
-                                         ViewModel(message: "Текст входящего сообщения", isIncomingMessage: true),
-                                         ViewModel(message: "Текст исходящего сообщения", isIncomingMessage: false),
-                                         ViewModel(message: "12345", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много входящего текста", isIncomingMessage: true),
-                                         ViewModel(message: "Очень много много много много много много много исходящего текста", isIncomingMessage: false),
-                                         ViewModel(message: "Текст входящего сообщения qwerty", isIncomingMessage: true)]
-
+    @IBAction func didTapSendButton(_ sender: UIButton) {
+        guard let message = messageTextField.text,
+            !message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
+                messageTextField.text = nil
+                return
+        }
+        
+        communicationManager.send(message: message, for: userID)
+        messageTextField.text = nil
+    }
+    
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setupCommunicationManager() {
+        communicationManager.currentUserID = userID
+        
+        communicationManager.obtainMessages(for: userID) { [weak self] messages in
+            guard let messages = messages else { return }
+            self?.dataSource = messages.reversed()
+        }
+        
+        communicationManager.didChangeMessagesAction = { [weak self] messages in
+            self?.dataSource = messages.reversed()
+        }
+        
+        communicationManager.currentUserStatus = { [weak self] isOnline in
+            self?.sendButton.isEnabled = isOnline
+        }
+    }
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ConversationViewController.didTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func didTap() {
+        view.endEditing(true)
+    }
+    
+    deinit {
+        communicationManager.currentUserID = nil
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -70,19 +108,41 @@ extension ConversationViewController: UITableViewDataSource {
         
         if model.isIncomingMessage {
             let cell: IncomingMessageCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(with: model)
+            cell.configure(with: model.viewModel)
+            cell.transform = CGAffineTransform.reverse
             return cell
         } else {
             let cell: OutgoingMessageCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(with: model)
+            cell.configure(with: model.viewModel)
+            cell.transform = CGAffineTransform.reverse
             return cell
         }
     }
 }
 
-// MARK: - UITableViewDelegate
-extension ConversationViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+// MARK: - UITextFieldDelegate
+extension ConversationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: - Keyboard
+extension ConversationViewController {
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.origin.y != 0 {
+                view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
 }

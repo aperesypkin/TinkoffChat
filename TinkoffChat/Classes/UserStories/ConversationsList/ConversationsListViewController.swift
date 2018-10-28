@@ -30,7 +30,7 @@ final class ConversationsListViewController: BaseViewController {
     
     struct Section {
         let sectionType: SectionType
-        let items: [ViewModel]
+        var items: [ConversationsListModel]
     }
     
     struct ViewModel {
@@ -56,8 +56,8 @@ final class ConversationsListViewController: BaseViewController {
             tableView.reloadData()
         }
     }
-
-    private let dataManager = ConversationsListDataManager()
+    
+    private let communicationManager = CommunicationManager()
     
     private let themes = [UIColor.black: Theme.black,
                           UIColor.blue: Theme.blue,
@@ -88,15 +88,21 @@ final class ConversationsListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.obtainConversationsList { viewModels in
-            dataSource = viewModels
+        communicationManager.didChangeConversationsListAction = { [weak self] models in
+            guard let `self` = self else { return }
+            let section = Section(sectionType: .online, items: models)
+            self.dataSource = [section]
         }
+            
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Identifiers.conversationSequeIdentifier {
             if let conversationViewController = segue.destination.contents as? ConversationViewController {
-                conversationViewController.title = (sender as? ConversationsListCell)?.nameLabel.text
+                guard let model = sender as? ConversationsListModel else { return }
+                conversationViewController.title = model.name
+                conversationViewController.userID = model.id
+                conversationViewController.communicationManager = communicationManager
             }
         } else if segue.identifier == Identifiers.themesSequeIdentifier {
             if let themesViewController = segue.destination.contents as? ThemesViewController {
@@ -142,7 +148,7 @@ extension ConversationsListViewController: UITableViewDataSource {
         let model = dataSource[indexPath.section].items[indexPath.row]
         
         let cell: ConversationsListCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.configure(with: model)
+        cell.configure(with: model.viewModel)
         
         return cell
     }
@@ -157,7 +163,8 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: tableView.cellForRow(at: indexPath))
+        let model = dataSource[indexPath.section].items[indexPath.row]
+        performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: model)
     }
 }
 
