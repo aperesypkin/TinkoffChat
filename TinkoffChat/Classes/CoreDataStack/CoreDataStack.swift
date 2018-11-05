@@ -25,7 +25,6 @@ class CoreDataStack {
     
     private var storeURL: URL {
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        return documentsUrl.appendingPathComponent("TinkoffChat.sqlite")
         return documentsUrl.appendingPathComponent(dataModelName).appendingPathExtension(.dataStoreExtension)
     }
     

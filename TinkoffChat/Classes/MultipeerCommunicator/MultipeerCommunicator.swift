@@ -27,7 +27,7 @@ protocol Communicator {
 
 private extension String {
     static let serviceType = "tinkoff-chat"
-    static let userID = "1l24mnb2v3gjbdnkj3b42v34j23hbn"
+    static let userID = "\(arc4random_uniform(UInt32.max))\(Date.timeIntervalSinceReferenceDate)".data(using: .utf8)!.base64EncodedString()
     static let userNameKey = "userName"
     static let eventType = "TextMessage"
 }
