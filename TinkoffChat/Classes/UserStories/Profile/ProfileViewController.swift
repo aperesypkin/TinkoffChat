@@ -14,19 +14,10 @@ private extension CGFloat {
 
 class ProfileViewController: BaseViewController {
     
-    private struct Keys {
-        static let profileState = "ProfileState"
-    }
-    
-    private struct State: Codable {
-        var name: String? = "Unnamed"
-        var aboutMe: String? = "Информация о пользователе"
-        var imageData: Data?
-    }
-    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: TCButton!
-    @IBOutlet weak var saveButtonsStack: UIStackView!
+    
+    @IBOutlet var saveButton: TCButton!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var aboutMeTextView: UITextView! {
         didSet {
@@ -35,8 +26,6 @@ class ProfileViewController: BaseViewController {
     }
     @IBOutlet weak var aboutMeLabel: UILabel!
     @IBOutlet weak var aboutMeContainer: UIView!
-    @IBOutlet weak var operationButton: TCButton!
-    @IBOutlet weak var gcdButton: TCButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var nameTextField: UITextField! {
         didSet {
@@ -45,17 +34,13 @@ class ProfileViewController: BaseViewController {
     }
     @IBOutlet weak var choosePhotoButton: UIButton!
     
-    private var dataManagerType: DataManagerType = .gcd
-    
-    private var state = State()
-    
     private var isEditMode: Bool = false {
         didSet {
             editButton.isHidden = isEditMode
             nameLabel.isHidden = isEditMode
             aboutMeContainer.isHidden = isEditMode
             
-            saveButtonsStack.isHidden = !isEditMode
+            saveButton.isHidden = !isEditMode
             nameTextField.isHidden = !isEditMode
             aboutMeTextView.isHidden = !isEditMode
             
@@ -63,12 +48,7 @@ class ProfileViewController: BaseViewController {
         }
     }
     
-    private var isSaveButtonsEnabled: Bool = false {
-        didSet {
-            gcdButton.isEnabled = isSaveButtonsEnabled
-            operationButton.isEnabled = isSaveButtonsEnabled
-        }
-    }
+    private let dataManager = ProfileDataManager()
     
     private let imagePicker = UIImagePickerController()
     
@@ -151,62 +131,46 @@ class ProfileViewController: BaseViewController {
     
     @IBAction func didTapEditButton(_ sender: TCButton) {
         isEditMode.toggle()
-        isSaveButtonsEnabled = false
+        saveButton.isEnabled = false
     }
     
-    @IBAction func didTapGCDButton(_ sender: TCButton) {
+    @IBAction func didTapSaveButton(_ sender: TCButton) {
         view.endEditing(true)
-        dataManagerType = .gcd
         saveData()
-    }
-    
-    @IBAction func didTapOperationButton(_ sender: TCButton) {
-        view.endEditing(true)
-        dataManagerType = .operation
-        saveData()
-    }
-    
-    private func setupKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func saveData() {
         activityIndicator.startAnimating()
-        isSaveButtonsEnabled = false
-        dataManagerType.dataManager().save(state, to: Keys.profileState) { [weak self] error in
+        saveButton.isEnabled = false
+        dataManager.saveProfile { [weak self] isSuccess, _ in
             guard let `self` = self else { return }
+            
+            self.saveButton.isEnabled = true
             self.activityIndicator.stopAnimating()
-            self.isSaveButtonsEnabled = true
-            if let error = error {
-                print("Error: \(error)")
-                self.present(self.failureAlert, animated: true)
-            } else {
+            if isSuccess {
                 self.present(self.successfulAlert, animated: true)
+            } else {
+                self.present(self.failureAlert, animated: true)
             }
         }
     }
     
     private func loadData() {
         activityIndicator.startAnimating()
-        isSaveButtonsEnabled = false
-        dataManagerType.dataManager().load(State.self, from: Keys.profileState) { [weak self] data, error in
+        saveButton.isEnabled = false
+        dataManager.loadProfile { [weak self] profile, error in
             guard let `self` = self else { return }
-            if let profileState = data {
-                self.state = profileState
-            }
-            self.updateData()
+            
             self.activityIndicator.stopAnimating()
-        }
-    }
-    
-    private func updateData() {
-        self.nameLabel.text = state.name
-        self.nameTextField.text = state.name
-        self.aboutMeLabel.text = state.aboutMe
-        self.aboutMeTextView.text = state.aboutMe
-        if let imageData = state.imageData {
-            self.photoImageView.image = UIImage(data: imageData)
+            if let profile = profile {
+                self.nameLabel.text = profile.name
+                self.nameTextField.text = profile.name
+                self.aboutMeLabel.text = profile.aboutMe
+                self.aboutMeTextView.text = profile.aboutMe
+                if let imageData = profile.imageData {
+                    self.photoImageView.image = UIImage(data: imageData)
+                }
+            }
         }
     }
     
@@ -224,9 +188,9 @@ class ProfileViewController: BaseViewController {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        state.imageData = image.jpegData(compressionQuality: 1)
+        dataManager.state.imageData = image.jpegData(compressionQuality: 1)
         photoImageView.image = image
-        isSaveButtonsEnabled = true
+        saveButton.isEnabled = true
         picker.dismiss(animated: true)
     }
     
@@ -238,8 +202,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 // MARK: - UITextFieldDelegate
 extension ProfileViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if isSaveButtonsEnabled == false {
-            isSaveButtonsEnabled = true
+        if saveButton.isEnabled == false {
+            saveButton.isEnabled = true
         }
         return true
     }
@@ -250,7 +214,7 @@ extension ProfileViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        state.name = textField.text
+        dataManager.state.name = textField.text
         textField.resignFirstResponder()
     }
 }
@@ -258,8 +222,8 @@ extension ProfileViewController: UITextFieldDelegate {
 // MARK: - UITextViewDelegate
 extension ProfileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        if isSaveButtonsEnabled == false {
-            isSaveButtonsEnabled = true
+        if saveButton.isEnabled == false {
+            saveButton.isEnabled = true
         }
     }
     
@@ -273,25 +237,6 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
-        state.aboutMe = textView.text
-    }
-}
-
-// MARK: - Keyboard
-extension ProfileViewController {
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if view.frame.origin.y != 0 {
-                view.frame.origin.y += keyboardSize.height
-            }
-        }
+        dataManager.state.aboutMe = textView.text
     }
 }
