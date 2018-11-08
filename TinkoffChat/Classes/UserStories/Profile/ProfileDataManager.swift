@@ -22,20 +22,26 @@ class ProfileDataManager {
     
     func saveProfile(completion: @escaping (Bool, Error?) -> Void) {
         let profileFetch: NSFetchRequest<Profile> = Profile.fetchRequest()
-        do {
-            let results = try coreDataStack.saveContext.fetch(profileFetch)
-            if let profile = results.first {
-                setProfile(profile)
-                coreDataStack.performSave() {
+        coreDataStack.saveContext.perform {
+            do {
+                let results = try self.coreDataStack.saveContext.fetch(profileFetch)
+                if let profile = results.first {
+                    self.setProfile(profile)
+                    self.coreDataStack.performSave() {
+                        DispatchQueue.main.async {
+                            completion(true, nil)
+                        }
+                    }
+                } else {
                     DispatchQueue.main.async {
-                        completion(true, nil)
+                        completion(false, nil)
                     }
                 }
-            } else {
-                completion(false, nil)
+            } catch {
+                DispatchQueue.main.async {
+                    completion(false, error)
+                }
             }
-        } catch {
-            completion(false, error)
         }
     }
     
@@ -44,11 +50,13 @@ class ProfileDataManager {
         do {
             let results = try coreDataStack.mainContext.fetch(profileFetch)
             if results.isEmpty {
-                let profile = Profile(context: coreDataStack.saveContext)
-                setProfile(profile)
-                coreDataStack.performSave() {
-                    DispatchQueue.main.async {
-                        completion(self.state, nil)
+                coreDataStack.saveContext.perform {
+                    let profile = Profile(context: self.coreDataStack.saveContext)
+                    self.setProfile(profile)
+                    self.coreDataStack.performSave() {
+                        DispatchQueue.main.async {
+                            completion(self.state, nil)
+                        }
                     }
                 }
             } else if let profile = results.first {

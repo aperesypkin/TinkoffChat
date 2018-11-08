@@ -17,7 +17,7 @@ class CoreDataStack {
     
     static let shared = CoreDataStack(dataModelName: "TinkoffChat")
     
-    let dataModelName: String
+    private let dataModelName: String
     
     init(dataModelName: String) {
         self.dataModelName = dataModelName
@@ -43,21 +43,21 @@ class CoreDataStack {
         return coordinator
     }()
     
-    lazy var masterContext: NSManagedObjectContext = {
+    private lazy var masterContext: NSManagedObjectContext = {
         var masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         masterContext.persistentStoreCoordinator = persistentStoreCoordinator
         masterContext.mergePolicy = NSOverwriteMergePolicy
         return masterContext
     }()
     
-    lazy var mainContext: NSManagedObjectContext = {
+    private(set) lazy var mainContext: NSManagedObjectContext = {
         var mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         mainContext.parent = masterContext
         mainContext.mergePolicy = NSOverwriteMergePolicy
         return mainContext
     }()
     
-    lazy var saveContext: NSManagedObjectContext = {
+    private(set) lazy var saveContext: NSManagedObjectContext = {
         var saveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         saveContext.parent = mainContext
         saveContext.mergePolicy = NSOverwriteMergePolicy
@@ -65,12 +65,12 @@ class CoreDataStack {
     }()
     
     func performSave(with context: NSManagedObjectContext, completion: (() -> Void)? = nil) {
-        guard context.hasChanges else {
-            completion?()
-            return
-        }
-        
         context.perform {
+            guard context.hasChanges else {
+                completion?()
+                return
+            }
+            
             do {
                 try context.save()
             } catch {
