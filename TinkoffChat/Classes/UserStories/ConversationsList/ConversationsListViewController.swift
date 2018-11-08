@@ -101,7 +101,7 @@ final class ConversationsListViewController: BaseViewController {
             if let conversationViewController = segue.destination.contents as? ConversationViewController {
                 guard let model = sender as? ConversationsListModel else { return }
                 conversationViewController.title = model.name
-                conversationViewController.userID = model.id
+                conversationViewController.userID = model.userID
                 conversationViewController.communicationManager = communicationManager
             }
         } else if segue.identifier == Identifiers.themesSequeIdentifier {

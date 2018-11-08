@@ -9,7 +9,7 @@
 import Foundation
 
 struct ConversationsListModel {
-    let id: String
+    let userID: String
     let name: String?
     var message: String?
     var date: Date?

@@ -44,9 +44,9 @@ enum Theme: String {
         let windows = UIApplication.shared.windows as [UIWindow]
         for window in windows {
             let subviews = window.subviews as [UIView]
-            for v in subviews {
-                v.removeFromSuperview()
-                window.addSubview(v)
+            for view in subviews {
+                view.removeFromSuperview()
+                window.addSubview(view)
             }
         }
     }
@@ -79,7 +79,7 @@ class ThemeManager {
     }
     
     func loadTheme(completionHandler: @escaping (Theme?) -> Void) {
-        dataType.dataManager().load(State.self, from: Keys.selectedTheme) { state, error in
+        dataType.dataManager().load(State.self, from: Keys.selectedTheme) { state, _ in
             if let state = state, let rawValue = state.rawValue {
                 completionHandler(Theme(rawValue: rawValue))
             } else {

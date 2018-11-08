@@ -62,7 +62,12 @@ class CommunicationManager: CommunicatorDelegate {
     func didFoundUser(userID: String, userName: String?) {
         backgroundQueue.async {
             let conversationModel = self.storage.messages[userID]?.last
-            let model = ConversationsListModel(id: userID, name: userName, message: conversationModel?.message, date: conversationModel?.date, online: true, hasUnreadMessages: conversationModel?.isUnread ?? false)
+            let model = ConversationsListModel(userID: userID,
+                                               name: userName,
+                                               message: conversationModel?.message,
+                                               date: conversationModel?.date,
+                                               online: true,
+                                               hasUnreadMessages: conversationModel?.isUnread ?? false)
             self.storage.people[userID] = model
             
             let people = self.sortPeople(Array(self.storage.people.values))
@@ -123,7 +128,6 @@ class CommunicationManager: CommunicatorDelegate {
         } else {
             storage.messages[user] = [model]
         }
-        
         
         if user == self.currentUserID {
             DispatchQueue.main.async {

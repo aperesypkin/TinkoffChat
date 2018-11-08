@@ -12,14 +12,14 @@ extension UIColor {
     static let lightYellow = UIColor(red: 253 / 255, green: 255 / 255, blue: 237 / 255, alpha: 1)
     
     private var rgbComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        if getRed(&r, green: &g, blue: &b, alpha: &a) {
-            return (r,g,b,a)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        if getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return (red, green, blue, alpha)
         }
-        return (0,0,0,0)
+        return (0, 0, 0, 0)
     }
     
     var string: String {

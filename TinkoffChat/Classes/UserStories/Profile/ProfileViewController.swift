@@ -158,7 +158,7 @@ class ProfileViewController: BaseViewController {
     private func loadData() {
         activityIndicator.startAnimating()
         saveButton.isEnabled = false
-        dataManager.loadProfile { [weak self] profile, error in
+        dataManager.loadProfile { [weak self] profile, _ in
             guard let `self` = self else { return }
             
             self.activityIndicator.stopAnimating()
@@ -186,7 +186,7 @@ class ProfileViewController: BaseViewController {
 
 // MARK: - UIImagePickerControllerDelegate & UINavigationControllerDelegate
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         dataManager.state.imageData = image.jpegData(compressionQuality: 1)
         photoImageView.image = image

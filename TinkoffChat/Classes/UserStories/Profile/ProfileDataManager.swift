@@ -27,7 +27,7 @@ class ProfileDataManager {
                 let results = try self.coreDataStack.saveContext.fetch(profileFetch)
                 if let profile = results.first {
                     self.setProfile(profile)
-                    self.coreDataStack.performSave() {
+                    self.coreDataStack.performSave {
                         DispatchQueue.main.async {
                             completion(true, nil)
                         }
@@ -53,7 +53,7 @@ class ProfileDataManager {
                 coreDataStack.saveContext.perform {
                     let profile = Profile(context: self.coreDataStack.saveContext)
                     self.setProfile(profile)
-                    self.coreDataStack.performSave() {
+                    self.coreDataStack.performSave {
                         DispatchQueue.main.async {
                             completion(self.state, nil)
                         }

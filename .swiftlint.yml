@@ -1,0 +1,22 @@
+warning_threshold: 1
+
+excluded:
+- Pods
+
+disabled_rules:
+- trailing_whitespace
+
+line_length: 180
+
+large_tuple: 4
+
+function_parameter_count:
+warning: 10
+
+file_length:
+warning: 500
+
+type_body_length:
+warning: 400
+
+reporter: "xcode"
