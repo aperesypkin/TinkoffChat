@@ -50,6 +50,7 @@
 		5CF9465A216566E500DAFBBC /* ConversationsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF94658216566E500DAFBBC /* ConversationsListCell.swift */; };
 		5CF9465B216566E500DAFBBC /* ConversationsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CF94659216566E500DAFBBC /* ConversationsListCell.xib */; };
 		5CF94662216570D300DAFBBC /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF94661216570D300DAFBBC /* ConversationViewController.swift */; };
+		95CD460E734E1468870CB86F /* Pods_TinkoffChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82B8E05B9F512525E3BC7F50 /* Pods_TinkoffChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,9 @@
 		5CF94658216566E500DAFBBC /* ConversationsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListCell.swift; sourceTree = "<group>"; };
 		5CF94659216566E500DAFBBC /* ConversationsListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListCell.xib; sourceTree = "<group>"; };
 		5CF94661216570D300DAFBBC /* ConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		756CEE48F83A5AE287010D19 /* Pods-TinkoffChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.release.xcconfig"; sourceTree = "<group>"; };
+		82B8E05B9F512525E3BC7F50 /* Pods_TinkoffChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0E988B1EF9C15D53C2DB715 /* Pods-TinkoffChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TinkoffChat/Pods-TinkoffChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +112,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95CD460E734E1468870CB86F /* Pods_TinkoffChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49FF408126C2CD8369648D09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82B8E05B9F512525E3BC7F50 /* Pods_TinkoffChat.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5C054905215D697F006A1523 /* UIEdgeInsets */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +280,8 @@
 			children = (
 				5C945B29215420180045E20F /* TinkoffChat */,
 				5C945B28215420180045E20F /* Products */,
+				F0EC7376DB39D171341E0BA9 /* Pods */,
+				49FF408126C2CD8369648D09 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -464,6 +479,15 @@
 			path = Conversation;
 			sourceTree = "<group>";
 		};
+		F0EC7376DB39D171341E0BA9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D0E988B1EF9C15D53C2DB715 /* Pods-TinkoffChat.debug.xcconfig */,
+				756CEE48F83A5AE287010D19 /* Pods-TinkoffChat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -471,6 +495,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5C945B392154201A0045E20F /* Build configuration list for PBXNativeTarget "TinkoffChat" */;
 			buildPhases = (
+				A408EFE47D3FA00DB807560F /* [CP] Check Pods Manifest.lock */,
+				5C8B74972194BC0300DBA001 /* SwiftLint */,
 				5C945B23215420180045E20F /* Sources */,
 				5C945B24215420180045E20F /* Frameworks */,
 				5C945B25215420180045E20F /* Resources */,
@@ -534,6 +560,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C8B74972194BC0300DBA001 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n${PODS_ROOT}/SwiftLint/swiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		A408EFE47D3FA00DB807560F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5C945B23215420180045E20F /* Sources */ = {
@@ -719,6 +784,7 @@
 		};
 		5C945B3A2154201A0045E20F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0E988B1EF9C15D53C2DB715 /* Pods-TinkoffChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -742,6 +808,7 @@
 		};
 		5C945B3B2154201A0045E20F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 756CEE48F83A5AE287010D19 /* Pods-TinkoffChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
