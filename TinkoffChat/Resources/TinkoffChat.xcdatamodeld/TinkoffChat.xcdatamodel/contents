@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="hasUnreadMessages" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isOnline" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" attributeType="String" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isIncomingMessage" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isUnread" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="text" attributeType="String" syncable="YES"/>
+        <relationship name="conversation" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+    </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES">
         <attribute name="aboutMe" optional="YES" attributeType="String" defaultValueString="Напиши про себя" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" defaultValueString="Unnamed" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Profile" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Profile" positionX="-131.14453125" positionY="-176.328125" width="128" height="88"/>
+        <element name="Message" positionX="-375.94140625" positionY="-66.55078125" width="128" height="118"/>
+        <element name="Conversation" positionX="-54" positionY="9" width="128" height="133"/>
     </elements>
 </model>
