@@ -2,7 +2,7 @@
 //  Conversation+CoreDataProperties.swift
 //  
 //
-//  Created by Alexander Peresypkin on 09/11/2018.
+//  Created by Alexander Peresypkin on 10/11/2018.
 //
 //
 
@@ -15,12 +15,9 @@ extension Conversation {
         return NSFetchRequest<Conversation>(entityName: "Conversation")
     }
 
-    @NSManaged public var userID: String?
-    @NSManaged public var name: String?
-    @NSManaged public var date: NSDate?
-    @NSManaged public var isOnline: Bool
-    @NSManaged public var hasUnreadMessages: Bool
+    @NSManaged public var identifier: String?
     @NSManaged public var messages: NSSet?
+    @NSManaged public var user: User?
 
 }
 
