@@ -23,9 +23,11 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="conversation" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="user" inverseEntity="Conversation" syncable="YES"/>
     </entity>
-    <fetchRequest name="ConversationsAreNotEmptyWhereUserIsOnline" entity="Conversation" predicateString="isOnline == 1 AND messages.count &gt; 0"/>
-    <fetchRequest name="CoversationWithID" entity="Conversation" predicateString="ANY objectID == $conversationID"/>
-    <fetchRequest name="MessagesForConversation" entity="Message" predicateString="ALL conversation.objectID == $conversationID"/>
+    <fetchRequest name="ConversationsAreNotEmptyWhereUserIsOnline" entity="Conversation" predicateString="user.isOnline == 1 AND messages.count &gt; 0"/>
+    <fetchRequest name="CoversationWithID" entity="Conversation" predicateString="identifier == &quot;$identifier&quot;"/>
+    <fetchRequest name="MessagesForConversationID" entity="Message" predicateString="conversation.identifier == $identifier"/>
+    <fetchRequest name="UsersAreOnline" entity="User" predicateString="isOnline == 1"/>
+    <fetchRequest name="UserWithID" entity="User" predicateString="identifier == &quot;$identifier&quot;"/>
     <elements>
         <element name="Conversation" positionX="-77.5" positionY="-67.4765625" width="128" height="88"/>
         <element name="Message" positionX="-298.640625" positionY="-82.55859375" width="128" height="118"/>
