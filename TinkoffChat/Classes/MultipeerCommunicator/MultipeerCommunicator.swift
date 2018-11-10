@@ -48,7 +48,7 @@ class MultipeerCommunicator: NSObject, Communicator {
     private let localPeer = MCPeerID(displayName: .userID)
     
     private lazy var advertiser: MCNearbyServiceAdvertiser = {
-        let advertiser = MCNearbyServiceAdvertiser(peer: localPeer, discoveryInfo: [.userNameKey: "Alexander"], serviceType: .serviceType)
+        let advertiser = MCNearbyServiceAdvertiser(peer: localPeer, discoveryInfo: [.userNameKey: "Alexander \(UIDevice.current.name)"], serviceType: .serviceType)
         advertiser.delegate = self
         return advertiser
     }()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ConversationViewController: BaseViewController {
     
@@ -33,16 +34,42 @@ class ConversationViewController: BaseViewController {
     }
     
     var communicationManager: CommunicationManager!
-    var userID: String!
+    var user: User!
     
-    private var dataSource: [ConversationModel] = [] {
-        didSet {
-            tableView.reloadData()
+//    private var dataSource: [ConversationModel] = [] {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    
+    private lazy var fetchedResultController: NSFetchedResultsController<Message> = {
+        let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
+        if let identifier = user.identifier {
+            fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), identifier)
         }
-    }
+        
+        let dateSort = NSSortDescriptor(key: #keyPath(Message.date), ascending: false)
+        
+        fetchRequest.sortDescriptors = [dateSort]
+        
+        let fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                 managedObjectContext: CoreDataStack.shared.mainContext,
+                                                                 sectionNameKeyPath: nil,
+                                                                 cacheName: nil)
+        fetchedResultController.delegate = self
+        return fetchedResultController
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do {
+            try fetchedResultController.performFetch()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        sendButton.isEnabled = user.isOnline
         
         setupKeyboardNotifications()
         setupCommunicationManager()
@@ -56,22 +83,27 @@ class ConversationViewController: BaseViewController {
                 return
         }
         
-        communicationManager.send(message: message, for: userID)
+        if let identifier = user.identifier {
+            communicationManager.send(text: message, for: identifier)
+        }
+        
         messageTextField.text = nil
     }
     
     private func setupCommunicationManager() {
-        communicationManager.currentUserID = userID
-        
-        communicationManager.obtainMessages(for: userID) { [weak self] messages in
-            guard let messages = messages else { return }
-            self?.dataSource = messages.reversed()
+        if let identifier = user.identifier {
+            communicationManager.currentUserID = identifier
         }
         
-        communicationManager.didChangeMessagesAction = { [weak self] messages in
-            self?.dataSource = messages.reversed()
-        }
-        
+//        communicationManager.obtainMessages(for: userID) { [weak self] messages in
+//            guard let messages = messages else { return }
+//            self?.dataSource = messages.reversed()
+//        }
+//        
+//        communicationManager.didChangeMessagesAction = { [weak self] messages in
+//            self?.dataSource = messages.reversed()
+//        }
+//        
         communicationManager.currentUserStatus = { [weak self] isOnline in
             self?.sendButton.isEnabled = isOnline
         }
@@ -95,20 +127,20 @@ class ConversationViewController: BaseViewController {
 // MARK: - UITableViewDataSource
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return fetchedResultController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = dataSource[indexPath.row]
+        let message = fetchedResultController.object(at: indexPath)
         
-        if model.isIncomingMessage {
+        if message.isIncomingMessage {
             let cell: IncomingMessageCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(with: model.viewModel)
+            cell.configure(with: message.viewModel)
             cell.transform = CGAffineTransform.reverse
             return cell
         } else {
             let cell: OutgoingMessageCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(with: model.viewModel)
+            cell.configure(with: message.viewModel)
             cell.transform = CGAffineTransform.reverse
             return cell
         }
@@ -120,5 +152,30 @@ extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension ConversationViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update: tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
     }
 }
