@@ -33,10 +33,6 @@ class BaseViewController: UIViewController {
         LogManager.shared.logViewControllerLifecycle(#function, className: className)
     }
     
-    override func loadView() {
-        LogManager.shared.logViewControllerLifecycle(#function, className: className)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         LogManager.shared.logViewControllerLifecycle(#function, className: className)
