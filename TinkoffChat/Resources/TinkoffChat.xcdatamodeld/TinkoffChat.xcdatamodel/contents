@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Profile" representedClassName="Profile" syncable="YES">
+    <entity name="AppUser" representedClassName="AppUser" syncable="YES">
         <attribute name="aboutMe" optional="YES" attributeType="String" defaultValueString="Напиши про себя" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" defaultValueString="Unnamed" syncable="YES"/>
     </entity>
+    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
+        <attribute name="identifier" attributeType="String" syncable="YES"/>
+        <attribute name="status" attributeType="String" syncable="YES"/>
+        <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Message" inverseName="conversationForLastMessage" inverseEntity="Message" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Message" inverseName="conversation" inverseEntity="Message" syncable="YES"/>
+        <relationship name="user" maxCount="1" deletionRule="Cascade" destinationEntity="User" inverseName="conversation" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isIncomingMessage" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isUnread" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="text" attributeType="String" syncable="YES"/>
+        <relationship name="conversation" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="messages" inverseEntity="Conversation" syncable="YES"/>
+        <relationship name="conversationForLastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Conversation" inverseName="lastMessage" inverseEntity="Conversation" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="identifier" attributeType="String" syncable="YES"/>
+        <attribute name="isOnline" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="conversation" maxCount="1" deletionRule="Cascade" destinationEntity="Conversation" inverseName="user" inverseEntity="Conversation" syncable="YES"/>
+    </entity>
+    <fetchRequest name="ConversationsAreNotEmptyWhereUserIsOnline" entity="Conversation" predicateString="user.isOnline == 1 AND messages.count &gt; 0"/>
+    <fetchRequest name="CoversationWithID" entity="Conversation" predicateString="identifier == &quot;$identifier&quot;"/>
+    <fetchRequest name="MessagesForConversationID" entity="Message" predicateString="conversation.identifier == $identifier"/>
+    <fetchRequest name="UsersAreOnline" entity="User" predicateString="isOnline == 1"/>
+    <fetchRequest name="UserWithID" entity="User" predicateString="identifier == &quot;$identifier&quot;"/>
     <elements>
-        <element name="Profile" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Conversation" positionX="-77.5" positionY="-67.4765625" width="128" height="118"/>
+        <element name="Message" positionX="-298.640625" positionY="-82.55859375" width="128" height="133"/>
+        <element name="AppUser" positionX="-78.69140625" positionY="-181.32421875" width="128" height="90"/>
+        <element name="User" positionX="-259.265625" positionY="53.0703125" width="128" height="103"/>
     </elements>
 </model>
