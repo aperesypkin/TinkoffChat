@@ -34,36 +34,28 @@ class ConversationViewController: BaseViewController {
     }
     
     var communicationManager: CommunicationManager!
-    var user: User!
+    var isUserOnline: Bool!
+    var userID: String!
     
-    private lazy var fetchedResultController: NSFetchedResultsController<Message> = {
+    private lazy var dataManager: FetchedResultControllerManager<Message> = {
         let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
-        if let identifier = user.identifier {
-            fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), identifier)
-        }
+        fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), userID)
         
         let dateSort = NSSortDescriptor(key: #keyPath(Message.date), ascending: false)
         
         fetchRequest.sortDescriptors = [dateSort]
         
-        let fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                                 managedObjectContext: CoreDataStack.shared.mainContext,
-                                                                 sectionNameKeyPath: nil,
-                                                                 cacheName: nil)
-        fetchedResultController.delegate = self
-        return fetchedResultController
+        return FetchedResultControllerManager(fetchRequest: fetchRequest,
+                                              sectionNameKeyPath: nil,
+                                              cacheName: nil)
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        do {
-            try fetchedResultController.performFetch()
-        } catch {
-            print(error.localizedDescription)
-        }
+        dataManager.performFetch(for: tableView)
         
-        sendButton.isEnabled = user.isOnline
+        sendButton.isEnabled = isUserOnline
         
         setupKeyboardNotifications()
         setupCommunicationManager()
@@ -77,17 +69,13 @@ class ConversationViewController: BaseViewController {
                 return
         }
         
-        if let identifier = user.identifier {
-            communicationManager.send(text: message, for: identifier)
-        }
+        communicationManager.send(text: message, for: userID)
         
         messageTextField.text = nil
     }
     
     private func setupCommunicationManager() {
-        if let identifier = user.identifier {
-            communicationManager.didOpenConversation(with: identifier)
-        }
+        communicationManager.didOpenConversation(with: userID)
 
         communicationManager.currentUserStatus = { [weak self] isOnline in
             self?.sendButton.isEnabled = isOnline
@@ -112,11 +100,11 @@ class ConversationViewController: BaseViewController {
 // MARK: - UITableViewDataSource
 extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultController.sections?[section].numberOfObjects ?? 0
+        return dataManager.numberOfObjects(at: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = fetchedResultController.object(at: indexPath)
+        let message = dataManager.object(at: indexPath)
         
         if message.isIncomingMessage {
             let cell: IncomingMessageCell = tableView.dequeueReusableCell(for: indexPath)
@@ -137,30 +125,5 @@ extension ConversationViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-extension ConversationViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
-        case .update: tableView.reloadRows(at: [indexPath!], with: .automatic)
-        case .move:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
 }

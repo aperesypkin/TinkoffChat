@@ -8,28 +8,38 @@
 
 import CoreData
 
-class FetchedResultControllerManager<ManagedObject: NSManagedObject> {
+class FetchedResultControllerManager<ResultType: NSFetchRequestResult> {
     
     private let coreDataStack = CoreDataStack.shared
     
-    private let fetchedResultController: NSFetchedResultsController<ManagedObject>
+    private let fetchRequest: NSFetchRequest<ResultType>
+    private let sectionNameKeyPath: String?
+    private let cacheName: String?
+    
+    private var delegate: FetchedResultControllerManagerDelegate?
     
     var sectionsCount: Int {
         return fetchedResultController.sections?.count ?? 0
     }
     
-    init(fetchRequest: NSFetchRequest<ManagedObject>, sectionNameKeyPath: String?, cacheName name: String?) {
-        self.fetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest,
-                                                                  managedObjectContext: coreDataStack.mainContext,
-                                                                  sectionNameKeyPath: sectionNameKeyPath,
-                                                                  cacheName: name)
+    lazy var fetchedResultController: NSFetchedResultsController<ResultType> = {
+        return NSFetchedResultsController(fetchRequest: fetchRequest,
+                                          managedObjectContext: coreDataStack.mainContext,
+                                          sectionNameKeyPath: sectionNameKeyPath,
+                                          cacheName: cacheName)
+    }()
+    
+    init(fetchRequest: NSFetchRequest<ResultType>, sectionNameKeyPath: String?, cacheName: String?) {
+        self.fetchRequest = fetchRequest
+        self.sectionNameKeyPath = sectionNameKeyPath
+        self.cacheName = cacheName
     }
     
-    func numberOfObjects(for section: Int) -> Int {
+    func numberOfObjects(at section: Int) -> Int {
         return fetchedResultController.sections?[section].numberOfObjects ?? 0
     }
     
-    func object(at indexPath: IndexPath) -> ManagedObject {
+    func object(at indexPath: IndexPath) -> ResultType {
         return fetchedResultController.object(at: indexPath)
     }
     
@@ -38,7 +48,7 @@ class FetchedResultControllerManager<ManagedObject: NSManagedObject> {
     }
     
     func performFetch(for tableView: UITableView) {
-        let delegate = FetchedResultControllerManagerDelegate(tableView: tableView)
+        delegate = FetchedResultControllerManagerDelegate(tableView: tableView)
         fetchedResultController.delegate = delegate
         
         do {
@@ -47,5 +57,5 @@ class FetchedResultControllerManager<ManagedObject: NSManagedObject> {
             print(error.localizedDescription)
         }
     }
-
+    
 }
