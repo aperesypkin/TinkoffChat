@@ -86,7 +86,7 @@ class ConversationViewController: BaseViewController {
     
     private func setupCommunicationManager() {
         if let identifier = user.identifier {
-            communicationManager.currentUserID = identifier
+            communicationManager.didOpenConversation(with: identifier)
         }
 
         communicationManager.currentUserStatus = { [weak self] isOnline in
@@ -104,7 +104,7 @@ class ConversationViewController: BaseViewController {
     }
     
     deinit {
-        communicationManager.currentUserID = nil
+        communicationManager.didCloseConversation()
     }
     
 }

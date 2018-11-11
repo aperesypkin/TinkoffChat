@@ -17,6 +17,9 @@
 		5C25CF2A217B46D300F1BAB9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C25CF29217B46D300F1BAB9 /* DataManager.swift */; };
 		5C25CF2C217B856100F1BAB9 /* DataManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C25CF2B217B856100F1BAB9 /* DataManagerType.swift */; };
 		5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C27274B21989618004BF445 /* MultipeerMessage.swift */; };
+		5C27274F219899BC004BF445 /* CoreDataStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C27274E219899BC004BF445 /* CoreDataStorageManager.swift */; };
+		5C2727532198A86C004BF445 /* FetchedResultControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2727522198A86C004BF445 /* FetchedResultControllerManager.swift */; };
+		5C2727552198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2727542198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift */; };
 		5C35B8D521714568006369B4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35B8D421714568006369B4 /* Theme.swift */; };
 		5C3F53DA21810B0400ED7D9E /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */; };
 		5C3F53DD21811D8500ED7D9E /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */; };
@@ -68,6 +71,9 @@
 		5C25CF29217B46D300F1BAB9 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		5C25CF2B217B856100F1BAB9 /* DataManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerType.swift; sourceTree = "<group>"; };
 		5C27274B21989618004BF445 /* MultipeerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
+		5C27274E219899BC004BF445 /* CoreDataStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorageManager.swift; sourceTree = "<group>"; };
+		5C2727522198A86C004BF445 /* FetchedResultControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultControllerManager.swift; sourceTree = "<group>"; };
+		5C2727542198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultControllerManagerDelegate.swift; sourceTree = "<group>"; };
 		5C35B8D421714568006369B4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
@@ -241,6 +247,7 @@
 				5C3F53DB21810B0800ED7D9E /* MultipeerCommunicator */,
 				5CA92C03218CF18400BCF7A5 /* CoreDataStack */,
 				5C9F9C0C217CFCBA005EE2A5 /* DataManager */,
+				5C272750219899C3004BF445 /* CoreDataStorageManager */,
 			);
 			path = CoreLayer;
 			sourceTree = "<group>";
@@ -248,6 +255,7 @@
 		5C272748219894D2004BF445 /* BusinessLogicLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5C2727512198A856004BF445 /* FetchedResultControllerManager */,
 				5C27274A219895F8004BF445 /* CommunicationManager */,
 			);
 			path = BusinessLogicLayer;
@@ -273,9 +281,26 @@
 			isa = PBXGroup;
 			children = (
 				5CE5286B21791B2100980D94 /* TCButton.swift */,
-				5C35B8D421714568006369B4 /* Theme.swift */,
+				5CB2A4D9216E9DDF00132404 /* Themes */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		5C272750219899C3004BF445 /* CoreDataStorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				5C27274E219899BC004BF445 /* CoreDataStorageManager.swift */,
+			);
+			path = CoreDataStorageManager;
+			sourceTree = "<group>";
+		};
+		5C2727512198A856004BF445 /* FetchedResultControllerManager */ = {
+			isa = PBXGroup;
+			children = (
+				5C2727522198A86C004BF445 /* FetchedResultControllerManager.swift */,
+				5C2727542198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift */,
+			);
+			path = FetchedResultControllerManager;
 			sourceTree = "<group>";
 		};
 		5C3F53DB21810B0800ED7D9E /* MultipeerCommunicator */ = {
@@ -430,6 +455,7 @@
 				5CB2A4D6216E9D7300132404 /* ThemesViewController.h */,
 				5CB2A4D7216E9D7300132404 /* ThemesViewController.m */,
 				5C1582A9216FE81A003F2453 /* ThemesSwiftViewController.swift */,
+				5C35B8D421714568006369B4 /* Theme.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -467,7 +493,6 @@
 				5CC119E5215C10C100507837 /* Profile */,
 				5CF946552165627500DAFBBC /* ConversationsList */,
 				5CF94660216570B400DAFBBC /* Conversation */,
-				5CB2A4D9216E9DDF00132404 /* Themes */,
 			);
 			path = UserStories;
 			sourceTree = "<group>";
@@ -649,6 +674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C2727532198A86C004BF445 /* FetchedResultControllerManager.swift in Sources */,
 				5C25CF26217B461700F1BAB9 /* GCDDataManager.swift in Sources */,
 				5C80E3CD21972C9B00581D13 /* User+CoreDataProperties copy.swift in Sources */,
 				5C80E3C921972C9B00581D13 /* User+CoreDataClass copy.swift in Sources */,
@@ -683,8 +709,10 @@
 				5CB2A4D8216E9D7300132404 /* ThemesViewController.m in Sources */,
 				5C80E3CC21972C9B00581D13 /* Profile+CoreDataClass copy.swift in Sources */,
 				5C6B4DFD218F500800E99478 /* ProfileDataManager.swift in Sources */,
+				5C27274F219899BC004BF445 /* CoreDataStorageManager.swift in Sources */,
 				5C25CF2A217B46D300F1BAB9 /* DataManager.swift in Sources */,
 				5C7C27B9216914C1005066C6 /* IncomingMessageCell.swift in Sources */,
+				5C2727552198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift in Sources */,
 				5C25CF2C217B856100F1BAB9 /* DataManagerType.swift in Sources */,
 				5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */,
 				5CF94657216562A600DAFBBC /* ConversationsListViewController.swift in Sources */,

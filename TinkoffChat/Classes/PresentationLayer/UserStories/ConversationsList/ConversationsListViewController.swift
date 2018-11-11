@@ -67,7 +67,7 @@ final class ConversationsListViewController: BaseViewController {
         let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         
         let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
-        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: true)
+        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
         let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: true)
         
         fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
@@ -89,6 +89,11 @@ final class ConversationsListViewController: BaseViewController {
             print(error.localizedDescription)
         }
             
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
