@@ -36,12 +36,6 @@ class ConversationViewController: BaseViewController {
     var communicationManager: CommunicationManager!
     var user: User!
     
-//    private var dataSource: [ConversationModel] = [] {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
-    
     private lazy var fetchedResultController: NSFetchedResultsController<Message> = {
         let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
         if let identifier = user.identifier {
@@ -94,16 +88,7 @@ class ConversationViewController: BaseViewController {
         if let identifier = user.identifier {
             communicationManager.currentUserID = identifier
         }
-        
-//        communicationManager.obtainMessages(for: userID) { [weak self] messages in
-//            guard let messages = messages else { return }
-//            self?.dataSource = messages.reversed()
-//        }
-//        
-//        communicationManager.didChangeMessagesAction = { [weak self] messages in
-//            self?.dataSource = messages.reversed()
-//        }
-//        
+
         communicationManager.currentUserStatus = { [weak self] isOnline in
             self?.sendButton.isEnabled = isOnline
         }

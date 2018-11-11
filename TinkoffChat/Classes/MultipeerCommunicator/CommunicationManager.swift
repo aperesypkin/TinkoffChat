@@ -11,8 +11,6 @@ import CoreData
 
 class CommunicationManager: CommunicatorDelegate {
     
-//    var didChangeConversationsListAction: (([ConversationsListModel]) -> Void)?
-//    var didChangeMessagesAction: (([ConversationModel]) -> Void)?
     var currentUserStatus: ((Bool) -> Void)?
     
     var currentUserID: String?
@@ -213,59 +211,6 @@ class CommunicationManager: CommunicatorDelegate {
                 print(error.localizedDescription)
             }
         }
-//        backgroundQueue.async {
-//            self.updateMessages(with: text, isIncoming: true, for: fromUser)
-//            self.updateConversationsList(with: text, for: fromUser)
-//        }
     }
     
-//    private func updateConversationsList(with message: String, for user: String) {
-//        storage.people[user]?.message = message
-//        storage.people[user]?.date = Date()
-//        storage.people[user]?.hasUnreadMessages = user != currentUserID
-//
-//        let people = sortPeople(Array(storage.people.values))
-//
-//        DispatchQueue.main.async {
-//            self.didChangeConversationsListAction?(people)
-//        }
-//    }
-//
-//    private func updateMessages(with message: String, isIncoming: Bool, for user: String) {
-//        let model = ConversationModel(message: message, date: Date(), isIncomingMessage: isIncoming, isUnread: user != currentUserID)
-//
-//        if let messages = storage.messages[user] {
-//            storage.messages[user] = messages + [model]
-//        } else {
-//            storage.messages[user] = [model]
-//        }
-//
-//        if user == self.currentUserID {
-//            DispatchQueue.main.async {
-//                self.didChangeMessagesAction?(self.storage.messages[user] ?? [])
-//            }
-//        }
-//    }
-    
-//    private func sortPeople(_ people: [ConversationsListModel]) -> [ConversationsListModel] {
-//        return people.sorted { model1, model2 -> Bool in
-//            if let date1 = model1.date, let date2 = model2.date {
-//                return date1 > date2
-//            } else if model1.date != nil, model2.date == nil {
-//                return true
-//            } else if model1.date == nil, model2.date != nil {
-//                return false
-//            } else {
-//                if let name1 = model1.name, let name2 = model2.name {
-//                    return name1 > name2
-//                } else if model1.name != nil, model2.name == nil {
-//                    return true
-//                } else if model1.name == nil, model2.name != nil {
-//                    return false
-//                } else {
-//                    return true
-//                }
-//            }
-//        }
-//    }
 }

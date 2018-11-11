@@ -17,23 +17,6 @@ private struct Identifiers {
 
 final class ConversationsListViewController: BaseViewController {
     
-//    enum SectionType {
-//        case online
-//        case history
-//
-//        var title: String {
-//            switch self {
-//            case .history: return "History"
-//            case .online: return "Online"
-//            }
-//        }
-//    }
-//
-//    struct Section {
-//        let sectionType: SectionType
-//        var items: [ConversationsListModel]
-//    }
-    
     struct ViewModel {
         let name: String
         let message: String
@@ -51,12 +34,6 @@ final class ConversationsListViewController: BaseViewController {
             tableView.register(ConversationsListCell.self)
         }
     }
-    
-//    private var dataSource: [Section] = [] {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
     
     private let communicationManager = CommunicationManager()
     
@@ -111,12 +88,6 @@ final class ConversationsListViewController: BaseViewController {
         } catch {
             print(error.localizedDescription)
         }
-        
-//        communicationManager.didChangeConversationsListAction = { [weak self] models in
-//            guard let `self` = self else { return }
-//            let section = Section(sectionType: .online, items: models)
-//            self.dataSource = [section]
-//        }
             
     }
 
@@ -169,40 +140,9 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        guard let cell = cell as? TeamCell else {
-//            return
-//        }
-//
-//        let team = fetchedResultController.object(at: indexPath)
-//        cell.teamLabel.text = team.teamName
-//        cell.scoreLabel.text = "Wins: \(team.wins)"
-//
-//        if let imageName = team.imageName {
-//            cell.flagImageView.image = UIImage(named: imageName)
-//        } else {
-//            cell.flagImageView.image = nil
-//        }
-        
         let conversation = fetchedResultController.object(at: indexPath)
         
         let cell: ConversationsListCell = tableView.dequeueReusableCell(for: indexPath)
-//        var viewModel: ViewModel {
-//            return ViewModel(name: name ?? "Unnamed",
-//                             message: message ?? "No messages yet",
-//                             font: font,
-//                             date: dateString,
-//                             backgroundColor: online ? .lightYellow : .white,
-//                             online: online)
-//        }
-        
-//        let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation), conversation)
-//        do {
-//            let messages =
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-
         cell.configure(with: conversation.viewModel)
         
         return cell
@@ -219,7 +159,6 @@ extension ConversationsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-//        let model = dataSource[indexPath.section].items[indexPath.row]
         let conversation = fetchedResultController.object(at: indexPath)
         performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: conversation)
     }
