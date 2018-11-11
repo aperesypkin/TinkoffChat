@@ -9,6 +9,16 @@
 import Foundation
 import CoreData
 
+protocol CommunicatorDelegate: class {
+    func didFoundUser(userID: String, userName: String?)
+    func didLostUser(userID: String)
+    
+    func failedToStartBrowsingForUsers(error: Error)
+    func failedToStartAdvertising(error: Error)
+    
+    func didReceiveMessage(text: String, fromUser: String, toUser: String)
+}
+
 class CommunicationManager: CommunicatorDelegate {
     
     var currentUserStatus: ((Bool) -> Void)?

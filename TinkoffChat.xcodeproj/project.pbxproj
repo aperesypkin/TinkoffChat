@@ -16,6 +16,7 @@
 		5C25CF28217B463C00F1BAB9 /* OperationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C25CF27217B463C00F1BAB9 /* OperationDataManager.swift */; };
 		5C25CF2A217B46D300F1BAB9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C25CF29217B46D300F1BAB9 /* DataManager.swift */; };
 		5C25CF2C217B856100F1BAB9 /* DataManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C25CF2B217B856100F1BAB9 /* DataManagerType.swift */; };
+		5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C27274B21989618004BF445 /* MultipeerMessage.swift */; };
 		5C35B8D521714568006369B4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35B8D421714568006369B4 /* Theme.swift */; };
 		5C3F53DA21810B0400ED7D9E /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */; };
 		5C3F53DD21811D8500ED7D9E /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */; };
@@ -66,6 +67,7 @@
 		5C25CF27217B463C00F1BAB9 /* OperationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationDataManager.swift; sourceTree = "<group>"; };
 		5C25CF29217B46D300F1BAB9 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		5C25CF2B217B856100F1BAB9 /* DataManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerType.swift; sourceTree = "<group>"; };
+		5C27274B21989618004BF445 /* MultipeerMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerMessage.swift; sourceTree = "<group>"; };
 		5C35B8D421714568006369B4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		5C0E547421680284000AA0A1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5CB2A4D5216E9D7200132404 /* TinkoffChat-Bridging-Header.h */,
 				5C945B4121542DD50045E20F /* Default-568h@2x.png */,
 				5C945B312154201A0045E20F /* Assets.xcassets */,
 				5C945B362154201A0045E20F /* Info.plist */,
@@ -164,12 +167,12 @@
 		5C0E5476216803A7000AA0A1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5C1D43802154A25A006017CB /* Application */,
-				5CA92C03218CF18400BCF7A5 /* CoreDataStack */,
-				5C9F9C0C217CFCBA005EE2A5 /* DataManager */,
-				5CA92C09218CF81300BCF7A5 /* ManagedObjects */,
-				5C3F53DB21810B0800ED7D9E /* MultipeerCommunicator */,
-				5CC119E6215C10FA00507837 /* UserStories */,
+				5C1D43802154A25A006017CB /* ApplicationLayer */,
+				5C272747219894C0004BF445 /* CoreLayer */,
+				5C272748219894D2004BF445 /* BusinessLogicLayer */,
+				5C27274621989464004BF445 /* PresentationLayer */,
+				5C2727492198950B004BF445 /* Models */,
+				5C0E547521680373000AA0A1 /* Helpers */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -212,20 +215,74 @@
 			path = BaseViewController;
 			sourceTree = "<group>";
 		};
-		5C1D43802154A25A006017CB /* Application */ = {
+		5C1D43802154A25A006017CB /* ApplicationLayer */ = {
 			isa = PBXGroup;
 			children = (
 				5C945B3D2154275B0045E20F /* AppDelegate */,
 				5C1D437F2154A244006017CB /* BaseViewController */,
 			);
-			path = Application;
+			path = ApplicationLayer;
+			sourceTree = "<group>";
+		};
+		5C27274621989464004BF445 /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
+				5C945B2E215420180045E20F /* Main.storyboard */,
+				5C27274D219896A9004BF445 /* Common */,
+				5CC119E6215C10FA00507837 /* UserStories */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		5C272747219894C0004BF445 /* CoreLayer */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F53DB21810B0800ED7D9E /* MultipeerCommunicator */,
+				5CA92C03218CF18400BCF7A5 /* CoreDataStack */,
+				5C9F9C0C217CFCBA005EE2A5 /* DataManager */,
+			);
+			path = CoreLayer;
+			sourceTree = "<group>";
+		};
+		5C272748219894D2004BF445 /* BusinessLogicLayer */ = {
+			isa = PBXGroup;
+			children = (
+				5C27274A219895F8004BF445 /* CommunicationManager */,
+			);
+			path = BusinessLogicLayer;
+			sourceTree = "<group>";
+		};
+		5C2727492198950B004BF445 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5CA92C09218CF81300BCF7A5 /* ManagedObjects */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5C27274A219895F8004BF445 /* CommunicationManager */ = {
+			isa = PBXGroup;
+			children = (
+				5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */,
+			);
+			path = CommunicationManager;
+			sourceTree = "<group>";
+		};
+		5C27274D219896A9004BF445 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5CE5286B21791B2100980D94 /* TCButton.swift */,
+				5C35B8D421714568006369B4 /* Theme.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		5C3F53DB21810B0800ED7D9E /* MultipeerCommunicator */ = {
 			isa = PBXGroup;
 			children = (
 				5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */,
-				5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */,
+				5C27274B21989618004BF445 /* MultipeerMessage.swift */,
 			);
 			path = MultipeerCommunicator;
 			sourceTree = "<group>";
@@ -303,7 +360,6 @@
 			isa = PBXGroup;
 			children = (
 				5C0E5476216803A7000AA0A1 /* Classes */,
-				5C0E547521680373000AA0A1 /* Helpers */,
 				5C0E547421680284000AA0A1 /* Resources */,
 			);
 			path = TinkoffChat;
@@ -408,15 +464,10 @@
 		5CC119E6215C10FA00507837 /* UserStories */ = {
 			isa = PBXGroup;
 			children = (
-				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
-				5C945B2E215420180045E20F /* Main.storyboard */,
 				5CC119E5215C10C100507837 /* Profile */,
 				5CF946552165627500DAFBBC /* ConversationsList */,
 				5CF94660216570B400DAFBBC /* Conversation */,
 				5CB2A4D9216E9DDF00132404 /* Themes */,
-				5CB2A4D5216E9D7200132404 /* TinkoffChat-Bridging-Header.h */,
-				5C35B8D421714568006369B4 /* Theme.swift */,
-				5CE5286B21791B2100980D94 /* TCButton.swift */,
 			);
 			path = UserStories;
 			sourceTree = "<group>";
@@ -635,6 +686,7 @@
 				5C25CF2A217B46D300F1BAB9 /* DataManager.swift in Sources */,
 				5C7C27B9216914C1005066C6 /* IncomingMessageCell.swift in Sources */,
 				5C25CF2C217B856100F1BAB9 /* DataManagerType.swift in Sources */,
+				5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */,
 				5CF94657216562A600DAFBBC /* ConversationsListViewController.swift in Sources */,
 				5C945B2B215420180045E20F /* AppDelegate.swift in Sources */,
 			);
@@ -795,7 +847,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aperesypkin.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Classes/UserStories/TinkoffChat-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Resources/TinkoffChat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -819,7 +871,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.aperesypkin.TinkoffChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Classes/UserStories/TinkoffChat-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TinkoffChat/Resources/TinkoffChat-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

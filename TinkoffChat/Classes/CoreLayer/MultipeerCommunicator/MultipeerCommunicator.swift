@@ -9,16 +9,6 @@
 import Foundation
 import MultipeerConnectivity
 
-protocol CommunicatorDelegate: class {
-    func didFoundUser(userID: String, userName: String?)
-    func didLostUser(userID: String)
-    
-    func failedToStartBrowsingForUsers(error: Error)
-    func failedToStartAdvertising(error: Error)
-    
-    func didReceiveMessage(text: String, fromUser: String, toUser: String)
-}
-
 protocol Communicator {
     func sendMessage(string: String, to userID: String, completionHandler: ((_ success: Bool, _ error: Error?) -> Void)?)
     var delegate: CommunicatorDelegate? { get set }
@@ -147,29 +137,5 @@ extension MultipeerCommunicator: MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
-    }
-}
-
-struct MultipeerMessage: Codable {
-    let eventType: String
-    let text: String
-    let messageId: String
-    
-    var data: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-    
-    init(eventType: String, text: String, messageId: String) {
-        self.eventType = eventType
-        self.text = text
-        self.messageId = messageId
-    }
-    
-    init?(data: Data) {
-        if let newValue = try? JSONDecoder().decode(MultipeerMessage.self, from: data) {
-            self = newValue
-        } else {
-            return nil
-        }
     }
 }
