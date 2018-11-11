@@ -25,6 +25,7 @@
 		5C3F53DD21811D8500ED7D9E /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */; };
 		5C57FAD32198DE3D0054E2D6 /* AppUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */; };
 		5C57FAD42198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD22198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift */; };
+		5C57FAD82198F2790054E2D6 /* NSManagedObjectContext+FetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD72198F2790054E2D6 /* NSManagedObjectContext+FetchRequest.swift */; };
 		5C6B4DFD218F500800E99478 /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6B4DFC218F500800E99478 /* ProfileDataManager.swift */; };
 		5C7C27AC2168FECA005066C6 /* Date+Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AB2168FECA005066C6 /* Date+Today.swift */; };
 		5C7C27AF21690134005066C6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AE21690134005066C6 /* UIColor.swift */; };
@@ -79,6 +80,7 @@
 		5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
 		5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppUser+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5C57FAD22198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5C57FAD72198F2790054E2D6 /* NSManagedObjectContext+FetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+FetchRequest.swift"; sourceTree = "<group>"; };
 		5C6B4DFC218F500800E99478 /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		5C7C27AB2168FECA005066C6 /* Date+Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Today.swift"; sourceTree = "<group>"; };
 		5C7C27AE21690134005066C6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		5C1D43782154A095006017CB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5C57FAD52198F24F0054E2D6 /* CoreData */,
 				5CA944462185C35500B3FF2F /* CoreGraphics */,
 				5C7C27A92168FEAF005066C6 /* Foundation */,
 				5C1D43792154A0BD006017CB /* UIKit */,
@@ -310,6 +313,22 @@
 				5C27274B21989618004BF445 /* MultipeerMessage.swift */,
 			);
 			path = MultipeerCommunicator;
+			sourceTree = "<group>";
+		};
+		5C57FAD52198F24F0054E2D6 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				5C57FAD62198F2620054E2D6 /* NSManagedObjectContext */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		5C57FAD62198F2620054E2D6 /* NSManagedObjectContext */ = {
+			isa = PBXGroup;
+			children = (
+				5C57FAD72198F2790054E2D6 /* NSManagedObjectContext+FetchRequest.swift */,
+			);
+			path = NSManagedObjectContext;
 			sourceTree = "<group>";
 		};
 		5C7C27A92168FEAF005066C6 /* Foundation */ = {
@@ -690,6 +709,7 @@
 				5CA92C05218CF19800BCF7A5 /* CoreDataStack.swift in Sources */,
 				5C80E3CF21972C9B00581D13 /* Message+CoreDataClass copy.swift in Sources */,
 				5C35B8D521714568006369B4 /* Theme.swift in Sources */,
+				5C57FAD82198F2790054E2D6 /* NSManagedObjectContext+FetchRequest.swift in Sources */,
 				5C3F53DA21810B0400ED7D9E /* MultipeerCommunicator.swift in Sources */,
 				5C7C27B5216914B0005066C6 /* OutgoingMessageCell.swift in Sources */,
 				5C0E5473216801F2000AA0A1 /* UITableView+ReusableCell.swift in Sources */,
