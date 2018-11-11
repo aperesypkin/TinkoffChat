@@ -50,8 +50,12 @@ class CoreDataStorageManager {
             do {
                 let result = try self.coreDataStack.saveContext.fetch(conversationsFetchRequest)
                 if let conversation = result.first {
-                    conversation.user?.isOnline = false
-                    conversation.status = "History"
+                    if let messages = conversation.messages, messages.count > 0 {
+                        conversation.user?.isOnline = false
+                        conversation.status = "History"
+                    } else {
+                        self.coreDataStack.saveContext.delete(conversation)
+                    }
                     
                     self.coreDataStack.performSave()
                 }
@@ -119,6 +123,23 @@ class CoreDataStorageManager {
             do {
                 let messages = try self.coreDataStack.saveContext.fetch(messagesFetchRequest)
                 messages.filter { $0.isUnread }.forEach { $0.isUnread = false }
+                self.coreDataStack.performSave()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func moveAllConversationsToHistory() {
+        coreDataStack.saveContext.perform {
+            let conversationsFetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+            
+            do {
+                let conversations = try self.coreDataStack.saveContext.fetch(conversationsFetchRequest)
+                conversations.filter { $0.status == "Online" }.forEach {
+                    $0.status = "History"
+                    $0.user?.isOnline = false
+                }
                 self.coreDataStack.performSave()
             } catch {
                 print(error.localizedDescription)

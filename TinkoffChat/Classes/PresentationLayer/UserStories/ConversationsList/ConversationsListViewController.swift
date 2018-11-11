@@ -68,7 +68,7 @@ final class ConversationsListViewController: BaseViewController {
         
         let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
         let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
-        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: true)
+        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: false)
         
         fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
         

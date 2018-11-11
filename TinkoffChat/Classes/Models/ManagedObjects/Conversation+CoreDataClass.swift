@@ -12,6 +12,18 @@ import CoreData
 
 @objc(Conversation)
 public class Conversation: NSManagedObject {
+    static func fetchRequestConversationsAreNotEmptyWhereUserIsOnline(context: NSManagedObjectContext) -> NSFetchRequest<Conversation>? {
+        let model = context.persistentStoreCoordinator?.managedObjectModel
+        let request = model?.fetchRequestTemplate(forName: "ConversationsAreNotEmptyWhereUserIsOnline") as? NSFetchRequest<Conversation>
+        return request
+    }
+    
+    static func fetchRequestConversations(context: NSManagedObjectContext, identifier: String) -> NSFetchRequest<Conversation>? {
+        let model = context.persistentStoreCoordinator?.managedObjectModel
+        let request = model?.fetchRequestFromTemplate(withName: "CoversationWithID", substitutionVariables: ["identifier": identifier]) as? NSFetchRequest<Conversation>
+        return request
+    }
+    
     typealias ViewModel = ConversationsListViewController.ViewModel
     
     var viewModel: ViewModel {

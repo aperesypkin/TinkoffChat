@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    private let storage = CoreDataStorageManager()
+    
     private var applicationState: String {
         return UIApplication.shared.applicationState.string
     }
@@ -25,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
+        storage.moveAllConversationsToHistory()
         ThemeManager.shared.loadTheme { theme in
             if let theme = theme {
                 theme.apply()
