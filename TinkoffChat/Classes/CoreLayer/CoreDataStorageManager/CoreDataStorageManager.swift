@@ -20,6 +20,7 @@ class CoreDataStorageManager {
             do {
                 let result = try self.coreDataStack.saveContext.fetch(conversationsFetchRequest)
                 if let conversation = result.first {
+                    conversation.user?.name = userName
                     conversation.user?.isOnline = true
                     conversation.status = "Online"
                 } else {
@@ -141,6 +142,23 @@ class CoreDataStorageManager {
                     $0.user?.isOnline = false
                 }
                 self.coreDataStack.performSave()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func createUserIfNeeded() {
+        coreDataStack.saveContext.perform {
+            let request: NSFetchRequest<AppUser> = AppUser.fetchRequest()
+            do {
+                let result = try self.coreDataStack.saveContext.fetch(request)
+                if result.isEmpty {
+                    let user = AppUser(context: self.coreDataStack.saveContext)
+                    user.name = "Unnamed"
+                    user.aboutMe = "Информация о пользователе"
+                    user.image = nil
+                }
             } catch {
                 print(error.localizedDescription)
             }

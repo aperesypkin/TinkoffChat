@@ -23,6 +23,8 @@
 		5C35B8D521714568006369B4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35B8D421714568006369B4 /* Theme.swift */; };
 		5C3F53DA21810B0400ED7D9E /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */; };
 		5C3F53DD21811D8500ED7D9E /* CommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */; };
+		5C57FAD32198DE3D0054E2D6 /* AppUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */; };
+		5C57FAD42198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD22198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift */; };
 		5C6B4DFD218F500800E99478 /* ProfileDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6B4DFC218F500800E99478 /* ProfileDataManager.swift */; };
 		5C7C27AC2168FECA005066C6 /* Date+Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AB2168FECA005066C6 /* Date+Today.swift */; };
 		5C7C27AF21690134005066C6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27AE21690134005066C6 /* UIColor.swift */; };
@@ -31,8 +33,6 @@
 		5C7C27B9216914C1005066C6 /* IncomingMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C27B7216914C1005066C6 /* IncomingMessageCell.swift */; };
 		5C7C27BA216914C1005066C6 /* IncomingMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C7C27B8216914C1005066C6 /* IncomingMessageCell.xib */; };
 		5C80E3C921972C9B00581D13 /* User+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C121972C9B00581D13 /* User+CoreDataClass copy.swift */; };
-		5C80E3CA21972C9B00581D13 /* Profile+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C221972C9B00581D13 /* Profile+CoreDataProperties copy.swift */; };
-		5C80E3CC21972C9B00581D13 /* Profile+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C421972C9B00581D13 /* Profile+CoreDataClass copy.swift */; };
 		5C80E3CD21972C9B00581D13 /* User+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C521972C9B00581D13 /* User+CoreDataProperties copy.swift */; };
 		5C80E3CE21972C9B00581D13 /* Message+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C621972C9B00581D13 /* Message+CoreDataProperties copy.swift */; };
 		5C80E3CF21972C9B00581D13 /* Message+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80E3C721972C9B00581D13 /* Message+CoreDataClass copy.swift */; };
@@ -77,6 +77,8 @@
 		5C35B8D421714568006369B4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5C3F53DC21811D8500ED7D9E /* CommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationManager.swift; sourceTree = "<group>"; };
+		5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppUser+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5C57FAD22198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5C6B4DFC218F500800E99478 /* ProfileDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataManager.swift; sourceTree = "<group>"; };
 		5C7C27AB2168FECA005066C6 /* Date+Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Today.swift"; sourceTree = "<group>"; };
 		5C7C27AE21690134005066C6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -85,8 +87,6 @@
 		5C7C27B7216914C1005066C6 /* IncomingMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingMessageCell.swift; sourceTree = "<group>"; };
 		5C7C27B8216914C1005066C6 /* IncomingMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IncomingMessageCell.xib; sourceTree = "<group>"; };
 		5C80E3C121972C9B00581D13 /* User+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass copy.swift"; sourceTree = "<group>"; };
-		5C80E3C221972C9B00581D13 /* Profile+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
-		5C80E3C421972C9B00581D13 /* Profile+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Profile+CoreDataClass copy.swift"; sourceTree = "<group>"; };
 		5C80E3C521972C9B00581D13 /* User+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		5C80E3C621972C9B00581D13 /* Message+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		5C80E3C721972C9B00581D13 /* Message+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass copy.swift"; sourceTree = "<group>"; };
@@ -420,12 +420,12 @@
 		5CA92C09218CF81300BCF7A5 /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
+				5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */,
+				5C57FAD22198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift */,
 				5C80E3DA219746A400581D13 /* Conversation+CoreDataClass.swift */,
 				5C80E3DB219746A400581D13 /* Conversation+CoreDataProperties.swift */,
 				5C80E3C721972C9B00581D13 /* Message+CoreDataClass copy.swift */,
 				5C80E3C621972C9B00581D13 /* Message+CoreDataProperties copy.swift */,
-				5C80E3C421972C9B00581D13 /* Profile+CoreDataClass copy.swift */,
-				5C80E3C221972C9B00581D13 /* Profile+CoreDataProperties copy.swift */,
 				5C80E3C121972C9B00581D13 /* User+CoreDataClass copy.swift */,
 				5C80E3C521972C9B00581D13 /* User+CoreDataProperties copy.swift */,
 			);
@@ -698,7 +698,6 @@
 				5CE5286C21791B2100980D94 /* TCButton.swift in Sources */,
 				5C80E3DD219746A400581D13 /* Conversation+CoreDataProperties.swift in Sources */,
 				5C054904215D6927006A1523 /* UIEdgeInsets.swift in Sources */,
-				5C80E3CA21972C9B00581D13 /* Profile+CoreDataProperties copy.swift in Sources */,
 				5CF9465A216566E500DAFBBC /* ConversationsListCell.swift in Sources */,
 				5CA944492185C39600B3FF2F /* CGAffineTransform+Reverse.swift in Sources */,
 				5C945B2D215420180045E20F /* ProfileViewController.swift in Sources */,
@@ -707,11 +706,12 @@
 				5CBAE6C62166A18B00F91551 /* UITableView+RegisterCell.swift in Sources */,
 				5C0E547D21680DFF000AA0A1 /* UIViewController+Contents.swift in Sources */,
 				5CB2A4D8216E9D7300132404 /* ThemesViewController.m in Sources */,
-				5C80E3CC21972C9B00581D13 /* Profile+CoreDataClass copy.swift in Sources */,
 				5C6B4DFD218F500800E99478 /* ProfileDataManager.swift in Sources */,
 				5C27274F219899BC004BF445 /* CoreDataStorageManager.swift in Sources */,
 				5C25CF2A217B46D300F1BAB9 /* DataManager.swift in Sources */,
 				5C7C27B9216914C1005066C6 /* IncomingMessageCell.swift in Sources */,
+				5C57FAD32198DE3D0054E2D6 /* AppUser+CoreDataClass.swift in Sources */,
+				5C57FAD42198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift in Sources */,
 				5C2727552198AB37004BF445 /* FetchedResultControllerManagerDelegate.swift in Sources */,
 				5C25CF2C217B856100F1BAB9 /* DataManagerType.swift in Sources */,
 				5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */,

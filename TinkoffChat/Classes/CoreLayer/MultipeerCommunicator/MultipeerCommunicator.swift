@@ -17,7 +17,6 @@ protocol Communicator {
 
 private extension String {
     static let serviceType = "tinkoff-chat"
-    static let userID = UUID().uuidString
     static let userNameKey = "userName"
     static let eventType = "TextMessage"
 }
@@ -34,11 +33,18 @@ class MultipeerCommunicator: NSObject, Communicator {
             online ? advertiser.startAdvertisingPeer() : advertiser.stopAdvertisingPeer()
         }
     }
-    
-    private let localPeer = MCPeerID(displayName: .userID)
+        
+    private let localPeer = MCPeerID(displayName: UIDevice.current.identifierForVendor!.uuidString)
     
     private lazy var advertiser: MCNearbyServiceAdvertiser = {
-        let advertiser = MCNearbyServiceAdvertiser(peer: localPeer, discoveryInfo: [.userNameKey: "Alexander \(UIDevice.current.name)"], serviceType: .serviceType)
+        let userName: String
+        if let users = try? AppUser.fetchUsers(context: CoreDataStack.shared.mainContext), let name = users.first?.name {
+            userName = name
+        } else {
+            userName = UIDevice.current.name
+        }
+        
+        let advertiser = MCNearbyServiceAdvertiser(peer: localPeer, discoveryInfo: [.userNameKey: userName], serviceType: .serviceType)
         advertiser.delegate = self
         return advertiser
     }()

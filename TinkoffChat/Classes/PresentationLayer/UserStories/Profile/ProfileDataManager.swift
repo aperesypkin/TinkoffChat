@@ -11,8 +11,8 @@ import CoreData
 class ProfileDataManager {
     
     struct State {
-        var name: String? = "Unnamed"
-        var aboutMe: String? = "Информация о пользователе"
+        var name: String?
+        var aboutMe: String?
         var imageData: Data?
     }
     
@@ -21,12 +21,12 @@ class ProfileDataManager {
     private let coreDataStack = CoreDataStack.shared
     
     func saveProfile(completion: @escaping (Bool, Error?) -> Void) {
-        let profileFetch: NSFetchRequest<Profile> = Profile.fetchRequest()
         coreDataStack.saveContext.perform {
             do {
-                let results = try self.coreDataStack.saveContext.fetch(profileFetch)
-                if let profile = results.first {
-                    self.setProfile(profile)
+                let users = try AppUser.fetchUsers(context: self.coreDataStack.saveContext)
+                
+                if let user = users.first {
+                    self.setUserInfo(user)
                     self.coreDataStack.performSave {
                         DispatchQueue.main.async {
                             completion(true, nil)
@@ -46,23 +46,12 @@ class ProfileDataManager {
     }
     
     func loadProfile(completion: @escaping (State?, Error?) -> Void) {
-        let profileFetch: NSFetchRequest<Profile> = Profile.fetchRequest()
         do {
-            let results = try coreDataStack.mainContext.fetch(profileFetch)
-            if results.isEmpty {
-                coreDataStack.saveContext.perform {
-                    let profile = Profile(context: self.coreDataStack.saveContext)
-                    self.setProfile(profile)
-                    self.coreDataStack.performSave {
-                        DispatchQueue.main.async {
-                            completion(self.state, nil)
-                        }
-                    }
-                }
-            } else if let profile = results.first {
-                state.name = profile.name
-                state.aboutMe = profile.aboutMe
-                state.imageData = profile.image as Data?
+            let users = try AppUser.fetchUsers(context: coreDataStack.mainContext)
+            if let user = users.first {
+                state.name = user.name
+                state.aboutMe = user.aboutMe
+                state.imageData = user.image as Data?
                 completion(state, nil)
             }
         } catch {
@@ -70,10 +59,10 @@ class ProfileDataManager {
         }
     }
     
-    private func setProfile(_ profile: Profile) {
-        profile.name = state.name
-        profile.aboutMe = state.aboutMe
-        profile.image = state.imageData as NSData?
+    private func setUserInfo(_ user: AppUser) {
+        user.name = state.name
+        user.aboutMe = state.aboutMe
+        user.image = state.imageData as NSData?
     }
     
 }
