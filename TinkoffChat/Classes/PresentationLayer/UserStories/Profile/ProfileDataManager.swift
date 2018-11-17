@@ -78,6 +78,9 @@ extension ProfileDataManager: IProfileServiceDelegate {
     }
     
     func didLoad(user: AppUser) {
+        state.name = user.name
+        state.aboutMe = user.aboutMe
+        state.imageData = user.image as Data?
         delegate?.didLoadUser(name: user.name, aboutMe: user.aboutMe, imageData: user.image as Data?)
     }
     
