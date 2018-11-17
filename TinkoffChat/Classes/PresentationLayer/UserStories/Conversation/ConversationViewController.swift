@@ -33,19 +33,6 @@ class ConversationViewController: BaseViewController {
         }
     }
     
-//    private lazy var dataManager: FetchedResultControllerManager<Message> = {
-//        let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), userID)
-//
-//        let dateSort = NSSortDescriptor(key: #keyPath(Message.date), ascending: false)
-//
-//        fetchRequest.sortDescriptors = [dateSort]
-//
-//        return FetchedResultControllerManager(fetchRequest: fetchRequest,
-//                                              sectionNameKeyPath: nil,
-//                                              cacheName: nil)
-//    }()
-    
     private let dataManager: IConversationDataManager
     private let isUserOnline: Bool
     private let userID: String
@@ -64,13 +51,10 @@ class ConversationViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        dataManager.performFetch(for: tableView)
-        
         sendButton.isEnabled = isUserOnline
         dataManager.performFetchData()
         
         setupKeyboardNotifications()
-//        setupCommunicationManager()
         setupTapGesture()
     }
     
@@ -86,17 +70,8 @@ class ConversationViewController: BaseViewController {
                 return
         }
         
-//        communicationManager.send(text: message, for: userID)
         dataManager.send(text: message, for: userID)
         messageTextField.text = nil
-    }
-    
-    private func setupCommunicationManager() {
-//        communicationManager.didOpenConversation(with: userID)
-//
-//        communicationManager.currentUserStatus = { [weak self] isOnline in
-//            self?.sendButton.isEnabled = isOnline
-//        }
     }
     
     private func setupTapGesture() {

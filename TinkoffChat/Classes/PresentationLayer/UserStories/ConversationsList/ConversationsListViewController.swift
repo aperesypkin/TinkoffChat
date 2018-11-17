@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 
 private struct Identifiers {
-    static let conversationSequeIdentifier = "ConversationSequeIdentifier"
     static let themesSequeIdentifier = "ThemesSequeIdentifier"
     static let themesSwiftSequeIdentifier = "ThemesSwiftSequeIdentifier"
 }
@@ -61,20 +60,6 @@ final class ConversationsListViewController: BaseViewController {
         return actionSheetController
     }()
     
-//    private lazy var dataManager: FetchedResultControllerManager<Conversation> = {
-//        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-//
-//        let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
-//        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
-//        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: false)
-//
-//        fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
-//
-//        return FetchedResultControllerManager(fetchRequest: fetchRequest,
-//                                              sectionNameKeyPath: #keyPath(Conversation.status),
-//                                              cacheName: nil)
-//    }()
-    
     private let dataManager: IConversationsListDataManager
     private let presentationAssembly: IPresentationAssembly
     
@@ -101,15 +86,7 @@ final class ConversationsListViewController: BaseViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Identifiers.conversationSequeIdentifier {
-            if let conversationViewController = segue.destination.contents as? ConversationViewController {
-                guard let conversation = sender as? Conversation else { return }
-                conversationViewController.title = conversation.user?.name
-//                conversationViewController.isUserOnline = conversation.user?.isOnline
-//                conversationViewController.userID = conversation.user?.identifier
-//                conversationViewController.communicationManager = communicationManager
-            }
-        } else if segue.identifier == Identifiers.themesSequeIdentifier {
+        if segue.identifier == Identifiers.themesSequeIdentifier {
             if let themesViewController = segue.destination.contents as? ThemesViewController {
                 themesViewController.delegate = self
             }
