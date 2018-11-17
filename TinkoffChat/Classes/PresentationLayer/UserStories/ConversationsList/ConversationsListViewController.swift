@@ -35,8 +35,6 @@ final class ConversationsListViewController: BaseViewController {
         }
     }
     
-    private let communicationManager = CommunicationManager()
-    
     private let themes = [UIColor.black: Theme.black,
                           UIColor.blue: Theme.blue,
                           UIColor.white: Theme.white]
@@ -63,24 +61,38 @@ final class ConversationsListViewController: BaseViewController {
         return actionSheetController
     }()
     
-    private lazy var dataManager: FetchedResultControllerManager<Conversation> = {
-        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        
-        let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
-        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
-        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: false)
-        
-        fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
-        
-        return FetchedResultControllerManager(fetchRequest: fetchRequest,
-                                              sectionNameKeyPath: #keyPath(Conversation.status),
-                                              cacheName: nil)
-    }()
+//    private lazy var dataManager: FetchedResultControllerManager<Conversation> = {
+//        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
+//
+//        let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
+//        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
+//        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: false)
+//
+//        fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
+//
+//        return FetchedResultControllerManager(fetchRequest: fetchRequest,
+//                                              sectionNameKeyPath: #keyPath(Conversation.status),
+//                                              cacheName: nil)
+//    }()
+    
+    private let dataManager: IConversationsListDataManager
+    private let presentationAssembly: IPresentationAssembly
+    
+    init(dataManager: IConversationsListDataManager, presentationAssembly: IPresentationAssembly) {
+        self.dataManager = dataManager
+        self.presentationAssembly = presentationAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.performFetch(for: tableView)
+        title = "TinkoffChat"
+        dataManager.performFetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,9 +105,9 @@ final class ConversationsListViewController: BaseViewController {
             if let conversationViewController = segue.destination.contents as? ConversationViewController {
                 guard let conversation = sender as? Conversation else { return }
                 conversationViewController.title = conversation.user?.name
-                conversationViewController.isUserOnline = conversation.user?.isOnline
-                conversationViewController.userID = conversation.user?.identifier
-                conversationViewController.communicationManager = communicationManager
+//                conversationViewController.isUserOnline = conversation.user?.isOnline
+//                conversationViewController.userID = conversation.user?.identifier
+//                conversationViewController.communicationManager = communicationManager
             }
         } else if segue.identifier == Identifiers.themesSequeIdentifier {
             if let themesViewController = segue.destination.contents as? ThemesViewController {
@@ -130,7 +142,7 @@ final class ConversationsListViewController: BaseViewController {
 // MARK: - UITableViewDataSource
 extension ConversationsListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.sectionsCount
+        return dataManager.sectionsCount()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,7 +150,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let conversation = dataManager.object(at: indexPath)
+        guard let conversation = dataManager.object(at: indexPath) else { return UITableViewCell() }
         
         let cell: ConversationsListCell = tableView.dequeueReusableCell(for: indexPath)
         cell.configure(with: conversation.viewModel)
@@ -157,7 +169,12 @@ extension ConversationsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let conversation = dataManager.object(at: indexPath)
-        performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: conversation)
+        
+        if let userID = conversation?.user?.identifier, let isOnline = conversation?.user?.isOnline {
+            let conversationViewController = presentationAssembly.conversationViewController(userID: userID, isUserOnline: isOnline)
+            conversationViewController.title = conversation?.user?.name
+            navigationController?.pushViewController(conversationViewController, animated: true)
+        }
     }
 }
 
@@ -165,5 +182,33 @@ extension ConversationsListViewController: UITableViewDelegate {
 extension ConversationsListViewController: ​ThemesViewControllerDelegate {
     func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
         logThemeChanging(selectedTheme: selectedTheme)
+    }
+}
+
+extension ConversationsListViewController: IConversationsListDataManagerDelegate {
+    func dataWillChange() {
+        tableView.beginUpdates()
+    }
+    func dataDidChange() {
+        tableView.endUpdates()
+    }
+    func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update: tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        }
+    }
+    func sectionDidChange(atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let indexSet = IndexSet(integer: sectionIndex)
+
+        switch type {
+        case .insert: tableView.insertSections(indexSet, with: .automatic)
+        case .delete: tableView.deleteSections(indexSet, with: .automatic)
+        default: break
+        }
     }
 }

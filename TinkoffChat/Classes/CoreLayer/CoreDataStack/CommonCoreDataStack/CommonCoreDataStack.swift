@@ -1,5 +1,5 @@
 //
-//  CoreDataStack.swift
+//  CommonCoreDataStack.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 31/10/2018.
@@ -13,27 +13,27 @@ private extension String {
     static let dataStoreExtension = "sqlite"
 }
 
-class CoreDataStack {
+class CommonCoreDataStack: ICoreDataStack {
     
-    static let shared = CoreDataStack(dataModelName: "TinkoffChat")
+    static let shared = CommonCoreDataStack(dataModelName: "TinkoffChat")
     
-    private let dataModelName: String
+    let dataModelName: String
     
     init(dataModelName: String) {
         self.dataModelName = dataModelName
     }
     
-    private var storeURL: URL {
+    var storeURL: URL {
         let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return documentsUrl.appendingPathComponent(dataModelName).appendingPathExtension(.dataStoreExtension)
     }
     
-    private lazy var manageObjectModel: NSManagedObjectModel = {
+    lazy var manageObjectModel: NSManagedObjectModel = {
         let modelURL = Bundle.main.url(forResource: dataModelName, withExtension: .dataModelExtension)!
         return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
-    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
+    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: manageObjectModel)
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL)
@@ -43,28 +43,40 @@ class CoreDataStack {
         return coordinator
     }()
     
-    private lazy var masterContext: NSManagedObjectContext = {
+    lazy var masterContext: NSManagedObjectContext = {
         var masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         masterContext.persistentStoreCoordinator = persistentStoreCoordinator
         masterContext.mergePolicy = NSOverwriteMergePolicy
         return masterContext
     }()
     
-    private(set) lazy var mainContext: NSManagedObjectContext = {
+    lazy var mainContext: NSManagedObjectContext = {
         var mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         mainContext.parent = masterContext
         mainContext.mergePolicy = NSOverwriteMergePolicy
         return mainContext
     }()
     
-    private(set) lazy var saveContext: NSManagedObjectContext = {
+    lazy var saveContext: NSManagedObjectContext = {
         var saveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         saveContext.parent = mainContext
         saveContext.mergePolicy = NSOverwriteMergePolicy
         return saveContext
     }()
     
-    func performSave(with context: NSManagedObjectContext, completion: (() -> Void)? = nil) {
+    func performSave() {
+        performSave(with: saveContext)
+    }
+    
+    func performSave(completion: (() -> Void)?) {
+        performSave(with: saveContext, completion: completion)
+    }
+    
+    func performSave(with context: NSManagedObjectContext) {
+        performSave(with: context, completion: nil)
+    }
+    
+    func performSave(with context: NSManagedObjectContext, completion: (() -> Void)?) {
         context.perform {
             guard context.hasChanges else {
                 completion?()
@@ -83,10 +95,6 @@ class CoreDataStack {
                 completion?()
             }
         }
-    }
-    
-    func performSave(completion: (() -> Void)? = nil) {
-        performSave(with: saveContext, completion: completion)
     }
     
 }

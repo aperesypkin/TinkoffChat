@@ -1,5 +1,5 @@
 //
-//  CoreDataStorageManager.swift
+//  CommonCoreDataStorage.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 11/11/2018.
@@ -8,9 +8,13 @@
 
 import CoreData
 
-class CoreDataStorageManager {
+class CommonCoreDataStorage: ICoreDataStorage {
     
-    private let coreDataStack = CoreDataStack.shared
+    private let coreDataStack: ICoreDataStack
+    
+    init(coreDataStack: ICoreDataStack) {
+        self.coreDataStack = coreDataStack
+    }
     
     func saveFoundedUser(userID: String, userName: String?) {
         coreDataStack.saveContext.perform {
@@ -66,7 +70,7 @@ class CoreDataStorageManager {
         }
     }
     
-    func saveReceivedMessage(text: String, fromUser: String, toUser: String, isUnread: Bool) {
+    func saveReceivedMessage(text: String, fromUser: String, isUnread: Bool) {
         coreDataStack.saveContext.perform {
             let conversationsFetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
             conversationsFetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Conversation.identifier), fromUser)
@@ -148,21 +152,21 @@ class CoreDataStorageManager {
         }
     }
     
-    func createUserIfNeeded() {
-        coreDataStack.saveContext.perform {
-            let request: NSFetchRequest<AppUser> = AppUser.fetchRequest()
-            do {
-                let result = try self.coreDataStack.saveContext.fetch(request)
-                if result.isEmpty {
-                    let user = AppUser(context: self.coreDataStack.saveContext)
-                    user.name = "Unnamed"
-                    user.aboutMe = "Информация о пользователе"
-                    user.image = nil
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
+//    func createUserIfNeeded() { //!!!!
+//        coreDataStack.saveContext.perform {
+//            let request: NSFetchRequest<AppUser> = AppUser.fetchRequest()
+//            do {
+//                let result = try self.coreDataStack.saveContext.fetch(request)
+//                if result.isEmpty {
+//                    let user = AppUser(context: self.coreDataStack.saveContext)
+//                    user.name = "Unnamed"
+//                    user.aboutMe = "Информация о пользователе"
+//                    user.image = nil
+//                }
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
     
 }

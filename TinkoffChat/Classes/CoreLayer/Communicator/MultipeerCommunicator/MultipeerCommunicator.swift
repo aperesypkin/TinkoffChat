@@ -9,12 +9,6 @@
 import Foundation
 import MultipeerConnectivity
 
-protocol Communicator {
-    func sendMessage(string: String, to userID: String, completionHandler: ((_ success: Bool, _ error: Error?) -> Void)?)
-    var delegate: CommunicatorDelegate? { get set }
-    var online: Bool { get set }
-}
-
 private extension String {
     static let serviceType = "tinkoff-chat"
     static let userNameKey = "userName"
@@ -25,20 +19,15 @@ private extension TimeInterval {
     static let `default`: TimeInterval = 10
 }
 
-class MultipeerCommunicator: NSObject, Communicator {
+class MultipeerCommunicator: NSObject, ICommunicator {
     
-    weak var delegate: CommunicatorDelegate?
-    var online: Bool = true {
-        didSet {
-            online ? advertiser.startAdvertisingPeer() : advertiser.stopAdvertisingPeer()
-        }
-    }
+    weak var delegate: ICommunicatorDelegate?
         
     private let localPeer = MCPeerID(displayName: UIDevice.current.identifierForVendor!.uuidString)
     
     private lazy var advertiser: MCNearbyServiceAdvertiser = {
         let userName: String
-        if let users = try? AppUser.fetchUsers(context: CoreDataStack.shared.mainContext), let name = users.first?.name {
+        if let users = try? AppUser.fetchUsers(context: CommonCoreDataStack.shared.mainContext), let name = users.first?.name {
             userName = name
         } else {
             userName = UIDevice.current.name
@@ -61,15 +50,13 @@ class MultipeerCommunicator: NSObject, Communicator {
         return "\(arc4random_uniform(UInt32.max))\(Date.timeIntervalSinceReferenceDate)\(arc4random_uniform(UInt32.max))".data(using: .utf8)!.base64EncodedString()
     }
     
-    override init() {
-        super.init()
-        
-        online ? advertiser.startAdvertisingPeer() : advertiser.stopAdvertisingPeer()
-        browser.startBrowsingForPeers()
-    }
-    
     private func obtainPeer(for userID: String) -> MCPeerID? {
         return sessions.keys.filter { $0.displayName == userID }.first
+    }
+    
+    func start() {
+        advertiser.startAdvertisingPeer()
+        browser.startBrowsingForPeers()
     }
     
     func sendMessage(string: String, to userID: String, completionHandler: ((Bool, Error?) -> Void)?) {
@@ -101,7 +88,7 @@ extension MultipeerCommunicator: MCNearbyServiceAdvertiserDelegate {
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
-        delegate?.failedToStartAdvertising(error: error)
+        print(error.localizedDescription)
     }
 }
 
@@ -122,7 +109,7 @@ extension MultipeerCommunicator: MCNearbyServiceBrowserDelegate {
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-        delegate?.failedToStartBrowsingForUsers(error: error)
+        print(error)
     }
 }
 
@@ -133,7 +120,7 @@ extension MultipeerCommunicator: MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         guard let message = MultipeerMessage(data: data) else { return }
-        delegate?.didReceiveMessage(text: message.text, fromUser: peerID.displayName, toUser: localPeer.displayName)
+        delegate?.didReceiveMessage(text: message.text, fromUser: peerID.displayName)
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

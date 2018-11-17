@@ -18,7 +18,7 @@ class ProfileDataManager {
     
     var state = State()
     
-    private let coreDataStack = CoreDataStack.shared
+    private let coreDataStack = CommonCoreDataStack.shared
     
     func saveProfile(completion: @escaping (Bool, Error?) -> Void) {
         coreDataStack.saveContext.perform {
