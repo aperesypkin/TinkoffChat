@@ -56,7 +56,17 @@ class PresentationAssembly: IPresentationAssembly {
     }
     
     func profileViewController() -> ProfileViewController {
-        return ProfileViewController()
+        var dataManager = profileDataManager()
+        let viewController = ProfileViewController(dataManager: dataManager)
+        dataManager.delegate = viewController
+        return viewController
+    }
+    
+    private func profileDataManager() -> IProfileDataManager {
+        var service = serviceAssembly.profileService()
+        let dataManager = ProfileDataManager(profileService: service)
+        service.delegate = dataManager
+        return dataManager
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  IDataFetch.swift
+//  IDataFetchService.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 17/11/2018.
@@ -8,8 +8,8 @@
 
 import CoreData
 
-protocol IDataFetch {
-    var delegate: IDataFetchDelegate? { get set }
+protocol IDataFetchService {
+    var delegate: IDataFetchServiceDelegate? { get set }
     
     func performFetch()
     func sectionsCount() -> Int

@@ -11,8 +11,9 @@ import CoreData
 
 protocol IServicesAssembly {
     var communicationService: ICommunicationService { get }
-    func conversationsListService() -> IDataFetch
-    func conversationService(userID: String) -> IDataFetch
+    func conversationsListService() -> IDataFetchService
+    func conversationService(userID: String) -> IDataFetchService
+    func profileService() -> IProfileService
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -30,7 +31,7 @@ class ServicesAssembly: IServicesAssembly {
         return observer
     }()
     
-    func conversationsListService() -> IDataFetch {
+    func conversationsListService() -> IDataFetchService {
         let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
         
         let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
@@ -45,7 +46,7 @@ class ServicesAssembly: IServicesAssembly {
                                               cacheName: nil)
     }
     
-    func conversationService(userID: String) -> IDataFetch {
+    func conversationService(userID: String) -> IDataFetchService {
         let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), userID)
         
@@ -56,6 +57,10 @@ class ServicesAssembly: IServicesAssembly {
                                               fetchRequest: fetchRequest,
                                               sectionNameKeyPath: nil,
                                               cacheName: nil)
+    }
+    
+    func profileService() -> IProfileService {
+        return CommonProfileService(coreDataStack: coreAssembly.coreDataStack)
     }
     
 }

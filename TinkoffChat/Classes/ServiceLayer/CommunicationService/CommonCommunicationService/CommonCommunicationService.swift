@@ -10,7 +10,7 @@ import Foundation
 
 class CommonCommunicationService: ICommunicationService, ICommunicatorDelegate {
     
-    weak var delegate: ICommunicationDelegate?
+    weak var delegate: ICommunicationServiceDelegate?
     
     private let communicator: ICommunicator
     private let storage: ICoreDataStorage
@@ -22,6 +22,7 @@ class CommonCommunicationService: ICommunicationService, ICommunicatorDelegate {
     
     func startComminucation() {
         storage.moveAllConversationsToHistory()
+        storage.createAppUserIfNeeded()
         communicator.start()
     }
     

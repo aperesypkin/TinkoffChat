@@ -15,4 +15,5 @@ protocol ICoreDataStorage {
     func saveSendMessage(text: String, for userID: String)
     func markMessagesAsRead(for user: String)
     func moveAllConversationsToHistory()
+    func createAppUserIfNeeded()
 }

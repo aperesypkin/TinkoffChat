@@ -1,5 +1,5 @@
 //
-//  ICommunicationDelegate.swift
+//  ICommunicationServiceDelegate.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 17/11/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ICommunicationDelegate: class {
+protocol ICommunicationServiceDelegate: class {
     func didLostUser(userID: String)
     func didFoundUser(userID: String)
 }

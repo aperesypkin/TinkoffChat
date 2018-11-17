@@ -1,5 +1,5 @@
 //
-//  IDataFetchDelegate.swift
+//  IDataFetchServiceDelegate.swift
 //  TinkoffChat
 //
 //  Created by Alexander Peresypkin on 17/11/2018.
@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol IDataFetchDelegate: class {
+protocol IDataFetchServiceDelegate: class {
     func dataWillChange()
     func dataDidChange()
     func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?)

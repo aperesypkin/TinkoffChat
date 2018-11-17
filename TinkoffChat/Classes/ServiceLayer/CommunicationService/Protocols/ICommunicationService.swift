@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ICommunicationService {
-    var delegate: ICommunicationDelegate? { get set }
+    var delegate: ICommunicationServiceDelegate? { get set }
     func send(text: String, for userID: String)
     func markMessagesAsRead(for userID: String)
     func startComminucation()

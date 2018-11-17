@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol IConversationDataManagerDelegate {
+protocol IConversationDataManagerDelegate: class {
     func dataWillChange()
     func dataDidChange()
     func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?)
@@ -26,12 +26,12 @@ protocol IConversationDataManager {
 
 class ConversationDataManager: IConversationDataManager {
     
-    var delegate: IConversationDataManagerDelegate?
+    weak var delegate: IConversationDataManagerDelegate?
     
-    private let conversationService: IDataFetch
+    private let conversationService: IDataFetchService
     private let communicationService: ICommunicationService
     
-    init(conversationService: IDataFetch, communicationService: ICommunicationService) {
+    init(conversationService: IDataFetchService, communicationService: ICommunicationService) {
         self.conversationService = conversationService
         self.communicationService = communicationService
     }
@@ -62,7 +62,7 @@ class ConversationDataManager: IConversationDataManager {
     
 }
 
-extension ConversationDataManager: IDataFetchDelegate {
+extension ConversationDataManager: IDataFetchServiceDelegate {
     func dataWillChange() {
         delegate?.dataWillChange()
     }
@@ -79,7 +79,7 @@ extension ConversationDataManager: IDataFetchDelegate {
     }
 }
 
-extension ConversationDataManager: ICommunicationDelegate {
+extension ConversationDataManager: ICommunicationServiceDelegate {
     func didLostUser(userID: String) {
         delegate?.didChange(user: userID, online: false)
     }

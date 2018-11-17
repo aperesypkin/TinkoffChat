@@ -152,21 +152,21 @@ class CommonCoreDataStorage: ICoreDataStorage {
         }
     }
     
-//    func createUserIfNeeded() { //!!!!
-//        coreDataStack.saveContext.perform {
-//            let request: NSFetchRequest<AppUser> = AppUser.fetchRequest()
-//            do {
-//                let result = try self.coreDataStack.saveContext.fetch(request)
-//                if result.isEmpty {
-//                    let user = AppUser(context: self.coreDataStack.saveContext)
-//                    user.name = "Unnamed"
-//                    user.aboutMe = "Информация о пользователе"
-//                    user.image = nil
-//                }
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
+    func createAppUserIfNeeded() {
+        coreDataStack.saveContext.perform {
+            let request: NSFetchRequest<AppUser> = AppUser.fetchRequest()
+            do {
+                let result = try self.coreDataStack.saveContext.fetch(request)
+                if result.isEmpty {
+                    let user = AppUser(context: self.coreDataStack.saveContext)
+                    user.name = "Unnamed"
+                    user.aboutMe = "Информация о пользователе"
+                    user.image = nil
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
     
 }

@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol IConversationsListDataManagerDelegate {
+protocol IConversationsListDataManagerDelegate: class {
     func dataWillChange()
     func dataDidChange()
     func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?)
@@ -26,12 +26,12 @@ protocol IConversationsListDataManager {
 
 class ConversationsListDataManager: IConversationsListDataManager {
     
-    var delegate: IConversationsListDataManagerDelegate?
+    weak var delegate: IConversationsListDataManagerDelegate?
     
-    private let conversationsListService: IDataFetch
+    private let conversationsListService: IDataFetchService
     private let communicationService: ICommunicationService
     
-    init(conversationsListService: IDataFetch, communicationService: ICommunicationService) {
+    init(conversationsListService: IDataFetchService, communicationService: ICommunicationService) {
         self.conversationsListService = conversationsListService
         self.communicationService = communicationService
         self.communicationService.startComminucation()
@@ -63,7 +63,7 @@ class ConversationsListDataManager: IConversationsListDataManager {
     
 }
 
-extension ConversationsListDataManager: IDataFetchDelegate {
+extension ConversationsListDataManager: IDataFetchServiceDelegate {
     func dataWillChange() {
         delegate?.dataWillChange()
     }

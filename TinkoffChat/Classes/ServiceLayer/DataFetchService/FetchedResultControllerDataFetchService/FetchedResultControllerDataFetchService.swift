@@ -8,9 +8,9 @@
 
 import CoreData
 
-class FetchedResultControllerDataFetchService<ResultType: NSFetchRequestResult>: NSObject, IDataFetch, NSFetchedResultsControllerDelegate {
+class FetchedResultControllerDataFetchService<ResultType: NSFetchRequestResult>: NSObject, IDataFetchService, NSFetchedResultsControllerDelegate {
     
-    weak var delegate: IDataFetchDelegate?
+    weak var delegate: IDataFetchServiceDelegate?
     
     private let coreDataStack: ICoreDataStack
 

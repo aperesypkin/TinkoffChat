@@ -78,6 +78,7 @@ final class ConversationsListViewController: BaseViewController {
         
         title = "TinkoffChat"
         dataManager.performFetchData()
+        setupProfileBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,6 +101,16 @@ final class ConversationsListViewController: BaseViewController {
         } else {
             super.prepare(for: segue, sender: sender)
         }
+    }
+    
+    func setupProfileBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Профиль", style: .plain, target: self, action: #selector(didTapProfileButton))
+    }
+    
+    @objc func didTapProfileButton() {
+        let profileViewController = presentationAssembly.profileViewController()
+        let navigationController = UINavigationController(rootViewController: profileViewController)
+        present(navigationController, animated: true)
     }
     
     @IBAction func didTapChooseThemeButton(_ sender: UIBarButtonItem) {
@@ -166,9 +177,11 @@ extension ConversationsListViewController: IConversationsListDataManagerDelegate
     func dataWillChange() {
         tableView.beginUpdates()
     }
+    
     func dataDidChange() {
         tableView.endUpdates()
     }
+    
     func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
@@ -179,6 +192,7 @@ extension ConversationsListViewController: IConversationsListDataManagerDelegate
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
         }
     }
+    
     func sectionDidChange(atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         let indexSet = IndexSet(integer: sectionIndex)
 
