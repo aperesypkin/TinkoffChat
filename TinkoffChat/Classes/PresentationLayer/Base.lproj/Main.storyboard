@@ -441,10 +441,10 @@
             </objects>
             <point key="canvasLocation" x="323" y="-661"/>
         </scene>
-        <!--Themes Swift View Controller-->
+        <!--Theme List View Controller-->
         <scene sceneID="GzD-Xi-ich">
             <objects>
-                <viewController id="B7z-Us-Zl8" customClass="ThemesSwiftViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="B7z-Us-Zl8" customClass="ThemeListViewController" customModule="TinkoffChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vPc-AW-OeN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -29,13 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
-//        storage.moveAllConversationsToHistory()
-//        storage.createUserIfNeeded()
-//        ThemeManager.shared.loadTheme { theme in
-//            if let theme = theme {
-//                theme.apply()
-//            }
-//        }
+        
+        rootAssembly.serviceAssembly.themeService.loadTheme { theme in
+            if let theme = theme {
+                theme.apply()
+            }
+        }
+        
         return true
     }
     

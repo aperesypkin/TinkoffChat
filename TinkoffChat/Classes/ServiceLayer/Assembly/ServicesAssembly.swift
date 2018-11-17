@@ -6,11 +6,11 @@
 //  Copyright © 2018 Alexander Peresypkin. All rights reserved.
 //
 
-import Foundation
 import CoreData
 
 protocol IServicesAssembly {
     var communicationService: ICommunicationService { get }
+    var themeService: IThemeService { get }
     func conversationsListService() -> IDataFetchService
     func conversationService(userID: String) -> IDataFetchService
     func profileService() -> IProfileService
@@ -29,6 +29,10 @@ class ServicesAssembly: IServicesAssembly {
         let observer = CommonCommunicationService(communicator: communicator, storage: coreAssembly.storage)
         communicator.delegate = observer
         return observer
+    }()
+    
+    lazy var themeService: IThemeService = {
+        return CommonThemeService(dataManager: coreAssembly.dataManager)
     }()
     
     func conversationsListService() -> IDataFetchService {

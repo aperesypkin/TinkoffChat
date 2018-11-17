@@ -12,6 +12,7 @@ protocol IPresentationAssembly {
     func conversationsListViewController() -> ConversationsListViewController
     func conversationViewController(userID: String, isUserOnline: Bool) -> ConversationViewController
     func profileViewController() -> ProfileViewController
+    func themeListViewController() -> ThemeListViewController
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -33,7 +34,8 @@ class PresentationAssembly: IPresentationAssembly {
     private func conversationsListDataManager() -> IConversationsListDataManager {
         var service = serviceAssembly.conversationsListService()
         let dataManager = ConversationsListDataManager(conversationsListService: service,
-                                                       communicationService: serviceAssembly.communicationService)
+                                                       communicationService: serviceAssembly.communicationService,
+                                                       themeService: serviceAssembly.themeService)
         service.delegate = dataManager
         return dataManager
     }
@@ -67,6 +69,14 @@ class PresentationAssembly: IPresentationAssembly {
         let dataManager = ProfileDataManager(profileService: service)
         service.delegate = dataManager
         return dataManager
+    }
+    
+    func themeListViewController() -> ThemeListViewController {
+        return ThemeListViewController(dataManager: themeListDataManager())
+    }
+    
+    private func themeListDataManager() -> IThemeListDataManager {
+        return ThemeListDataManager(themeService: serviceAssembly.themeService)
     }
     
 }

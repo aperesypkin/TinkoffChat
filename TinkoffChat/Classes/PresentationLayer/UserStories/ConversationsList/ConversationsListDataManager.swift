@@ -22,6 +22,7 @@ protocol IConversationsListDataManager {
     func numberOfObjects(at section: Int) -> Int
     func object(at indexPath: IndexPath) -> Conversation?
     func name(for section: Int) -> String?
+    func save(theme: Theme)
 }
 
 class ConversationsListDataManager: IConversationsListDataManager {
@@ -30,10 +31,12 @@ class ConversationsListDataManager: IConversationsListDataManager {
     
     private let conversationsListService: IDataFetchService
     private let communicationService: ICommunicationService
+    private let themeService: IThemeService
     
-    init(conversationsListService: IDataFetchService, communicationService: ICommunicationService) {
+    init(conversationsListService: IDataFetchService, communicationService: ICommunicationService, themeService: IThemeService) {
         self.conversationsListService = conversationsListService
         self.communicationService = communicationService
+        self.themeService = themeService
         self.communicationService.startComminucation()
     }
     
@@ -59,6 +62,10 @@ class ConversationsListDataManager: IConversationsListDataManager {
     
     func name(for section: Int) -> String? {
         return conversationsListService.name(for: section)
+    }
+    
+    func save(theme: Theme) {
+        themeService.save(theme: theme)
     }
     
 }

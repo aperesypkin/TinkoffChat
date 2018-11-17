@@ -50,42 +50,4 @@ enum Theme: String {
             }
         }
     }
-    
-}
-
-class ThemeManager {
-    
-    static let shared = ThemeManager()
-    
-    private let dataType = DataManagerType.gcd
-    
-    private enum Keys {
-        static let selectedTheme = "SelectedTheme"
-    }
-    
-    private struct State: Codable {
-        var rawValue: String?
-    }
-    
-    private var state = State()
-    
-    func save(theme: Theme) {
-        state.rawValue = theme.rawValue
-        dataType.dataManager().save(state, to: Keys.selectedTheme) { error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func loadTheme(completionHandler: @escaping (Theme?) -> Void) {
-        dataType.dataManager().load(State.self, from: Keys.selectedTheme) { state, _ in
-            if let state = state, let rawValue = state.rawValue {
-                completionHandler(Theme(rawValue: rawValue))
-            } else {
-                completionHandler(nil)
-            }
-        }
-    }
-    
 }

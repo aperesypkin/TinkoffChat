@@ -8,13 +8,18 @@
 
 import Foundation
 
-class OperationDataManager: DataManager {
+private extension String {
+    static let queueIdentifier = "com.aperesypkin.tinkoffchat.OperationDataManager"
+}
+
+class OperationDataManager: IDataManager {
     
-    private let backgroundQueue: OperationQueue
+    private let backgroundOperationQueue: OperationQueue
+    private let backgroundQueue = DispatchQueue(label: .queueIdentifier, qos: .userInitiated)
     
     init() {
-        backgroundQueue = OperationQueue()
-        backgroundQueue.underlyingQueue = DispatchQueue.global()
+        backgroundOperationQueue = OperationQueue()
+        backgroundOperationQueue.underlyingQueue = backgroundQueue
     }
     
     func save<T: Codable>(_ object: T, to fileName: String, completionHandler: @escaping (Error?) -> Void) {
@@ -25,7 +30,7 @@ class OperationDataManager: DataManager {
                 completionHandler(saveOperation.error)
             }
         }
-        backgroundQueue.addOperation(saveOperation)
+        backgroundOperationQueue.addOperation(saveOperation)
     }
     
     func load<T: Codable>(_ type: T.Type, from fileName: String, completionHandler: @escaping (T?, Error?) -> Void) {
@@ -36,7 +41,7 @@ class OperationDataManager: DataManager {
                 completionHandler(loadOperation.result, loadOperation.error)
             }
         }
-        backgroundQueue.addOperation(loadOperation)
+        backgroundOperationQueue.addOperation(loadOperation)
     }
 }
 

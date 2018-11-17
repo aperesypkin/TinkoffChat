@@ -8,9 +8,16 @@
 
 import Foundation
 
-class GCDDataManager: DataManager {
+private extension String {
+    static let queueIdentifier = "com.aperesypkin.tinkoffchat.GCDDataManager"
+}
+
+class GCDDataManager: IDataManager {
+    
+    private let backgroundQueue = DispatchQueue(label: .queueIdentifier, qos: .userInitiated)
+    
     func save<T: Codable>(_ object: T, to fileName: String, completionHandler: @escaping (Error?) -> Void) {
-        DispatchQueue.global().async {
+        backgroundQueue.async {
             do {
                 let url = self.createURL(withFileName: fileName)
                 let data = try JSONEncoder().encode(object)
@@ -27,7 +34,7 @@ class GCDDataManager: DataManager {
     }
     
     func load<T: Codable>(_ type: T.Type, from fileName: String, completionHandler: @escaping (T?, Error?) -> Void) {
-        DispatchQueue.global().async {
+        backgroundQueue.async {
             do {
                 let url = self.createURL(withFileName: fileName)
                 let data = try Data(contentsOf: url)

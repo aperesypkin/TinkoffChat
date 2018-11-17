@@ -34,31 +34,27 @@ final class ConversationsListViewController: BaseViewController {
         }
     }
     
-    private let themes = [UIColor.black: Theme.black,
-                          UIColor.blue: Theme.blue,
-                          UIColor.white: Theme.white]
-    
-    private lazy var actionSheetController: UIAlertController = {
-        let actionSheetController = UIAlertController(title: "Выберите View Controller", message: nil, preferredStyle: .actionSheet)
-        
-        let objectiveViewControllerAction = UIAlertAction(title: "Objective-C View Controller", style: .default) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.performSegue(withIdentifier: Identifiers.themesSequeIdentifier, sender: nil)
-        }
-        
-        let swiftViewControllerAction = UIAlertAction(title: "Swift View Controller", style: .default) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.performSegue(withIdentifier: Identifiers.themesSwiftSequeIdentifier, sender: nil)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-        
-        actionSheetController.addAction(objectiveViewControllerAction)
-        actionSheetController.addAction(swiftViewControllerAction)
-        actionSheetController.addAction(cancelAction)
-        
-        return actionSheetController
-    }()
+//    private lazy var actionSheetController: UIAlertController = {
+//        let actionSheetController = UIAlertController(title: "Выберите View Controller", message: nil, preferredStyle: .actionSheet)
+//
+//        let objectiveViewControllerAction = UIAlertAction(title: "Objective-C View Controller", style: .default) { [weak self] _ in
+//            guard let `self` = self else { return }
+//            self.performSegue(withIdentifier: Identifiers.themesSequeIdentifier, sender: nil)
+//        }
+//
+//        let swiftViewControllerAction = UIAlertAction(title: "Swift View Controller", style: .default) { [weak self] _ in
+//            guard let `self` = self else { return }
+//            self.performSegue(withIdentifier: Identifiers.themesSwiftSequeIdentifier, sender: nil)
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+//
+//        actionSheetController.addAction(objectiveViewControllerAction)
+//        actionSheetController.addAction(swiftViewControllerAction)
+//        actionSheetController.addAction(cancelAction)
+//
+//        return actionSheetController
+//    }()
     
     private let dataManager: IConversationsListDataManager
     private let presentationAssembly: IPresentationAssembly
@@ -78,7 +74,7 @@ final class ConversationsListViewController: BaseViewController {
         
         title = "TinkoffChat"
         dataManager.performFetchData()
-        setupProfileBarButton()
+        setupBarButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,21 +82,26 @@ final class ConversationsListViewController: BaseViewController {
         tableView.reloadData()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Identifiers.themesSequeIdentifier {
-            if let themesViewController = segue.destination.contents as? ThemesViewController {
-                themesViewController.delegate = self
-            }
-        } else if segue.identifier == Identifiers.themesSwiftSequeIdentifier {
-            if let themesSwiftViewController = segue.destination.contents as? ThemesSwiftViewController {
-                themesSwiftViewController.themeButtonAction = { [weak self] selectedTheme in
-                    guard let `self` = self else { return }
-                    self.logThemeChanging(selectedTheme: selectedTheme)
-                }
-            }
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == Identifiers.themesSequeIdentifier {
+//            if let themesViewController = segue.destination.contents as? ThemesViewController {
+//                themesViewController.delegate = self
+//            }
+//        } else if segue.identifier == Identifiers.themesSwiftSequeIdentifier {
+//            if let themesSwiftViewController = segue.destination.contents as? ThemeListViewController {
+//                themesSwiftViewController.themeButtonAction = { [weak self] selectedTheme in
+//                    guard let `self` = self else { return }
+//                    self.logThemeChanging(selectedTheme: selectedTheme)
+//                }
+//            }
+//        } else {
+//            super.prepare(for: segue, sender: sender)
+//        }
+//    }
+    
+    func setupBarButtons() {
+        setupProfileBarButton()
+        setupThemeListBarButton()
     }
     
     func setupProfileBarButton() {
@@ -113,17 +114,23 @@ final class ConversationsListViewController: BaseViewController {
         present(navigationController, animated: true)
     }
     
-    @IBAction func didTapChooseThemeButton(_ sender: UIBarButtonItem) {
-        present(actionSheetController, animated: true)
+    func setupThemeListBarButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Темы", style: .plain, target: self, action: #selector(didTapThemeListButton))
     }
     
-    private func logThemeChanging(selectedTheme: UIColor) {
-        print("Selected theme's color is \(selectedTheme.string)")
-        if let theme = themes[selectedTheme] {
-            theme.apply()
-            ThemeManager.shared.save(theme: theme)
-        }
+    @objc func didTapThemeListButton() {
+        let profileViewController = presentationAssembly.themeListViewController()
+        let navigationController = UINavigationController(rootViewController: profileViewController)
+        present(navigationController, animated: true)
     }
+    
+//    private func logThemeChanging(selectedTheme: UIColor) {
+//        print("Selected theme's color is \(selectedTheme.string)")
+//        if let theme = themes[selectedTheme] {
+//            theme.apply()
+//            dataManager.save(theme: theme)
+//        }
+//    }
 
 }
 
@@ -163,13 +170,6 @@ extension ConversationsListViewController: UITableViewDelegate {
             conversationViewController.title = conversation?.user?.name
             navigationController?.pushViewController(conversationViewController, animated: true)
         }
-    }
-}
-
-// MARK: - ​ThemesViewControllerDelegate
-extension ConversationsListViewController: ​ThemesViewControllerDelegate {
-    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
-        logThemeChanging(selectedTheme: selectedTheme)
     }
 }
 

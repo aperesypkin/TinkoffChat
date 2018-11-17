@@ -12,6 +12,7 @@ protocol ICoreAssembly {
     var coreDataStack: ICoreDataStack { get }
     var storage: ICoreDataStorage { get }
     var communicator: ICommunicator { get }
+    var dataManager: IDataManager { get }
 }
 
 class CoreAssembly: ICoreAssembly {
@@ -25,5 +26,7 @@ class CoreAssembly: ICoreAssembly {
     }
     
     lazy var communicator: ICommunicator = MultipeerCommunicator()
+    
+    var dataManager: IDataManager = GCDDataManager()
     
 }

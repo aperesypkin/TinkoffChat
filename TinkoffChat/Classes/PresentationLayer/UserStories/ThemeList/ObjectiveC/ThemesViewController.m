@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     self.model = [[[Themes alloc] init] autorelease];
-    self.themesArray = [[[NSArray alloc] initWithObjects:self.model.theme1, self.model.theme2, self.model.theme3, nil] autorelease];
+    self.themesArray = [[[NSArray alloc] initWithObjects: self.model.theme1, self.model.theme2, self.model.theme3, nil] autorelease];
 }
 
 - (IBAction)didTapThemeButton:(UIButton *)sender {
