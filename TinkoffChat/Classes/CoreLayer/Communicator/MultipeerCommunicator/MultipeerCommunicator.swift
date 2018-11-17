@@ -22,12 +22,14 @@ private extension TimeInterval {
 class MultipeerCommunicator: NSObject, ICommunicator {
     
     weak var delegate: ICommunicatorDelegate?
-        
+    
+    private let coreDataStack: ICoreDataStack
+    
     private let localPeer = MCPeerID(displayName: UIDevice.current.identifierForVendor!.uuidString)
     
     private lazy var advertiser: MCNearbyServiceAdvertiser = {
         let userName: String
-        if let users = try? AppUser.fetchUsers(context: CommonCoreDataStack.shared.mainContext), let name = users.first?.name {
+        if let users = try? AppUser.fetchUsers(context: coreDataStack.mainContext), let name = users.first?.name {
             userName = name
         } else {
             userName = UIDevice.current.name
@@ -52,6 +54,11 @@ class MultipeerCommunicator: NSObject, ICommunicator {
     
     private func obtainPeer(for userID: String) -> MCPeerID? {
         return sessions.keys.filter { $0.displayName == userID }.first
+    }
+    
+    init(coreDataStack: ICoreDataStack) {
+        self.coreDataStack = coreDataStack
+        super.init()
     }
     
     func start() {

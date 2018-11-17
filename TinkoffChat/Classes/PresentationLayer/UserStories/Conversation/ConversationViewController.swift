@@ -15,6 +15,8 @@ class ConversationViewController: BaseViewController {
         let text: String
     }
     
+    // MARK: - UI
+    
     @IBOutlet var messageTextField: UITextField! {
         didSet {
             messageTextField.delegate = self
@@ -33,9 +35,16 @@ class ConversationViewController: BaseViewController {
         }
     }
     
+    // MARK: - Dependencies
+    
     private let dataManager: IConversationDataManager
+    
+    // MARK: - Private properties
+    
     private let isUserOnline: Bool
     private let userID: String
+    
+    // MARK: - Initialization
     
     init(dataManager: IConversationDataManager, userID: String, isUserOnline: Bool) {
         self.dataManager = dataManager
@@ -48,20 +57,22 @@ class ConversationViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sendButton.isEnabled = isUserOnline
+        setup()
         dataManager.performFetchData()
-        
-        setupKeyboardNotifications()
-        setupTapGesture()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         dataManager.markMessagesAsRead(for: userID)
     }
+    
+    // MARK: - IB Actions
     
     @IBAction func didTapSendButton(_ sender: UIButton) {
         guard let message = messageTextField.text,
@@ -72,6 +83,14 @@ class ConversationViewController: BaseViewController {
         
         dataManager.send(text: message, for: userID)
         messageTextField.text = nil
+    }
+    
+    // MARK: - Private methods
+    
+    private func setup() {
+        sendButton.isEnabled = isUserOnline
+        setupKeyboardNotifications()
+        setupTapGesture()
     }
     
     private func setupTapGesture() {
@@ -116,6 +135,7 @@ extension ConversationViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - IConversationDataManagerDelegate
 extension ConversationViewController: IConversationDataManagerDelegate {
     func didChange(user: String, online status: Bool) {
         sendButton.isEnabled = status

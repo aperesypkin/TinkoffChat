@@ -198,6 +198,8 @@
 		5C0E547421680284000AA0A1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
+				5C945B2E215420180045E20F /* Main.storyboard */,
 				5CB2A4D5216E9D7200132404 /* TinkoffChat-Bridging-Header.h */,
 				5C945B4121542DD50045E20F /* Default-568h@2x.png */,
 				5C945B312154201A0045E20F /* Assets.xcassets */,
@@ -459,8 +461,6 @@
 			isa = PBXGroup;
 			children = (
 				5C33FF38219D8CD90033CCA1 /* Assembly */,
-				5C945B332154201A0045E20F /* LaunchScreen.storyboard */,
-				5C945B2E215420180045E20F /* Main.storyboard */,
 				5C27274D219896A9004BF445 /* Common */,
 				5CC119E6215C10FA00507837 /* UserStories */,
 			);

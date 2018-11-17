@@ -25,7 +25,7 @@ class CoreAssembly: ICoreAssembly {
         return CommonCoreDataStorage(coreDataStack: coreDataStack)
     }
     
-    lazy var communicator: ICommunicator = MultipeerCommunicator()
+    lazy var communicator: ICommunicator = MultipeerCommunicator(coreDataStack: coreDataStack)
     
     var dataManager: IDataManager = GCDDataManager()
     

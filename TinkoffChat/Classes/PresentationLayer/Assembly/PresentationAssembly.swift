@@ -23,6 +23,8 @@ class PresentationAssembly: IPresentationAssembly {
         self.serviceAssembly = serviceAssembly
     }
     
+    // MARK: - ConversationsListViewController
+    
     func conversationsListViewController() -> ConversationsListViewController {
         var dataManager = conversationsListDataManager()
         let viewController = ConversationsListViewController(dataManager: dataManager,
@@ -39,6 +41,8 @@ class PresentationAssembly: IPresentationAssembly {
         service.delegate = dataManager
         return dataManager
     }
+    
+    // MARK: - ConversationViewController
     
     func conversationViewController(userID: String, isUserOnline: Bool) -> ConversationViewController {
         var dataManager = conversationDataManager(userID: userID)
@@ -57,6 +61,8 @@ class PresentationAssembly: IPresentationAssembly {
         return dataManager
     }
     
+    // MARK: - ProfileViewController
+    
     func profileViewController() -> ProfileViewController {
         var dataManager = profileDataManager()
         let viewController = ProfileViewController(dataManager: dataManager)
@@ -70,6 +76,8 @@ class PresentationAssembly: IPresentationAssembly {
         service.delegate = dataManager
         return dataManager
     }
+    
+    // MARK: - ThemeListViewController
     
     func themeListViewController() -> ThemeListViewController {
         return ThemeListViewController(dataManager: themeListDataManager())

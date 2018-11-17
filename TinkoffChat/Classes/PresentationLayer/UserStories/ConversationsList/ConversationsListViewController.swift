@@ -25,6 +25,8 @@ final class ConversationsListViewController: BaseViewController {
         let online: Bool
     }
     
+    // MARK: - UI
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -34,30 +36,12 @@ final class ConversationsListViewController: BaseViewController {
         }
     }
     
-//    private lazy var actionSheetController: UIAlertController = {
-//        let actionSheetController = UIAlertController(title: "Выберите View Controller", message: nil, preferredStyle: .actionSheet)
-//
-//        let objectiveViewControllerAction = UIAlertAction(title: "Objective-C View Controller", style: .default) { [weak self] _ in
-//            guard let `self` = self else { return }
-//            self.performSegue(withIdentifier: Identifiers.themesSequeIdentifier, sender: nil)
-//        }
-//
-//        let swiftViewControllerAction = UIAlertAction(title: "Swift View Controller", style: .default) { [weak self] _ in
-//            guard let `self` = self else { return }
-//            self.performSegue(withIdentifier: Identifiers.themesSwiftSequeIdentifier, sender: nil)
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-//
-//        actionSheetController.addAction(objectiveViewControllerAction)
-//        actionSheetController.addAction(swiftViewControllerAction)
-//        actionSheetController.addAction(cancelAction)
-//
-//        return actionSheetController
-//    }()
+    // MARK: - Dependencies
     
     private let dataManager: IConversationsListDataManager
     private let presentationAssembly: IPresentationAssembly
+    
+    // MARK: - Initialization
     
     init(dataManager: IConversationsListDataManager, presentationAssembly: IPresentationAssembly) {
         self.dataManager = dataManager
@@ -69,68 +53,52 @@ final class ConversationsListViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "TinkoffChat"
+        setup()
         dataManager.performFetchData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
+    // MARK: - Private methods
+    
+    private func setup() {
+        title = "TinkoffChat"
         setupBarButtons()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
-
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == Identifiers.themesSequeIdentifier {
-//            if let themesViewController = segue.destination.contents as? ThemesViewController {
-//                themesViewController.delegate = self
-//            }
-//        } else if segue.identifier == Identifiers.themesSwiftSequeIdentifier {
-//            if let themesSwiftViewController = segue.destination.contents as? ThemeListViewController {
-//                themesSwiftViewController.themeButtonAction = { [weak self] selectedTheme in
-//                    guard let `self` = self else { return }
-//                    self.logThemeChanging(selectedTheme: selectedTheme)
-//                }
-//            }
-//        } else {
-//            super.prepare(for: segue, sender: sender)
-//        }
-//    }
-    
-    func setupBarButtons() {
+    private func setupBarButtons() {
         setupProfileBarButton()
         setupThemeListBarButton()
     }
     
-    func setupProfileBarButton() {
+    private func setupProfileBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Профиль", style: .plain, target: self, action: #selector(didTapProfileButton))
     }
     
-    @objc func didTapProfileButton() {
+    @objc private func didTapProfileButton() {
         let profileViewController = presentationAssembly.profileViewController()
         let navigationController = UINavigationController(rootViewController: profileViewController)
         present(navigationController, animated: true)
     }
     
-    func setupThemeListBarButton() {
+    private func setupThemeListBarButton() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Темы", style: .plain, target: self, action: #selector(didTapThemeListButton))
     }
     
-    @objc func didTapThemeListButton() {
+    @objc private func didTapThemeListButton() {
         let profileViewController = presentationAssembly.themeListViewController()
         let navigationController = UINavigationController(rootViewController: profileViewController)
         present(navigationController, animated: true)
     }
-    
-//    private func logThemeChanging(selectedTheme: UIColor) {
-//        print("Selected theme's color is \(selectedTheme.string)")
-//        if let theme = themes[selectedTheme] {
-//            theme.apply()
-//            dataManager.save(theme: theme)
-//        }
-//    }
 
 }
 
@@ -173,6 +141,7 @@ extension ConversationsListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - IConversationsListDataManagerDelegate
 extension ConversationsListViewController: IConversationsListDataManagerDelegate {
     func dataWillChange() {
         tableView.beginUpdates()

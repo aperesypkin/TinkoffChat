@@ -14,6 +14,8 @@ private extension CGFloat {
 
 class ProfileViewController: BaseViewController {
     
+    // MARK: - UI
+    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: TCButton!
     
@@ -34,6 +36,8 @@ class ProfileViewController: BaseViewController {
     }
     @IBOutlet weak var choosePhotoButton: UIButton!
     
+    // MARK: - Private properties
+    
     private var isEditMode: Bool = false {
         didSet {
             editButton.isHidden = isEditMode
@@ -46,17 +50,6 @@ class ProfileViewController: BaseViewController {
             
             choosePhotoButton.isHidden.toggle()
         }
-    }
-    
-    private let dataManager: IProfileDataManager
-    
-    init(dataManager: IProfileDataManager) {
-        self.dataManager = dataManager
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private let imagePicker = UIImagePickerController()
@@ -116,13 +109,27 @@ class ProfileViewController: BaseViewController {
         return alert
     }()
     
+    // MARK: - Dependencies
+    
+    private let dataManager: IProfileDataManager
+    
+    // MARK: - Initialization
+    
+    init(dataManager: IProfileDataManager) {
+        self.dataManager = dataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Профиль"
-        setupKeyboardNotifications()
-        setupCloseBarButton()
-        imagePicker.delegate = self
+        setup()
         loadData()
     }
     
@@ -132,13 +139,7 @@ class ProfileViewController: BaseViewController {
         updateUI()
     }
     
-    func setupCloseBarButton() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Закрыть", style: .plain, target: self, action: #selector(didTapCloseButton))
-    }
-    
-    @objc func didTapCloseButton() {
-        dismiss(animated: true)
-    }
+    // MARK: - IB Actions
     
     @IBAction func didTapChoosePhotoButton(_ sender: UIButton) {
         present(actionSheetController, animated: true)
@@ -152,6 +153,23 @@ class ProfileViewController: BaseViewController {
     @IBAction func didTapSaveButton(_ sender: TCButton) {
         view.endEditing(true)
         saveData()
+    }
+    
+    // MARK: - Private methods
+    
+    private func setup() {
+        title = "Профиль"
+        setupKeyboardNotifications()
+        setupCloseBarButton()
+        imagePicker.delegate = self
+    }
+    
+    private func setupCloseBarButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Закрыть", style: .plain, target: self, action: #selector(didTapCloseButton))
+    }
+    
+    @objc private func didTapCloseButton() {
+        dismiss(animated: true)
     }
     
     private func saveData() {
@@ -233,6 +251,7 @@ extension ProfileViewController: UITextViewDelegate {
     }
 }
 
+// MARK: - IProfileDataManagerDelegate
 extension ProfileViewController: IProfileDataManagerDelegate {
     func didLoadUser(name: String?, aboutMe: String?, imageData: Data?) {
         self.activityIndicator.stopAnimating()
