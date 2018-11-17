@@ -12,9 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-//    private let storage = CoreDataStorageManager()
-    
+        
     private let rootAssembly = RootAssembly()
     
     private var applicationState: String {
