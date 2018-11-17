@@ -8,61 +8,83 @@
 
 import CoreData
 
-class ProfileDataManager {
+protocol IProfileDataManagerDelegate: class {
+    func didLoadUser(name: String?, aboutMe: String?, imageData: Data?)
+    func didSaveUser()
+    func didReceiveSave(error: String)
+    func didReceiveLoad(error: String)
+}
+
+protocol IProfileDataManager {
+    var delegate: IProfileDataManagerDelegate? { get set }
+    func saveProfile()
+    func loadProfile()
+    func set(name: String?)
+    func set(aboutMe: String)
+    func set(imageData: Data?)
+}
+
+class ProfileDataManager: IProfileDataManager {
     
-    struct State {
+    private struct State {
         var name: String?
         var aboutMe: String?
         var imageData: Data?
     }
     
-    var state = State()
+    private var state = State()
     
-    private let coreDataStack = CoreDataStack.shared
+    weak var delegate: IProfileDataManagerDelegate?
     
-    func saveProfile(completion: @escaping (Bool, Error?) -> Void) {
-        coreDataStack.saveContext.perform {
-            do {
-                let users = try AppUser.fetchUsers(context: self.coreDataStack.saveContext)
-                
-                if let user = users.first {
-                    self.setUserInfo(user)
-                    self.coreDataStack.performSave {
-                        DispatchQueue.main.async {
-                            completion(true, nil)
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        completion(false, nil)
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(false, error)
-                }
-            }
-        }
+    private let profileService: IProfileService
+    
+    init(profileService: IProfileService) {
+        self.profileService = profileService
     }
     
-    func loadProfile(completion: @escaping (State?, Error?) -> Void) {
-        do {
-            let users = try AppUser.fetchUsers(context: coreDataStack.mainContext)
-            if let user = users.first {
-                state.name = user.name
-                state.aboutMe = user.aboutMe
-                state.imageData = user.image as Data?
-                completion(state, nil)
-            }
-        } catch {
-            completion(nil, error)
-        }
+    func saveProfile() {
+        profileService.save(name: state.name,
+                            aboutMe: state.aboutMe,
+                            imageData: state.imageData as NSData?)
     }
     
-    private func setUserInfo(_ user: AppUser) {
-        user.name = state.name
-        user.aboutMe = state.aboutMe
-        user.image = state.imageData as NSData?
+    func loadProfile() {
+        profileService.load()
     }
     
+    func set(name: String?) {
+        state.name = name
+    }
+    
+    func set(aboutMe: String) {
+        state.aboutMe = aboutMe
+    }
+    
+    func set(imageData: Data?) {
+        state.imageData = imageData
+    }
+    
+}
+
+extension ProfileDataManager: IProfileServiceDelegate {
+    func didReceiveSave(error: Error?) {
+        let error = error?.localizedDescription ?? "ProfileService did receive save error"
+        delegate?.didReceiveSave(error: error)
+    }
+    
+    func didReceiveLoad(error: Error?) {
+        let error = error?.localizedDescription ?? "ProfileService did receive load error"
+        delegate?.didReceiveLoad(error: error)
+    }
+    
+    func didLoad(user: AppUser) {
+        state.name = user.name
+        state.aboutMe = user.aboutMe
+        state.imageData = user.image as Data?
+        delegate?.didLoadUser(name: user.name, aboutMe: user.aboutMe, imageData: user.image as Data?)
+    }
+    
+    func didSaveUser() {
+        delegate?.didSaveUser()
+    }
 }

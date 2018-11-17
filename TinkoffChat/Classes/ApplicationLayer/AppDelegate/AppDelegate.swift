@@ -12,8 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    private let storage = CoreDataStorageManager()
+        
+    private let rootAssembly = RootAssembly()
     
     private var applicationState: String {
         return UIApplication.shared.applicationState.string
@@ -27,18 +27,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
-        storage.moveAllConversationsToHistory()
-        storage.createUserIfNeeded()
-        ThemeManager.shared.loadTheme { theme in
+        
+        rootAssembly.serviceAssembly.themeService.loadTheme { theme in
             if let theme = theme {
                 theme.apply()
             }
         }
+        
         return true
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let controller = rootAssembly.presentationAssembly.conversationsListViewController()
+        let navigationController = UINavigationController(rootViewController: controller)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
     

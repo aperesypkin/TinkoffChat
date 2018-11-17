@@ -15,6 +15,8 @@ class ConversationViewController: BaseViewController {
         let text: String
     }
     
+    // MARK: - UI
+    
     @IBOutlet var messageTextField: UITextField! {
         didSet {
             messageTextField.delegate = self
@@ -33,34 +35,44 @@ class ConversationViewController: BaseViewController {
         }
     }
     
-    var communicationManager: CommunicationManager!
-    var isUserOnline: Bool!
-    var userID: String!
+    // MARK: - Dependencies
     
-    private lazy var dataManager: FetchedResultControllerManager<Message> = {
-        let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "%K = %@", #keyPath(Message.conversation.identifier), userID)
-        
-        let dateSort = NSSortDescriptor(key: #keyPath(Message.date), ascending: false)
-        
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        return FetchedResultControllerManager(fetchRequest: fetchRequest,
-                                              sectionNameKeyPath: nil,
-                                              cacheName: nil)
-    }()
+    private let dataManager: IConversationDataManager
+    
+    // MARK: - Private properties
+    
+    private let isUserOnline: Bool
+    private let userID: String
+    
+    // MARK: - Initialization
+    
+    init(dataManager: IConversationDataManager, userID: String, isUserOnline: Bool) {
+        self.dataManager = dataManager
+        self.userID = userID
+        self.isUserOnline = isUserOnline
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.performFetch(for: tableView)
-        
-        sendButton.isEnabled = isUserOnline
-        
-        setupKeyboardNotifications()
-        setupCommunicationManager()
-        setupTapGesture()
+        setup()
+        dataManager.performFetchData()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        dataManager.markMessagesAsRead(for: userID)
+    }
+    
+    // MARK: - IB Actions
     
     @IBAction func didTapSendButton(_ sender: UIButton) {
         guard let message = messageTextField.text,
@@ -69,17 +81,16 @@ class ConversationViewController: BaseViewController {
                 return
         }
         
-        communicationManager.send(text: message, for: userID)
-        
+        dataManager.send(text: message, for: userID)
         messageTextField.text = nil
     }
     
-    private func setupCommunicationManager() {
-        communicationManager.didOpenConversation(with: userID)
-
-        communicationManager.currentUserStatus = { [weak self] isOnline in
-            self?.sendButton.isEnabled = isOnline
-        }
+    // MARK: - Private methods
+    
+    private func setup() {
+        sendButton.isEnabled = isUserOnline
+        setupKeyboardNotifications()
+        setupTapGesture()
     }
     
     private func setupTapGesture() {
@@ -91,10 +102,6 @@ class ConversationViewController: BaseViewController {
         view.endEditing(true)
     }
     
-    deinit {
-        communicationManager.didCloseConversation()
-    }
-    
 }
 
 // MARK: - UITableViewDataSource
@@ -102,10 +109,10 @@ extension ConversationViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataManager.numberOfObjects(at: section)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = dataManager.object(at: indexPath)
-        
+        guard let message = dataManager.object(at: indexPath) else { return UITableViewCell() }
+
         if message.isIncomingMessage {
             let cell: IncomingMessageCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(with: message.viewModel)
@@ -126,4 +133,31 @@ extension ConversationViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+}
+
+// MARK: - IConversationDataManagerDelegate
+extension ConversationViewController: IConversationDataManagerDelegate {
+    func didChange(user: String, online status: Bool) {
+        sendButton.isEnabled = status
+    }
+    
+    func dataWillChange() {
+        tableView.beginUpdates()
+    }
+    
+    func dataDidChange() {
+        tableView.endUpdates()
+    }
+    
+    func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update: tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        }
+    }
+    
 }

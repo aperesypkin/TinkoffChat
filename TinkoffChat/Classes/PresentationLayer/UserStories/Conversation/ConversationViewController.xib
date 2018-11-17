@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationViewController" customModule="TinkoffChat" customModuleProvider="target">
+            <connections>
+                <outlet property="messageTextField" destination="Hm6-DN-SVw" id="6w5-8t-8AP"/>
+                <outlet property="sendButton" destination="HpN-uG-osJ" id="AE7-Ct-aeR"/>
+                <outlet property="tableView" destination="MA5-db-9lE" id="mah-F6-o0E"/>
+                <outlet property="view" destination="iN0-l3-epB" id="MKG-M6-6dv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MA5-db-9lE">
+                    <rect key="frame" x="0.0" y="20" width="375" height="602"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C7h-ud-WMs">
+                    <rect key="frame" x="0.0" y="622" width="375" height="45"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XOz-aG-2xi">
+                            <rect key="frame" x="15" y="5" width="345" height="35"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Сообщение..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hm6-DN-SVw">
+                                    <rect key="frame" x="0.0" y="2.5" width="301" height="30"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HpN-uG-osJ">
+                                    <rect key="frame" x="309" y="2.5" width="36" height="30"/>
+                                    <state key="normal" title="Send"/>
+                                    <connections>
+                                        <action selector="didTapSendButton:" destination="-1" eventType="touchUpInside" id="ttB-Mx-u7D"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.95054727159999997" green="0.95054727159999997" blue="0.95054727159999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="XOz-aG-2xi" firstAttribute="top" secondItem="C7h-ud-WMs" secondAttribute="top" constant="5" id="JtQ-Ly-XWE"/>
+                        <constraint firstAttribute="trailing" secondItem="XOz-aG-2xi" secondAttribute="trailing" constant="15" id="LOd-jP-GeW"/>
+                        <constraint firstAttribute="bottom" secondItem="XOz-aG-2xi" secondAttribute="bottom" constant="5" id="T1H-CW-yPZ"/>
+                        <constraint firstItem="XOz-aG-2xi" firstAttribute="leading" secondItem="C7h-ud-WMs" secondAttribute="leading" constant="15" id="htd-s9-8cA"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="iN7-tF-pCX"/>
+                        <constraint firstAttribute="height" constant="45" id="oH4-QG-bPV"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="dW4-Vk-7iq"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="C7h-ud-WMs" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="6TN-Jl-dDT"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="MA5-db-9lE" secondAttribute="trailing" id="8Sb-xt-9B7"/>
+                <constraint firstItem="C7h-ud-WMs" firstAttribute="top" secondItem="MA5-db-9lE" secondAttribute="bottom" id="H5Z-rb-clx"/>
+                <constraint firstItem="C7h-ud-WMs" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="ZY5-SF-GVe"/>
+                <constraint firstItem="MA5-db-9lE" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="k9c-1F-6c1"/>
+                <constraint firstItem="C7h-ud-WMs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="xCN-h6-RbZ"/>
+                <constraint firstItem="MA5-db-9lE" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="y1y-dM-ByN"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="53.600000000000001" y="77.811094452773617"/>
+        </view>
+    </objects>
+</document>

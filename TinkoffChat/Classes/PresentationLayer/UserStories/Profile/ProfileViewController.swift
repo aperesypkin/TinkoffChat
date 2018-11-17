@@ -14,6 +14,8 @@ private extension CGFloat {
 
 class ProfileViewController: BaseViewController {
     
+    // MARK: - UI
+    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var editButton: TCButton!
     
@@ -34,6 +36,8 @@ class ProfileViewController: BaseViewController {
     }
     @IBOutlet weak var choosePhotoButton: UIButton!
     
+    // MARK: - Private properties
+    
     private var isEditMode: Bool = false {
         didSet {
             editButton.isHidden = isEditMode
@@ -47,8 +51,6 @@ class ProfileViewController: BaseViewController {
             choosePhotoButton.isHidden.toggle()
         }
     }
-    
-    private let dataManager = ProfileDataManager()
     
     private let imagePicker = UIImagePickerController()
     
@@ -107,11 +109,27 @@ class ProfileViewController: BaseViewController {
         return alert
     }()
     
+    // MARK: - Dependencies
+    
+    private let dataManager: IProfileDataManager
+    
+    // MARK: - Initialization
+    
+    init(dataManager: IProfileDataManager) {
+        self.dataManager = dataManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupKeyboardNotifications()
-        imagePicker.delegate = self
+        setup()
         loadData()
     }
     
@@ -121,9 +139,7 @@ class ProfileViewController: BaseViewController {
         updateUI()
     }
     
-    @IBAction func didTapCloseButton(_ sender: UIBarButtonItem) {
-        dismiss(animated: true)
-    }
+    // MARK: - IB Actions
     
     @IBAction func didTapChoosePhotoButton(_ sender: UIButton) {
         present(actionSheetController, animated: true)
@@ -139,39 +155,33 @@ class ProfileViewController: BaseViewController {
         saveData()
     }
     
+    // MARK: - Private methods
+    
+    private func setup() {
+        title = "Профиль"
+        setupKeyboardNotifications()
+        setupCloseBarButton()
+        imagePicker.delegate = self
+    }
+    
+    private func setupCloseBarButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Закрыть", style: .plain, target: self, action: #selector(didTapCloseButton))
+    }
+    
+    @objc private func didTapCloseButton() {
+        dismiss(animated: true)
+    }
+    
     private func saveData() {
         activityIndicator.startAnimating()
         saveButton.isEnabled = false
-        dataManager.saveProfile { [weak self] isSuccess, _ in
-            guard let `self` = self else { return }
-            
-            self.saveButton.isEnabled = true
-            self.activityIndicator.stopAnimating()
-            if isSuccess {
-                self.present(self.successfulAlert, animated: true)
-            } else {
-                self.present(self.failureAlert, animated: true)
-            }
-        }
+        dataManager.saveProfile()
     }
     
     private func loadData() {
         activityIndicator.startAnimating()
         saveButton.isEnabled = false
-        dataManager.loadProfile { [weak self] profile, _ in
-            guard let `self` = self else { return }
-            
-            self.activityIndicator.stopAnimating()
-            if let profile = profile {
-                self.nameLabel.text = profile.name
-                self.nameTextField.text = profile.name
-                self.aboutMeLabel.text = profile.aboutMe
-                self.aboutMeTextView.text = profile.aboutMe
-                if let imageData = profile.imageData {
-                    self.photoImageView.image = UIImage(data: imageData)
-                }
-            }
-        }
+        dataManager.loadProfile()
     }
     
     private func updateUI() {
@@ -188,7 +198,7 @@ class ProfileViewController: BaseViewController {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        dataManager.state.imageData = image.jpegData(compressionQuality: 1)
+        dataManager.set(imageData: image.jpegData(compressionQuality: 1))
         photoImageView.image = image
         saveButton.isEnabled = true
         picker.dismiss(animated: true)
@@ -214,7 +224,7 @@ extension ProfileViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        dataManager.state.name = textField.text
+        dataManager.set(name: textField.text)
         textField.resignFirstResponder()
     }
 }
@@ -237,6 +247,36 @@ extension ProfileViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         textView.resignFirstResponder()
-        dataManager.state.aboutMe = textView.text
+        dataManager.set(aboutMe: textView.text)
+    }
+}
+
+// MARK: - IProfileDataManagerDelegate
+extension ProfileViewController: IProfileDataManagerDelegate {
+    func didLoadUser(name: String?, aboutMe: String?, imageData: Data?) {
+        self.activityIndicator.stopAnimating()
+        nameLabel.text = name
+        nameTextField.text = name
+        aboutMeLabel.text = aboutMe
+        aboutMeTextView.text = aboutMe
+        if let imageData = imageData {
+            photoImageView.image = UIImage(data: imageData)
+        }
+    }
+    
+    func didSaveUser() {
+        saveButton.isEnabled = true
+        activityIndicator.stopAnimating()
+        present(successfulAlert, animated: true)
+    }
+    
+    func didReceiveSave(error: String) {
+        print(error)
+        present(failureAlert, animated: true)
+    }
+    
+    func didReceiveLoad(error: String) {
+        print(error)
+        activityIndicator.stopAnimating()
     }
 }

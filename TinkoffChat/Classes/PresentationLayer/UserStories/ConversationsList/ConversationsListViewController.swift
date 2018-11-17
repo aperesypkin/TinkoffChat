@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 
 private struct Identifiers {
-    static let conversationSequeIdentifier = "ConversationSequeIdentifier"
     static let themesSequeIdentifier = "ThemesSequeIdentifier"
     static let themesSwiftSequeIdentifier = "ThemesSwiftSequeIdentifier"
 }
@@ -26,6 +25,8 @@ final class ConversationsListViewController: BaseViewController {
         let online: Bool
     }
     
+    // MARK: - UI
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -35,94 +36,68 @@ final class ConversationsListViewController: BaseViewController {
         }
     }
     
-    private let communicationManager = CommunicationManager()
+    // MARK: - Dependencies
     
-    private let themes = [UIColor.black: Theme.black,
-                          UIColor.blue: Theme.blue,
-                          UIColor.white: Theme.white]
+    private let dataManager: IConversationsListDataManager
+    private let presentationAssembly: IPresentationAssembly
     
-    private lazy var actionSheetController: UIAlertController = {
-        let actionSheetController = UIAlertController(title: "Выберите View Controller", message: nil, preferredStyle: .actionSheet)
-        
-        let objectiveViewControllerAction = UIAlertAction(title: "Objective-C View Controller", style: .default) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.performSegue(withIdentifier: Identifiers.themesSequeIdentifier, sender: nil)
-        }
-        
-        let swiftViewControllerAction = UIAlertAction(title: "Swift View Controller", style: .default) { [weak self] _ in
-            guard let `self` = self else { return }
-            self.performSegue(withIdentifier: Identifiers.themesSwiftSequeIdentifier, sender: nil)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-        
-        actionSheetController.addAction(objectiveViewControllerAction)
-        actionSheetController.addAction(swiftViewControllerAction)
-        actionSheetController.addAction(cancelAction)
-        
-        return actionSheetController
-    }()
+    // MARK: - Initialization
     
-    private lazy var dataManager: FetchedResultControllerManager<Conversation> = {
-        let fetchRequest: NSFetchRequest<Conversation> = Conversation.fetchRequest()
-        
-        let sectionSort = NSSortDescriptor(key: #keyPath(Conversation.status), ascending: false)
-        let dateSort = NSSortDescriptor(key: #keyPath(Conversation.lastMessage.date), ascending: false)
-        let nameSort = NSSortDescriptor(key: #keyPath(Conversation.user.name), ascending: false)
-        
-        fetchRequest.sortDescriptors = [sectionSort, dateSort, nameSort]
-        
-        return FetchedResultControllerManager(fetchRequest: fetchRequest,
-                                              sectionNameKeyPath: #keyPath(Conversation.status),
-                                              cacheName: nil)
-    }()
+    init(dataManager: IConversationsListDataManager, presentationAssembly: IPresentationAssembly) {
+        self.dataManager = dataManager
+        self.presentationAssembly = presentationAssembly
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.performFetch(for: tableView)
+        setup()
+        dataManager.performFetchData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         tableView.reloadData()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Identifiers.conversationSequeIdentifier {
-            if let conversationViewController = segue.destination.contents as? ConversationViewController {
-                guard let conversation = sender as? Conversation else { return }
-                conversationViewController.title = conversation.user?.name
-                conversationViewController.isUserOnline = conversation.user?.isOnline
-                conversationViewController.userID = conversation.user?.identifier
-                conversationViewController.communicationManager = communicationManager
-            }
-        } else if segue.identifier == Identifiers.themesSequeIdentifier {
-            if let themesViewController = segue.destination.contents as? ThemesViewController {
-                themesViewController.delegate = self
-            }
-        } else if segue.identifier == Identifiers.themesSwiftSequeIdentifier {
-            if let themesSwiftViewController = segue.destination.contents as? ThemesSwiftViewController {
-                themesSwiftViewController.themeButtonAction = { [weak self] selectedTheme in
-                    guard let `self` = self else { return }
-                    self.logThemeChanging(selectedTheme: selectedTheme)
-                }
-            }
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+    
+    // MARK: - Private methods
+    
+    private func setup() {
+        title = "TinkoffChat"
+        setupBarButtons()
     }
     
-    @IBAction func didTapChooseThemeButton(_ sender: UIBarButtonItem) {
-        present(actionSheetController, animated: true)
+    private func setupBarButtons() {
+        setupProfileBarButton()
+        setupThemeListBarButton()
     }
     
-    private func logThemeChanging(selectedTheme: UIColor) {
-        print("Selected theme's color is \(selectedTheme.string)")
-        if let theme = themes[selectedTheme] {
-            theme.apply()
-            ThemeManager.shared.save(theme: theme)
-        }
+    private func setupProfileBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Профиль", style: .plain, target: self, action: #selector(didTapProfileButton))
+    }
+    
+    @objc private func didTapProfileButton() {
+        let profileViewController = presentationAssembly.profileViewController()
+        let navigationController = UINavigationController(rootViewController: profileViewController)
+        present(navigationController, animated: true)
+    }
+    
+    private func setupThemeListBarButton() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Темы", style: .plain, target: self, action: #selector(didTapThemeListButton))
+    }
+    
+    @objc private func didTapThemeListButton() {
+        let profileViewController = presentationAssembly.themeListViewController()
+        let navigationController = UINavigationController(rootViewController: profileViewController)
+        present(navigationController, animated: true)
     }
 
 }
@@ -130,7 +105,7 @@ final class ConversationsListViewController: BaseViewController {
 // MARK: - UITableViewDataSource
 extension ConversationsListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataManager.sectionsCount
+        return dataManager.sectionsCount()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,7 +113,7 @@ extension ConversationsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let conversation = dataManager.object(at: indexPath)
+        guard let conversation = dataManager.object(at: indexPath) else { return UITableViewCell() }
         
         let cell: ConversationsListCell = tableView.dequeueReusableCell(for: indexPath)
         cell.configure(with: conversation.viewModel)
@@ -157,13 +132,43 @@ extension ConversationsListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let conversation = dataManager.object(at: indexPath)
-        performSegue(withIdentifier: Identifiers.conversationSequeIdentifier, sender: conversation)
+        
+        if let userID = conversation?.user?.identifier, let isOnline = conversation?.user?.isOnline {
+            let conversationViewController = presentationAssembly.conversationViewController(userID: userID, isUserOnline: isOnline)
+            conversationViewController.title = conversation?.user?.name
+            navigationController?.pushViewController(conversationViewController, animated: true)
+        }
     }
 }
 
-// MARK: - ​ThemesViewControllerDelegate
-extension ConversationsListViewController: ​ThemesViewControllerDelegate {
-    func themesViewController(_ controller: ThemesViewController, didSelectTheme selectedTheme: UIColor) {
-        logThemeChanging(selectedTheme: selectedTheme)
+// MARK: - IConversationsListDataManagerDelegate
+extension ConversationsListViewController: IConversationsListDataManagerDelegate {
+    func dataWillChange() {
+        tableView.beginUpdates()
+    }
+    
+    func dataDidChange() {
+        tableView.endUpdates()
+    }
+    
+    func objectDidChange(at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert: tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        case .delete: tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .update: tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        }
+    }
+    
+    func sectionDidChange(atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        let indexSet = IndexSet(integer: sectionIndex)
+
+        switch type {
+        case .insert: tableView.insertSections(indexSet, with: .automatic)
+        case .delete: tableView.deleteSections(indexSet, with: .automatic)
+        default: break
+        }
     }
 }
