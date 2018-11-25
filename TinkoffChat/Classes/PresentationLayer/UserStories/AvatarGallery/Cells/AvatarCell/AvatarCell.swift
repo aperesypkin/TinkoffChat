@@ -19,31 +19,23 @@ class AvatarCell: UICollectionViewCell {
         }
     }
     
-    private let cachedImages = NSCache<NSURL, UIImage>()
-    
     func configure(with model: AvatarGalleryViewModel) {
         imageURL = model.imageURL
     }
     
     private func fetchImage() {
-        if let url = imageURL {
-            if let image = cachedImages.object(forKey: url as NSURL) {
-                avatarImageView.image = image
-            } else {
-                avatarImageView.image = #imageLiteral(resourceName: "placeholder-user")
-                activityIndicator.startAnimating()
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    let urlContents = try? Data(contentsOf: url)
-                    DispatchQueue.main.async {
-                        self?.activityIndicator.stopAnimating()
-                        if let imageData = urlContents, url == self?.imageURL, let image = UIImage(data: imageData) {
-                            self?.cachedImages.setObject(image, forKey: url as NSURL)
-                            self?.avatarImageView.image = image
-                        }
-                    }
+        guard let url = imageURL else { return }
+        
+        avatarImageView.image = #imageLiteral(resourceName: "placeholder-user")
+        activityIndicator.startAnimating()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let urlContents = try? Data(contentsOf: url)
+            DispatchQueue.main.async {
+                if let imageData = urlContents, url == self?.imageURL {
+                    self?.avatarImageView.image = UIImage(data: imageData)
                 }
+                self?.activityIndicator.stopAnimating()
             }
-            
         }
     }
     

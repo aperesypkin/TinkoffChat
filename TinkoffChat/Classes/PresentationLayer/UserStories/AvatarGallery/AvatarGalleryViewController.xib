@@ -27,18 +27,19 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewLayout key="collectionViewLayout" id="6Zd-Fu-vec" customClass="AvatarGalleryCollectionViewFlowLayout" customModule="TinkoffChat" customModuleProvider="target"/>
                 </collectionView>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dsC-YN-xRK">
-                    <rect key="frame" x="171" y="317" width="37" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dsC-YN-xRK">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
                     <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="dsC-YN-xRK" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="2NR-NX-Wz3"/>
                 <constraint firstItem="3or-L5-cWy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Pdt-TO-hKW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3or-L5-cWy" secondAttribute="bottom" id="Y31-iM-EYI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3or-L5-cWy" secondAttribute="trailing" id="fE4-Bk-Iqj"/>
                 <constraint firstItem="3or-L5-cWy" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ixO-lG-gVM"/>
+                <constraint firstItem="dsC-YN-xRK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xDh-hw-Zxv"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
