@@ -15,12 +15,11 @@ class AvatarCell: UICollectionViewCell {
     
     private var imageURL: URL? {
         didSet {
-            avatarImageView.image = #imageLiteral(resourceName: "placeholder-user")
             fetchImage()
         }
     }
     
-    private var cachedImages: [URL: UIImage?] = [:]
+    private let cachedImages = NSCache<NSURL, UIImage>()
     
     func configure(with model: AvatarGalleryViewModel) {
         imageURL = model.imageURL
@@ -28,18 +27,18 @@ class AvatarCell: UICollectionViewCell {
     
     private func fetchImage() {
         if let url = imageURL {
-            if let image = cachedImages[url] {
+            if let image = cachedImages.object(forKey: url as NSURL) {
                 avatarImageView.image = image
             } else {
+                avatarImageView.image = #imageLiteral(resourceName: "placeholder-user")
                 activityIndicator.startAnimating()
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                     let urlContents = try? Data(contentsOf: url)
                     DispatchQueue.main.async {
-                        if let imageData = urlContents, url == self?.imageURL {
-                            let image = UIImage(data: imageData)
-                            self?.cachedImages[url] = image
+                        self?.activityIndicator.stopAnimating()
+                        if let imageData = urlContents, url == self?.imageURL, let image = UIImage(data: imageData) {
+                            self?.cachedImages.setObject(image, forKey: url as NSURL)
                             self?.avatarImageView.image = image
-                            self?.activityIndicator.stopAnimating()
                         }
                     }
                 }
