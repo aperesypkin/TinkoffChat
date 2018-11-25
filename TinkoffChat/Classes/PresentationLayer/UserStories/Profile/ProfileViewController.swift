@@ -77,10 +77,20 @@ class ProfileViewController: BaseViewController {
             }
         }
         
+        let chooseDownloadedImageAction = UIAlertAction(title: "Загрузить", style: .default) { [weak self] _ in
+            guard let `self` = self else { return }
+            
+            let avatarGalleryViewController = self.presentationAssembly.avatarGalleryViewController()
+            avatarGalleryViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: avatarGalleryViewController)
+            self.present(navigationController, animated: true)
+        }
+        
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         
         actionSheetController.addAction(chooseFromGalleryAction)
         actionSheetController.addAction(takePhotoAction)
+        actionSheetController.addAction(chooseDownloadedImageAction)
         actionSheetController.addAction(cancelAction)
         
         return actionSheetController
@@ -112,11 +122,13 @@ class ProfileViewController: BaseViewController {
     // MARK: - Dependencies
     
     private let dataManager: IProfileDataManager
+    private let presentationAssembly: IPresentationAssembly
     
     // MARK: - Initialization
     
-    init(dataManager: IProfileDataManager) {
+    init(dataManager: IProfileDataManager, presentationAssembly: IPresentationAssembly) {
         self.dataManager = dataManager
+        self.presentationAssembly = presentationAssembly
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -278,5 +290,14 @@ extension ProfileViewController: IProfileDataManagerDelegate {
     func didReceiveLoad(error: String) {
         print(error)
         activityIndicator.stopAnimating()
+    }
+}
+
+// MARK: - IAvatarGalleryViewControllerDelegate
+extension ProfileViewController: IAvatarGalleryViewControllerDelegate {
+    func didChoose(image: UIImage) {
+        dataManager.set(imageData: image.jpegData(compressionQuality: 1))
+        photoImageView.image = image
+        saveButton.isEnabled = true
     }
 }

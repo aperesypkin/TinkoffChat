@@ -14,6 +14,7 @@ protocol IServicesAssembly {
     func conversationsListService() -> IDataFetchService
     func conversationService(userID: String) -> IDataFetchService
     func profileService() -> IProfileService
+    func avatarGalleryService() -> IAvatarGalleryService
 }
 
 class ServicesAssembly: IServicesAssembly {
@@ -65,6 +66,10 @@ class ServicesAssembly: IServicesAssembly {
     
     func profileService() -> IProfileService {
         return CommonProfileService(coreDataStack: coreAssembly.coreDataStack)
+    }
+    
+    func avatarGalleryService() -> IAvatarGalleryService {
+        return CommonAvatarGalleryService(requestClient: coreAssembly.requestClient)
     }
     
 }
