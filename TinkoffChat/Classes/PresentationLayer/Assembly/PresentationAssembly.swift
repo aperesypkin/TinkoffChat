@@ -13,6 +13,7 @@ protocol IPresentationAssembly {
     func conversationViewController(userID: String, isUserOnline: Bool) -> ConversationViewController
     func profileViewController() -> ProfileViewController
     func themeListViewController() -> ThemeListViewController
+    func avatarGalleryViewController() -> AvatarGalleryViewController
 }
 
 class PresentationAssembly: IPresentationAssembly {
@@ -65,7 +66,7 @@ class PresentationAssembly: IPresentationAssembly {
     
     func profileViewController() -> ProfileViewController {
         var dataManager = profileDataManager()
-        let viewController = ProfileViewController(dataManager: dataManager)
+        let viewController = ProfileViewController(dataManager: dataManager, presentationAssembly: self)
         dataManager.delegate = viewController
         return viewController
     }
@@ -85,6 +86,18 @@ class PresentationAssembly: IPresentationAssembly {
     
     private func themeListDataManager() -> IThemeListDataManager {
         return ThemeListDataManager(themeService: serviceAssembly.themeService)
+    }
+    
+    // MARK: - AvatarGalleryViewController
+    
+    func avatarGalleryViewController() -> AvatarGalleryViewController {
+        let dataManager = avatarGalleryDataManager()
+        let viewController = AvatarGalleryViewController(dataManager: dataManager)
+        return viewController
+    }
+    
+    private func avatarGalleryDataManager() -> IAvatarGalleryDataManager {
+        return AvatarGalleryDataManager(avatarGalleryService: serviceAssembly.avatarGalleryService())
     }
     
 }

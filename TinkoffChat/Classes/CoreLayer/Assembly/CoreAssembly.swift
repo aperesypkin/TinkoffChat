@@ -13,13 +13,12 @@ protocol ICoreAssembly {
     var storage: ICoreDataStorage { get }
     var communicator: ICommunicator { get }
     var dataManager: IDataManager { get }
+    var requestClient: IRequestClient { get }
 }
 
 class CoreAssembly: ICoreAssembly {
     
-    var coreDataStack: ICoreDataStack {
-        return CommonCoreDataStack.shared
-    }
+    var coreDataStack: ICoreDataStack = CommonCoreDataStack.shared
     
     var storage: ICoreDataStorage {
         return CommonCoreDataStorage(coreDataStack: coreDataStack)
@@ -28,5 +27,7 @@ class CoreAssembly: ICoreAssembly {
     lazy var communicator: ICommunicator = MultipeerCommunicator(coreDataStack: coreDataStack)
     
     var dataManager: IDataManager = GCDDataManager()
+    
+    var requestClient: IRequestClient = CommonRequestClient()
     
 }
