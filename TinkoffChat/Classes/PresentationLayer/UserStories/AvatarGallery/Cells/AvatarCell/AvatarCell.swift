@@ -33,8 +33,8 @@ class AvatarCell: UICollectionViewCell {
             DispatchQueue.main.async {
                 if let imageData = urlContents, url == self?.imageURL {
                     self?.avatarImageView.image = UIImage(data: imageData)
+                    self?.activityIndicator.stopAnimating()
                 }
-                self?.activityIndicator.stopAnimating()
             }
         }
     }
