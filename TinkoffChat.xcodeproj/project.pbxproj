@@ -43,6 +43,8 @@
 		5C33FF47219D947E0033CCA1 /* ConversationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C33FF46219D947E0033CCA1 /* ConversationsListViewController.xib */; };
 		5C33FF49219D9A150033CCA1 /* ConversationsListDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33FF48219D9A150033CCA1 /* ConversationsListDataManager.swift */; };
 		5C35B8D521714568006369B4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C35B8D421714568006369B4 /* Theme.swift */; };
+		5C3966C021AB39F10010EF39 /* ImageParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3966BF21AB39F10010EF39 /* ImageParser.swift */; };
+		5C3966C321AB3A850010EF39 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3966C221AB3A850010EF39 /* ImageRequest.swift */; };
 		5C3F53DA21810B0400ED7D9E /* MultipeerCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */; };
 		5C3F53DD21811D8500ED7D9E /* CommonCommunicationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F53DC21811D8500ED7D9E /* CommonCommunicationService.swift */; };
 		5C57FAD32198DE3D0054E2D6 /* AppUser+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */; };
@@ -138,6 +140,8 @@
 		5C33FF46219D947E0033CCA1 /* ConversationsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListViewController.xib; sourceTree = "<group>"; };
 		5C33FF48219D9A150033CCA1 /* ConversationsListDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListDataManager.swift; sourceTree = "<group>"; };
 		5C35B8D421714568006369B4 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		5C3966BF21AB39F10010EF39 /* ImageParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageParser.swift; sourceTree = "<group>"; };
+		5C3966C221AB3A850010EF39 /* ImageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
 		5C3F53D921810B0400ED7D9E /* MultipeerCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerCommunicator.swift; sourceTree = "<group>"; };
 		5C3F53DC21811D8500ED7D9E /* CommonCommunicationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCommunicationService.swift; sourceTree = "<group>"; };
 		5C57FAD12198DE3D0054E2D6 /* AppUser+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppUser+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -606,6 +610,22 @@
 			path = Assembly;
 			sourceTree = "<group>";
 		};
+		5C3966BE21AB39D80010EF39 /* ImageParser */ = {
+			isa = PBXGroup;
+			children = (
+				5C3966BF21AB39F10010EF39 /* ImageParser.swift */,
+			);
+			path = ImageParser;
+			sourceTree = "<group>";
+		};
+		5C3966C121AB3A690010EF39 /* ImageRequest */ = {
+			isa = PBXGroup;
+			children = (
+				5C3966C221AB3A850010EF39 /* ImageRequest.swift */,
+			);
+			path = ImageRequest;
+			sourceTree = "<group>";
+		};
 		5C3F53DB21810B0800ED7D9E /* Communicator */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +667,7 @@
 			children = (
 				5C79743621AACD34001C1F1D /* Protocols */,
 				5C79743921AACD98001C1F1D /* PixabayParser */,
+				5C3966BE21AB39D80010EF39 /* ImageParser */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -665,6 +686,7 @@
 			children = (
 				5C79744321AACF98001C1F1D /* Protocols */,
 				5C79744621AACFDC001C1F1D /* PixabayRequest */,
+				5C3966C121AB3A690010EF39 /* ImageRequest */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1180,6 +1202,7 @@
 				5C80E3C921972C9B00581D13 /* User+CoreDataClass copy.swift in Sources */,
 				5C80E3CE21972C9B00581D13 /* Message+CoreDataProperties copy.swift in Sources */,
 				5C14B21221A0541F00A9F2FA /* IDataFetchServiceDelegate.swift in Sources */,
+				5C3966C321AB3A850010EF39 /* ImageRequest.swift in Sources */,
 				5C1D437E2154A23A006017CB /* BaseViewController.swift in Sources */,
 				5CA92C08218CF6B100BCF7A5 /* TinkoffChat.xcdatamodeld in Sources */,
 				5CC88917215E4F170005A46B /* UIApplicationState+String.swift in Sources */,
@@ -1191,6 +1214,7 @@
 				5C7C27AF21690134005066C6 /* UIColor.swift in Sources */,
 				5CA92C05218CF19800BCF7A5 /* CommonCoreDataStack.swift in Sources */,
 				5C14B20A21A0530700A9F2FA /* ICommunicationService.swift in Sources */,
+				5C3966C021AB39F10010EF39 /* ImageParser.swift in Sources */,
 				5C94C87C21A898C3008CE530 /* UICollectionView+RegisterCell.swift in Sources */,
 				5C80E3CF21972C9B00581D13 /* Message+CoreDataClass copy.swift in Sources */,
 				5C79745A21AADDEA001C1F1D /* AvatarCell.swift in Sources */,

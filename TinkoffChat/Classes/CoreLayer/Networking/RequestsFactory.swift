@@ -14,4 +14,10 @@ struct RequestsFactory {
             return RequestConfig(request: PixabayRequest(), parser: PixabayParser())
         }
     }
+    
+    struct Common {
+        static func image(for url: URL) -> RequestConfig<ImageParser> {
+            return RequestConfig(request: ImageRequest(url: url), parser: ImageParser())
+        }
+    }
 }

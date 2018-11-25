@@ -25,4 +25,13 @@ class CommonAvatarGalleryService: IAvatarGalleryService {
         }
     }
     
+    func fetchImage(url: URL, completionHandler: @escaping (UIImage?, String?) -> Void) {
+        requestClient.send(config: RequestsFactory.Common.image(for: url)) { result in
+            switch result {
+            case .success(let model): completionHandler(model, nil)
+            case .error(let error): completionHandler(nil, error)
+            }
+        }
+    }
+    
 }

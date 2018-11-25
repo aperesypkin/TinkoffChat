@@ -98,15 +98,27 @@ extension AvatarGalleryViewController: UICollectionViewDataSource {
         let model = dataSource[indexPath.row]
         
         let cell: AvatarCell = collectionView.dequeueReusableCell(for: indexPath)
-        cell.configure(with: model)
+        configure(cell: cell, with: model)
         return cell
+    }
+    
+    private func configure(cell: AvatarCell, with model: AvatarGalleryViewModel) {
+        cell.avatarImageView.image = #imageLiteral(resourceName: "placeholder-user")
+        cell.activityIndicator.startAnimating()
+        cell.imageURL = model.imageURL
+        dataManager.fetchImage(url: model.imageURL) { image in
+            if let image = image, cell.imageURL == model.imageURL {
+                cell.avatarImageView.image = image
+                cell.activityIndicator.stopAnimating()
+            }
+        }
     }
 }
 
 // MARK: - UICollectionViewDelegate
 extension AvatarGalleryViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? AvatarCell, let image = cell.avatarImageView.image {
+        if let cell = collectionView.cellForItem(at: indexPath) as? AvatarCell, let image = cell.avatarImageView.image, image != #imageLiteral(resourceName: "placeholder-user") {
             delegate?.didChoose(image: image)
             dismiss(animated: true)
         }

@@ -10,6 +10,7 @@ import Foundation
 
 protocol IAvatarGalleryDataManager {
     func fetchImages(completionHandler: @escaping ([AvatarGalleryViewModel]?) -> Void)
+    func fetchImage(url: URL, completionHandler: @escaping (UIImage?) -> Void)
 }
 
 struct AvatarGalleryViewModel {
@@ -19,6 +20,8 @@ struct AvatarGalleryViewModel {
 class AvatarGalleryDataManager: IAvatarGalleryDataManager {
         
     private let avatarGalleryService: IAvatarGalleryService
+    
+    private var cachedImages: [URL: UIImage] = [:]
     
     init(avatarGalleryService: IAvatarGalleryService) {
         self.avatarGalleryService = avatarGalleryService
@@ -30,6 +33,7 @@ class AvatarGalleryDataManager: IAvatarGalleryDataManager {
                 DispatchQueue.main.async {
                     print(error)
                     completionHandler(nil)
+                    return
                 }
             }
             
@@ -37,6 +41,31 @@ class AvatarGalleryDataManager: IAvatarGalleryDataManager {
                 let viewModels = model.images.map { AvatarGalleryViewModel(imageURL: $0.imageURL) }
                 DispatchQueue.main.async {
                     completionHandler(viewModels)
+                    return
+                }
+            }
+        }
+    }
+    
+    func fetchImage(url: URL, completionHandler: @escaping (UIImage?) -> Void) {
+        if let image = cachedImages[url] {
+            completionHandler(image)
+            return
+        }
+        
+        avatarGalleryService.fetchImage(url: url) { image, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    print(error)
+                    completionHandler(nil)
+                    return
+                }
+            }
+            
+            if let image = image {
+                DispatchQueue.main.async {
+                    self.cachedImages[url] = image
+                    completionHandler(image)
                 }
             }
         }

@@ -10,4 +10,5 @@ import Foundation
 
 protocol IAvatarGalleryService {
     func fetchPixabayImages(completionHandler: @escaping (PixabayModel?, String?) -> Void)
+    func fetchImage(url: URL, completionHandler: @escaping (UIImage?, String?) -> Void)
 }
