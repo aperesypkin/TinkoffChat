@@ -41,8 +41,22 @@ class ConversationViewController: BaseViewController {
     
     // MARK: - Private properties
     
-    private let isUserOnline: Bool
+    private var titleLabel: UILabel? {
+        return navigationItem.titleView as? UILabel
+    }
+    
+    private var isUserOnline: Bool
     private let userID: String
+    
+    private let animator = ConversationAnimator()
+    
+    private var isSendButtonAvailable: Bool = false {
+        didSet {
+            if oldValue != isSendButtonAvailable {
+                animator.animate(button: sendButton, isEnabled: isSendButtonAvailable)
+            }
+        }
+    }
     
     // MARK: - Initialization
     
@@ -78,17 +92,23 @@ class ConversationViewController: BaseViewController {
         guard let message = messageTextField.text,
             !message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
                 messageTextField.text = nil
+                changeSendButtonStatusIfNeeded()
                 return
         }
         
         dataManager.send(text: message, for: userID)
         messageTextField.text = nil
+        changeSendButtonStatusIfNeeded()
+    }
+    
+    @IBAction func textFieldDidChange(_ sender: UITextField) {
+        changeSendButtonStatusIfNeeded()
     }
     
     // MARK: - Private methods
     
     private func setup() {
-        sendButton.isEnabled = isUserOnline
+        sendButton.isEnabled = false
         setupKeyboardNotifications()
         setupTapGesture()
     }
@@ -100,6 +120,14 @@ class ConversationViewController: BaseViewController {
     
     @objc private func didTap() {
         view.endEditing(true)
+    }
+    
+    private func changeSendButtonStatusIfNeeded() {
+        if (messageTextField.text ?? "").isEmpty || isUserOnline == false {
+            isSendButtonAvailable = false
+        } else {
+            isSendButtonAvailable = true
+        }
     }
     
 }
@@ -138,7 +166,24 @@ extension ConversationViewController: UITextFieldDelegate {
 // MARK: - IConversationDataManagerDelegate
 extension ConversationViewController: IConversationDataManagerDelegate {
     func didChange(user: String, online status: Bool) {
-        sendButton.isEnabled = status
+        isUserOnline = status
+        changeSendButtonStatusIfNeeded()
+        
+        if status == true {
+            if let label = titleLabel {
+                UIView.animate(withDuration: 1) {
+                    label.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                    label.textColor = .green
+                }
+            }
+        } else {
+            if let label = titleLabel {
+                UIView.animate(withDuration: 1) {
+                    label.transform = CGAffineTransform.identity
+                    label.textColor = .black
+                }
+            }
+        }
     }
     
     func dataWillChange() {
