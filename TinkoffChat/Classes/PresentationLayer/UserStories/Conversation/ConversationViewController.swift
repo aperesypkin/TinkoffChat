@@ -17,6 +17,8 @@ class ConversationViewController: BaseViewController {
     
     // MARK: - UI
     
+    let titleLabel = UILabel()
+    
     @IBOutlet var messageTextField: UITextField! {
         didSet {
             messageTextField.delegate = self
@@ -40,10 +42,6 @@ class ConversationViewController: BaseViewController {
     private let dataManager: IConversationDataManager
     
     // MARK: - Private properties
-    
-    private var titleLabel: UILabel? {
-        return navigationItem.titleView as? UILabel
-    }
     
     private var isUserOnline: Bool
     private let userID: String
@@ -80,6 +78,12 @@ class ConversationViewController: BaseViewController {
         dataManager.performFetchData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        changeTitleLabel()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -111,6 +115,14 @@ class ConversationViewController: BaseViewController {
         sendButton.isEnabled = false
         setupKeyboardNotifications()
         setupTapGesture()
+        setupTitleLabel()
+    }
+    
+    private func setupTitleLabel() {
+        titleLabel.sizeToFit()
+        titleLabel.frame.size.width *= 1.3
+        titleLabel.textAlignment = .center
+        navigationItem.titleView = titleLabel
     }
     
     private func setupTapGesture() {
@@ -128,6 +140,11 @@ class ConversationViewController: BaseViewController {
         } else {
             isSendButtonAvailable = true
         }
+    }
+    
+    private func changeTitleLabel() {
+        guard let label = navigationItem.titleView as? UILabel else { return }
+        animator.animate(label: label, isUserOnline: isUserOnline)
     }
     
 }
@@ -168,22 +185,7 @@ extension ConversationViewController: IConversationDataManagerDelegate {
     func didChange(user: String, online status: Bool) {
         isUserOnline = status
         changeSendButtonStatusIfNeeded()
-        
-        if status == true {
-            if let label = titleLabel {
-                UIView.animate(withDuration: 1) {
-                    label.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-                    label.textColor = .green
-                }
-            }
-        } else {
-            if let label = titleLabel {
-                UIView.animate(withDuration: 1) {
-                    label.transform = CGAffineTransform.identity
-                    label.textColor = .black
-                }
-            }
-        }
+        changeTitleLabel()
     }
     
     func dataWillChange() {

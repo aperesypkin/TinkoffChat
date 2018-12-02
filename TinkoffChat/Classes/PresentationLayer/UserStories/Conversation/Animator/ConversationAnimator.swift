@@ -24,4 +24,11 @@ class ConversationAnimator {
         })
     }
     
+    func animate(label: UILabel, isUserOnline: Bool) {
+        UIView.transition(with: label, duration: 1, options: .transitionCrossDissolve, animations: {
+            label.transform = isUserOnline ? CGAffineTransform(scaleX: 1.1, y: 1.1) : .identity
+            label.textColor = isUserOnline ? .green : .black
+        }, completion: nil)
+    }
+    
 }
