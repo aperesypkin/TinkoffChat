@@ -11,7 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    var window: TCWindow?
         
     private let rootAssembly = RootAssembly()
     
@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         LogManager.shared.logAppDelegateLifecycle(#function, state: applicationState)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = TCWindow(frame: UIScreen.main.bounds)
         let controller = rootAssembly.presentationAssembly.conversationsListViewController()
         let navigationController = UINavigationController(rootViewController: controller)
         window?.rootViewController = navigationController

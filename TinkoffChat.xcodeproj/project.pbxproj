@@ -87,6 +87,8 @@
 		5C94C87C21A898C3008CE530 /* UICollectionView+RegisterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C94C87B21A898C3008CE530 /* UICollectionView+RegisterCell.swift */; };
 		5C94C87E21A89980008CE530 /* UICollectionView+ReusableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C94C87D21A89980008CE530 /* UICollectionView+ReusableCell.swift */; };
 		5C94C88021A89BC9008CE530 /* AvatarGalleryCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C94C87F21A89BC9008CE530 /* AvatarGalleryCollectionViewFlowLayout.swift */; };
+		5C9EBB2221B460CF008676E5 /* EmitterAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9EBB2121B460CF008676E5 /* EmitterAnimator.swift */; };
+		5C9EBB2521B46171008676E5 /* TCWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9EBB2421B46171008676E5 /* TCWindow.swift */; };
 		5CA92C05218CF19800BCF7A5 /* CommonCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA92C04218CF19800BCF7A5 /* CommonCoreDataStack.swift */; };
 		5CA92C08218CF6B100BCF7A5 /* TinkoffChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5CA92C06218CF6B100BCF7A5 /* TinkoffChat.xcdatamodeld */; };
 		5CA944492185C39600B3FF2F /* CGAffineTransform+Reverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA944482185C39600B3FF2F /* CGAffineTransform+Reverse.swift */; };
@@ -187,6 +189,8 @@
 		5C94C87B21A898C3008CE530 /* UICollectionView+RegisterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+RegisterCell.swift"; sourceTree = "<group>"; };
 		5C94C87D21A89980008CE530 /* UICollectionView+ReusableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+ReusableCell.swift"; sourceTree = "<group>"; };
 		5C94C87F21A89BC9008CE530 /* AvatarGalleryCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarGalleryCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		5C9EBB2121B460CF008676E5 /* EmitterAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmitterAnimator.swift; sourceTree = "<group>"; };
+		5C9EBB2421B46171008676E5 /* TCWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCWindow.swift; sourceTree = "<group>"; };
 		5CA92C04218CF19800BCF7A5 /* CommonCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonCoreDataStack.swift; sourceTree = "<group>"; };
 		5CA92C07218CF6B100BCF7A5 /* TinkoffChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChat.xcdatamodel; sourceTree = "<group>"; };
 		5CA944482185C39600B3FF2F /* CGAffineTransform+Reverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+Reverse.swift"; sourceTree = "<group>"; };
@@ -254,6 +258,7 @@
 		5C0E547521680373000AA0A1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5C9EBB2021B460C0008676E5 /* EmitterAnimator */,
 				5C1D43782154A095006017CB /* Extensions */,
 				5CC26AAF21555A9400DF9E64 /* LogManager */,
 			);
@@ -496,6 +501,7 @@
 				5C33FF41219D907F0033CCA1 /* Assembly */,
 				5C945B3D2154275B0045E20F /* AppDelegate */,
 				5C1D437F2154A244006017CB /* BaseViewController */,
+				5C9EBB2321B46161008676E5 /* TCWindow */,
 			);
 			path = ApplicationLayer;
 			sourceTree = "<group>";
@@ -906,6 +912,22 @@
 			path = FlowLayout;
 			sourceTree = "<group>";
 		};
+		5C9EBB2021B460C0008676E5 /* EmitterAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				5C9EBB2121B460CF008676E5 /* EmitterAnimator.swift */,
+			);
+			path = EmitterAnimator;
+			sourceTree = "<group>";
+		};
+		5C9EBB2321B46161008676E5 /* TCWindow */ = {
+			isa = PBXGroup;
+			children = (
+				5C9EBB2421B46171008676E5 /* TCWindow.swift */,
+			);
+			path = TCWindow;
+			sourceTree = "<group>";
+		};
 		5C9F9C0C217CFCBA005EE2A5 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1232,6 +1254,7 @@
 				5C79743C21AACDB6001C1F1D /* PixabayParser.swift in Sources */,
 				5C14B21A21A0624F00A9F2FA /* IProfileService.swift in Sources */,
 				5C79743F21AACE0B001C1F1D /* PixabayModel.swift in Sources */,
+				5C9EBB2521B46171008676E5 /* TCWindow.swift in Sources */,
 				5C14B1FE21A0509D00A9F2FA /* ICommunicatorDelegate.swift in Sources */,
 				5C33FF3D219D8E810033CCA1 /* ServicesAssembly.swift in Sources */,
 				5C79744521AACFAE001C1F1D /* IRequest.swift in Sources */,
@@ -1277,6 +1300,7 @@
 				5C14B20221A0514000A9F2FA /* ICoreDataStack.swift in Sources */,
 				5C57FAD42198DE3D0054E2D6 /* AppUser+CoreDataProperties.swift in Sources */,
 				5C14B21E21A065A600A9F2FA /* IProfileServiceDelegate.swift in Sources */,
+				5C9EBB2221B460CF008676E5 /* EmitterAnimator.swift in Sources */,
 				5C27274C21989618004BF445 /* MultipeerMessage.swift in Sources */,
 				5CF94657216562A600DAFBBC /* ConversationsListViewController.swift in Sources */,
 				5CCDE34321B338D700BB3415 /* ConversationAnimator.swift in Sources */,
