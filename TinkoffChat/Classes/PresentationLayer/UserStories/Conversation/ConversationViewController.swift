@@ -17,6 +17,8 @@ class ConversationViewController: BaseViewController {
     
     // MARK: - UI
     
+    let titleLabel = UILabel()
+    
     @IBOutlet var messageTextField: UITextField! {
         didSet {
             messageTextField.delegate = self
@@ -41,8 +43,18 @@ class ConversationViewController: BaseViewController {
     
     // MARK: - Private properties
     
-    private let isUserOnline: Bool
+    private var isUserOnline: Bool
     private let userID: String
+    
+    private let animator = ConversationAnimator()
+    
+    private var isSendButtonAvailable: Bool = false {
+        didSet {
+            if oldValue != isSendButtonAvailable {
+                animator.animate(button: sendButton, isEnabled: isSendButtonAvailable)
+            }
+        }
+    }
     
     // MARK: - Initialization
     
@@ -66,6 +78,12 @@ class ConversationViewController: BaseViewController {
         dataManager.performFetchData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        changeTitleLabel()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -78,19 +96,33 @@ class ConversationViewController: BaseViewController {
         guard let message = messageTextField.text,
             !message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty else {
                 messageTextField.text = nil
+                changeSendButtonStatusIfNeeded()
                 return
         }
         
         dataManager.send(text: message, for: userID)
         messageTextField.text = nil
+        changeSendButtonStatusIfNeeded()
+    }
+    
+    @IBAction func textFieldDidChange(_ sender: UITextField) {
+        changeSendButtonStatusIfNeeded()
     }
     
     // MARK: - Private methods
     
     private func setup() {
-        sendButton.isEnabled = isUserOnline
+        sendButton.isEnabled = false
         setupKeyboardNotifications()
         setupTapGesture()
+        setupTitleLabel()
+    }
+    
+    private func setupTitleLabel() {
+        titleLabel.sizeToFit()
+        titleLabel.frame.size.width *= 1.3
+        titleLabel.textAlignment = .center
+        navigationItem.titleView = titleLabel
     }
     
     private func setupTapGesture() {
@@ -100,6 +132,19 @@ class ConversationViewController: BaseViewController {
     
     @objc private func didTap() {
         view.endEditing(true)
+    }
+    
+    private func changeSendButtonStatusIfNeeded() {
+        if (messageTextField.text ?? "").isEmpty || isUserOnline == false {
+            isSendButtonAvailable = false
+        } else {
+            isSendButtonAvailable = true
+        }
+    }
+    
+    private func changeTitleLabel() {
+        guard let label = navigationItem.titleView as? UILabel else { return }
+        animator.animate(label: label, isUserOnline: isUserOnline)
     }
     
 }
@@ -138,7 +183,9 @@ extension ConversationViewController: UITextFieldDelegate {
 // MARK: - IConversationDataManagerDelegate
 extension ConversationViewController: IConversationDataManagerDelegate {
     func didChange(user: String, online status: Bool) {
-        sendButton.isEnabled = status
+        isUserOnline = status
+        changeSendButtonStatusIfNeeded()
+        changeTitleLabel()
     }
     
     func dataWillChange() {

@@ -135,7 +135,7 @@ extension ConversationsListViewController: UITableViewDelegate {
         
         if let userID = conversation?.user?.identifier, let isOnline = conversation?.user?.isOnline {
             let conversationViewController = presentationAssembly.conversationViewController(userID: userID, isUserOnline: isOnline)
-            conversationViewController.title = conversation?.user?.name
+            conversationViewController.titleLabel.text = conversation?.user?.name
             navigationController?.pushViewController(conversationViewController, animated: true)
         }
     }
